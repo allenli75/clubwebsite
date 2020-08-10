@@ -10,6 +10,7 @@ import {
 
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
+import './GridComponent.css';
 
 function GridComponent(props) {
 
@@ -43,18 +44,18 @@ function GridComponent(props) {
                   {club.name}
                 </div>
               </div>
-                <div className="tags-flex-test">
+                <div className="grid-tags-flex">
                 { club.tags.map(tag => 
-                  <div className="tag-test"> {tag} </div>
+                  <div className="grid-tag"> {tag} </div>
                 )}
                 </div>
                 <div className="req-flex">
                   {club.req_app ? 
-                    <div className="tag-test" id="app-req">✎ Requires App</div> : 
-                    <div className="tag-test" id="app-not-req">😊 No App Required</div>}
+                    <div className="grid-tag" id="app-req">✎ Requires App</div> : 
+                    <div className="grid-tag" id="app-not-req">😊 No App Required</div>}
                   {club.status ?
-                    <div className="tag-test" id="open-tag">✓ Taking New Members</div> :
-                    <div className="tag-test" id="not-open-tag">✗ Not Taking New Members</div>}
+                    <div className="grid-tag" id="open-tag">✓ Taking New Members</div> :
+                    <div className="grid-tag" id="not-open-tag">✗ Not Taking New Members</div>}
                 </div>
             </div>
           </CardContent>
