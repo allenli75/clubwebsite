@@ -191,7 +191,7 @@ button:hover {
   font-size: 20px;
 }
 
-img {
+.res-flex img {
   width: 40px;
   margin-left: 10px;
 }
@@ -208,7 +208,7 @@ img {
 }
 
 
-/*MODAL ADD RESOURCE STYLING*/
+/*ADD RESOURCE MODAL STYLING*/
 .res-modal {
   width: 800px;
 }
@@ -279,5 +279,41 @@ img {
   font-size: 14px;
 }
 
+/*DELETE RESOURCE MODAL STYLING*/
+#del-modal {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#del-text {
+  width: 75%;
+  text-align: center;
+}
+
+#del-buttons-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+
+#del-cancel {
+  color: black;
+  padding: 10px 10px;
+  margin-right: 5px;
+  font-size: 14px;
+  background: #C4C4C4;
+}
+
+#del-cancel:hover {
+  background: #e6e6e6;
+  cursor: pointer;
+}
+
+#del-del {
+  padding: 10px 10px;
+  font-size: 14px;
+}
 
 

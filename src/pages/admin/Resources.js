@@ -66,16 +66,18 @@ const Resources = () => {
     <div>
       <h3>Resources</h3>
       <div className="admin-text">
-        Link additional resources for prospective or current members!
+        Link important resources for prospective or current members!
       </div>
       <div className="gray-back">
         {resComps}
         <img className="add-button" src={require('../assets/linkImages/addLink.png')} onClick={() => setShowModal(true)}/>
       </div>
+
+        {/*ADD RESOURCE MODAL*/}
         <Modal showModal={showModal} setShowModal={setShowModal}>
           <div className="res-modal">
-            <h3 id="res-bold">Resources</h3>
-            <p id="res-desc">Link important resources for propspective or current members!</p>
+            <h3 id="res-bold">Add New Resource</h3>
+            <p id="res-desc">Link additional resources for propspective or current members!</p>
             <div className="gray-modal">
               <div className="input-holder">
                 <div className='input-title'>Resource Title</div>
