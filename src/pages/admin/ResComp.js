@@ -2,42 +2,52 @@ import React, { useState, useEffect } from 'react'
 import Modal from '../../layout/Modal';
 const ResComp = (props) => {
 
-  const [title, setTitle] = useState("")
-  const [link, setLink] = useState(props.name)
-  const [propsName, setPropsName] = useState(props.name)
-  const [propsLink, setPropsLink] = useState(props.link)
+  /*Tracks input values for edit modal*/
+  const [name, setName] = useState("")
+  const [link, setLink] = useState("")
+
+  /*Tracks current values in saved resources array*/
+  const [propsName, setPropsName] = useState(props.data.name)
+  const [propsLink, setPropsLink] = useState(props.data.link)
+
+  /*Control displaying of each modal*/
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
 
+    /*Updates main resource array with entries in the edit modal*/
     function singleSave() {
       setShowEditModal(false)
-      props.entryChange(props.number - 1, title, link)
-      setPropsName(title)
+      props.entryChange(props.data.id, name, link)
+      setPropsName(name)
     }
 
+    /*Removes selected resource from main resource array*/
     function singleDelete() {
-      props.removeRes(props.number - 1)
+      props.removeRes(props.data.id)
       setShowDelModal(false)
     }
 
+    /*onChange for name input in edit modal*/
     function changeName(event) {
-      setTitle(event.target.value)
+      setName(event.target.value)
     }
 
+    /*onChange for link input in edit modal*/
     function changeLink(event) {
       setLink(event.target.value)
     }
 
-    if (propsName !== props.name) {
-      setPropsName(props.name)
+    /*Update states to reflect current value in array*/
+    if (propsName !== props.data.name) {
+      setPropsName(props.data.name)
+    }
+    if (propsLink !== props.data.link) {
+      setPropsLink(props.data.link)
     }
 
-    if (propsLink !== props.link) {
-      setPropsLink(props.link)
-    }
-
+    /*Updates entries in the edit modal to reflect saved resources*/
     useEffect(() => {
-      setTitle(propsName)
+      setName(propsName)
       setLink(propsLink)
     }, [propsName, propsLink])
 
@@ -65,13 +75,13 @@ const ResComp = (props) => {
               <div className="gray-modal">
                 <div className="input-holder">
                   <div className='input-title'>Resource Title</div>
-                  <input value={title} placeholder="Type resource name" className="userInput" type="text" onChange={changeName}></input>
+                  <input value={name} placeholder="Type resource name" className="userInput" type="text" onChange={changeName}></input>
                   <div className='input-title'>URL Link</div>
                   <input value={link} placeholder="+ Add a link (google drive, google form, youtube, etc)" className="userInput" type="text" onChange={changeLink}></input>
                 </div>
               </div>
             <div id="buttons-flex">
-              {/*(title !== propsName || link !== propsLink) ? <p>You have unsaved changes!!</p>: null */}
+              {/*(name !== propsName || link !== propsLink) ? <p>You have unsaved changes!!</p>: null */}
               <button id="cancel-button" onClick={() => setShowEditModal(false)}> Cancel </button>
               <button id="save-button" onClick={singleSave}>Save</button>
             </div>
