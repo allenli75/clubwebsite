@@ -15,7 +15,7 @@ const customStyles = {
     marginBottom: 8,
     fontSize: 12,
     fontFamily: 'montserrat, sans-serif',
-    fontWeight: 600,
+    fontWeight: 300,
     fontStyle: 'normal',
     border: 'solid 1px #949494',
     borderRadius: 5,
@@ -27,7 +27,7 @@ const customStyles = {
     width: 310,
     fontSize: '12px',
     fontFamily: 'montserrat, sans-serif',
-    fontWeight: 600,
+    fontWeight: 300,
     fontStyle: 'normal',
     textAlign: 'left',
     color: '#4e4e4e',
@@ -41,6 +41,11 @@ const customStyles = {
   singleValue: (provided, state) => ({
     ...provided,
     color: '#4e4e4e',
+  }),
+  multiValueLabel: (provided, state) => ({
+    ...provided,
+    color: 'white',
+    'margin-left': "4px",
   }),
   indicatorSeparator: (provided, state) => ({
     ...provided,
@@ -58,7 +63,6 @@ const Dropdown = (props) => (
         neutral50: '#949494',
         danger: 'white',
         dangerLight: '#8ACEFD',
-        neutral80: 'white',
       },
     })}
     isSearchable={props.search}

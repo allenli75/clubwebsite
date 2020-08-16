@@ -27,6 +27,12 @@ const ResComp = (props) => {
       setShowDelModal(false)
     }
 
+    function cancelEdit() {
+      setShowEditModal(false)
+      setName(propsName)
+      setLink(propsLink)
+    }
+
     /*onChange for name input in edit modal*/
     function changeName(event) {
       setName(event.target.value)
@@ -55,7 +61,7 @@ const ResComp = (props) => {
         <div className="res-flex">
           <div className="title-buttons-flex">
           <div className="res-num">Resource #{props.data.id + 1}</div>
-            <div className="buttons-flex">
+            <div className="del-edit-flex">
               <img onClick={() => setShowDelModal(true)} src={require('../assets/linkImages/removeLink.png')}/>
               <img onClick={() => setShowEditModal(true)} src={require('../assets/linkImages/editLink.png')}/>
             </div>
@@ -75,14 +81,14 @@ const ResComp = (props) => {
               <div className="gray-modal">
                 <div className="input-holder">
                   <div className='input-title'>Resource Title</div>
-                  <input value={name} placeholder="Type resource name" className="userInput" type="text" onChange={changeName}></input>
+                  <input value={name} placeholder="Type resource name" className="resourcesInput" type="text" onChange={changeName}></input>
                   <div className='input-title'>URL Link</div>
-                  <input value={link} placeholder="+ Add a link (google drive, google form, youtube, etc)" className="userInput" type="text" onChange={changeLink}></input>
+                  <input value={link} placeholder="+ Add a link (google drive, google form, youtube, etc)" className="resourcesInput" type="text" onChange={changeLink}></input>
                 </div>
               </div>
             <div id="buttons-flex">
               {/*(name !== propsName || link !== propsLink) ? <p>You have unsaved changes!!</p>: null */}
-              <button id="cancel-button" onClick={() => setShowEditModal(false)}> Cancel </button>
+              <button id="cancel-button" onClick={cancelEdit}> Cancel </button>
               <button id="save-button" onClick={singleSave}>Save</button>
             </div>
             </div>

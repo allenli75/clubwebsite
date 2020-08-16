@@ -9,15 +9,24 @@
   background-size: cover;
 }
 
+.landing img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .landing .content {
-  position: relative;
-  widows: 100%;
   min-height: 87vh;
   display: flex;
   /* justify-content: space-between; */
   justify-content: center;
+  padding-top: 40px;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 40px;
 }
 
 .landing .text {
@@ -27,9 +36,8 @@
   /* padding: 100px 50px 100px 150px; */
   box-sizing: border-box;
   max-width: 650px;
-  margin-left: -20px;
   float: left;
-  text-align: center;
+  align-items: center;
 }
 
 .landing .text h3 {
@@ -40,6 +48,7 @@
   font-weight: 700;
   font-style: normal;
   line-height: 42px;
+  margin-bottom: 5px;
 }
 
 .landing .text p {
@@ -50,14 +59,12 @@
   font-weight: 400;
   font-style: normal;
   padding-bottom: 12px;
-  margin-top: -10px;
   letter-spacing: 0.04em;
 }
 
 .landing .text a {
-  width: 180px;
+  width: 250px;
   font-size: 0.9em;
-  text-align: left;
   line-height: 1em;
   background: white;
   font-family: montserrat, sans-serif;
@@ -67,34 +74,30 @@
   color: #ffffff;
   background-color: #54a0f1;
   text-decoration: none;
-  padding: 14px 20px 14px 20px;
+  padding: 14px 30px 14px 30px;
   border-radius: 6px;
   text-align: center;
 }
 
+.landing .text a:hover {
+  background-color: #6eaff5;
+}
+
 .landing .content .imageContainer {
-  position: relative;
-  padding-top: 50px;
-  margin-right: 120px;
-  width: 442px;
-  height: 383px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 350px;
 }
 
 .landing .content .imageContainer img {
-  position: absolute;
-  width: 442px;
-  height: 383px;
-  margin-left: -200px;
+  margin-top: 50px;
+  width: 450px;
 }
 
 .landing .moreContent {
-  margin-top: 150px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -109,9 +112,8 @@
   flex-direction: column;
 }
 
-.landing .moreContent .feature1 {
+.landing .moreContent .feature1, .feature2, .feature3 {
   justify-content: flex-end;
-  height: 400px;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -122,28 +124,10 @@
 
 .landing .moreContent .feature2 {
   justify-content: flex-start;
-  height: 400px;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  padding: 20px;
-  padding-left: 50px;
-  margin-bottom: 150px;
+  padding-left: 30px;
 }
 
-.landing .moreContent .feature3 {
-  height: 400px;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 20px;
-  margin-bottom: 150px;
-}
-
-.landing .moreContent .feature1 .description {
+.landing .moreContent .feature1 .description, .feature3 .description {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -158,14 +142,7 @@
   margin-left: 50px;
 }
 
-.landing .moreContent .feature3 .description {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-right: 50px;
-}
-
-.landing .moreContent .feature1 img {
+.landing .moreContent .feature1 img, .feature3 img {
   height: 420px;
   position: relative;
   margin-right: 74px;
@@ -175,29 +152,8 @@
   position: relative;
   margin-left: 24px;
 }
-.landing .moreContent .feature3 img {
-  height: 420px;
-  position: relative;
-  margin-right: 74px;
-}
 
-.landing .moreContent .feature1 p {
-  width: 400px;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0.05em;
-  text-align: left;
-}
-.landing .moreContent .feature2 p {
-  width: 400px;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0.05em;
-  text-align: left;
-}
-.landing .moreContent .feature3 p {
+.landing .moreContent .featureWrapper p {
   width: 400px;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -206,25 +162,7 @@
   text-align: left;
 }
 
-.landing .moreContent .feature1 h2 {
-  line-height: 40px;
-  width: 500px;
-  font-family: montserrat, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  margin: 0;
-  text-align: left;
-}
-.landing .moreContent .feature2 h2 {
-  line-height: 40px;
-  width: 500px;
-  font-family: montserrat, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  margin: 0;
-  text-align: left;
-}
-.landing .moreContent .feature3 h2 {
+.landing .moreContent .featureWrapper h2 {
   line-height: 40px;
   width: 500px;
   font-family: montserrat, sans-serif;
@@ -276,10 +214,8 @@
   }
 
   .landing .content {
-    flex-direction: column-reverse;
+    width: 100%;
     margin-bottom: 30px;
-    justify-content: center;
-    align-items: center;
   }
 
   .landing .content .text {
@@ -293,28 +229,29 @@
 
   .landing .content .text h3 {
     font-size: 24px;
+    width: 90%;
   }
 
   .landing .content .text p {
     font-size: 14px;
     letter-spacing: 0.05em;
+    width: 90%;
   }
 
   .landing .content .imageContainer {
     float: right;
     padding-top: 20px;
-    margin-right: 0px;
-    margin-top: 50px;
-    width: 368px;
-    height: 319px;
-    margin-bottom: 50px;
+    margin: 0px;
+    width: 360px;
+    height: 275px;
+    /* margin-bottom: 50px; */
   }
 
   .landing .content .imageContainer img {
     position: absolute;
-    width: 368px;
+    margin-top: 0px;
+    width: 360px;
     height: 319px;
-    margin-left: -180px;
   }
 
   .landing .moreContent .featureWrapper {
@@ -336,17 +273,18 @@
   .landing .moreContent .featureWrapper .description p {
     text-align: center;
     font-size: 14px;
-    width: 375px;
+    width: 95%;
   }
 
   .landing .moreContent .featureWrapper .description h2 {
     text-align: center;
     font-size: 20px;
-    width: 375px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 98%;
   }
 
-  .landing .moreContent .featureWrapper .feature1 {
-    height: 500px;
+  .landing .moreContent .featureWrapper .feature1, .feature3 {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
@@ -355,17 +293,7 @@
     margin-bottom: 40px;
   }
   .landing .moreContent .featureWrapper .feature2 {
-    height: 500px;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0px;
-    padding: 0px;
-    margin-bottom: 40px;
-  }
-  .landing .moreContent .featureWrapper .feature3 {
-    height: 500px;
-    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
     margin: 0px;
@@ -383,7 +311,7 @@
 
   .landing .moreContent {
     flex-direction: column;
-    height: 2500px;
+    height: 2450px;
     text-align: center;
     margin-top: 0px;
   }
@@ -395,7 +323,7 @@
   }
 
   .landing .moreContent .feature2 img {
-    margin-left: 6px;
+    margin-left: 4px;
   }
 
   .landing .moreContent h2 {
@@ -435,18 +363,12 @@
   }
 
   .landing .content .imageContainer {
-    float: right;
-    margin-right: 70px;
-    margin-top: 36px;
-    margin-bottom: -40px;
-    width: 634.5px;
-    height: 550px;
+    width: 600px;
+    height: 500px;
   }
 
   .landing .content .imageContainer img {
-    width: 634.5px;
-    height: 550px;
-    margin-left: -340px;
+    width: 600px;
   }
 
   .landing .moreContent {
@@ -471,19 +393,8 @@
     width: 550px;
   }
 
-  .landing .moreContent .feature1 {
+  .landing .moreContent .feature1, .feature2, .feature3 {
     margin-bottom: 150px;
-    height: 600px;
-  }
-
-  .landing .moreContent .feature2 {
-    margin-bottom: 150px;
-    height: 600px;
-  }
-
-  .landing .moreContent .feature3 {
-    margin-bottom: 150px;
-    height: 600px;
   }
 
   .landing .moreContent .interestForm {
@@ -496,6 +407,7 @@
 
   .landing .moreContent .interestForm img {
     min-height: 0px;
+    width: 250px;
   }
 
   .landing .moreContent .interestForm .imgContainer {

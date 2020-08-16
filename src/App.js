@@ -11,6 +11,7 @@ import { Landing } from './pages/Landing.js';
 import { ComingSoon } from './pages/ComingSoon.js';
 import Catalog from './pages/catalog.js';
 import { SignUp } from './pages/SignUp.js';
+import { SignIn } from './pages/SignIn.js';
 import Admin from './pages/admin/Admin.js';
 import Modal from './pages/Modal.js';
 import store from './store';
@@ -28,23 +29,22 @@ class App extends Component {
   }
 
   render() {
-    const { location } = this.props;
+    // const { location } = this.props;
 
-    console.log(location);
+    // console.log(location);
     return (
       <Provider store={store}>
         <Router>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/comingsoon" component={ComingSoon} />
-            <Route path="/admin" component={Admin} />
-            <Route path="/signin" component={ComingSoon} />
-            <Route path="/catalog" component={Catalog} />
+            <Route path="/admin" component={ComingSoon} />
+            <Route path="/catalog" component={ComingSoon} />
             <Route exact path="/signup" component={ComingSoon} />
+            <Route exact path="/signin" component={ComingSoon} />
             <Route exact path="/club/:id" component={ComingSoon} />
             <Route>{'404'}</Route>
           </Switch>
-          <Route exact path="/club/:id" component={Modal} />
         </Router>
       </Provider>
     );

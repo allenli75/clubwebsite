@@ -60,7 +60,7 @@
 }
 
 .landing .imgContainer {
-  width: 300px;
+  width: 200px;
   margin-bottom: 10px;
   margin-top: 5px;
 }
@@ -86,6 +86,11 @@
   font-size: 12px;
   width: 200px;
   margin-bottom: 10px;
+}
+
+.landing button:hover {
+  background-color: #6eaff5;
+  cursor: pointer;
 }
 
 .landing :focus {
@@ -143,6 +148,10 @@
   align-items: center;
 }
 
+.landing .inputs .formGroup .messageText a:hover {
+  background-color: #6eaff5;
+}
+
 .landing .inputs .formGroup .complete .imgContainer {
   margin-top: 10px;
 }
@@ -191,7 +200,7 @@
     margin-top: 0px;
   }
   .landing .moreContent .interestForm .formGroup {
-    width: auto;
+    width: 100%;
   }
 
   .landing .inputs .formGroup .userInput {
@@ -199,7 +208,12 @@
     width: 100%;
   }
   .landing .inputs .formGroup p {
-    margin-left: -10px;
+    margin-left: -15px;
+  }
+
+  .landing .inputs .formGroup h2 {
+    width: 100%;
+    margin-right: 35px;
   }
 }
 

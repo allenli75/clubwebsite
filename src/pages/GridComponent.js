@@ -7,13 +7,13 @@ import {
   Typography,
   Grid,
 } from '@material-ui/core';
-
+ 
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 import './GridComponent.css';
-
+ 
 function GridComponent(props) {
-
+ 
   const GridList = props.clubs.map((club, i) => (
     <Grid item xs={12} sm={6} md={4} key={i}>
       <Card className={props.classes.root}>
@@ -70,10 +70,12 @@ function GridComponent(props) {
     </Grid>
   );
 }
-
+ 
 // This function gets a piece of the app state that is stored in redux store
 const mapStateToProps = (state) => ({
   clubs: state.catalog.clubs,
 });
-
+ 
 export default withRouter(connect(mapStateToProps)(GridComponent));
+ 
+
