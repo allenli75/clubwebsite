@@ -84,3 +84,64 @@
   padding-left: 12px;
   border-radius: 5px;
 }
+
+/*EVENTS STYLING BY SATIYA*/
+.add-event-button {
+  width: 160px;
+  align-self: flex-start;
+  margin-left: 2%;
+  cursor: pointer;
+}
+
+.add-event-button:hover {
+  filter: brightness(125%);
+}
+
+#cancelb {
+  color: black;
+  padding: 10px 10px;
+  margin-right: 5px;
+  font-size: 14px;
+  background: #c4c4c4;
+}
+
+#cancelb:hover {
+  background: #e6e6e6;
+  cursor: pointer;
+}
+
+#delb {
+  padding: 10px 10px;
+  font-size: 14px;
+}
+
+#edit-ev-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  margin-left: 5%;
+  justify-content: flex-end;
+}
+
+#edit-ev-cancel {
+  margin-bottom: 20px;
+  margin-right: 10px;
+  float: right;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  color: #ff2d2d;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid #ff2d2d;
+}
+
+#edit-ev-cancel:hover {
+  color: #ff9999;
+  border: 1px solid #ff9999;
+}
+#edit-ev-save {
+  font-size: 14px;
+}
+
+

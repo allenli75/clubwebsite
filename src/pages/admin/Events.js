@@ -78,6 +78,7 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
             </>
           ))}
         </div>
+        <img className="add-event-button" src={require('../assets/linkImages/addEvent.png')} onClick={openAddEvent}/>
       </div>
       <DeleteModal
         type="event"
@@ -85,11 +86,10 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}
       />
-      <button onClick={openAddEvent}>Add Event</button>
 
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <div className="add-resource">
-          <div className="formElement">
+          <div className="formElement ">
             <p>Event Name</p>
             <input
               type="text"
@@ -136,9 +136,12 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
               onChange={(e) => setText(e.target.value)}
             />
           </div>
-          <button type="submit">{activeEvent ? 'Update' : 'Add Event'}</button>
+          <div id="edit-ev-buttons">
+            <button id="edit-ev-cancel" onClick={() => setShowModal(false)}> Cancel </button> 
+            <button id="edit-ev-save" type="submit">{activeEvent ? 'Update' : 'Save'}</button>
+          </div>
         </div>
-      </Modal>
+      </Modal> 
     </div>
   );
 };

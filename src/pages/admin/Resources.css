@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.add-button:hover {
+  filter: brightness(125%);
+}
+
 .res-flex {
   display: flex;
   flex-direction: column;
@@ -130,24 +134,29 @@
   font-size: 14px;
   border: 1px solid #ff2d2d;
 }
+
+#cancel-button:hover {
+  color: #ff9999;
+  border: 1px solid #ff9999;
+}
 #save-button {
   font-size: 14px;
 }
 
 /*DELETE RESOURCE MODAL STYLING*/
-#del-modal {
+.del-modal {
   width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#del-text {
+.del-text {
   width: 75%;
   text-align: center;
 }
 
-#del-buttons-flex {
+.del-buttons-flex {
   display: flex;
   flex-direction: row;
 }
@@ -169,3 +178,4 @@
   padding: 10px 10px;
   font-size: 14px;
 }
+
