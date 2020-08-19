@@ -17,10 +17,12 @@ import mock2 from './assets/mock2.png';
 import mock3 from './assets/mock3.png';
 import bearshehe from './assets/landingbears.svg';
 import LandingForm from './LandingForm.js';
+import Preview from './Preview';
 
 const Landing = () => {
   return (
-    <div className="landing">
+    <Preview/>)
+    {/*<div className="landing">
       <Navbar />
       <div className="content">
         <div className="imageContainer">
@@ -104,8 +106,7 @@ const Landing = () => {
           </div>
       </div>
       <Footer />
-    </div>
-  );
+  </div>*/}
 };
 
 export { Landing };

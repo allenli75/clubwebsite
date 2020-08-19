@@ -1,14 +1,15 @@
 /*BANNER IMAGE*/
 .header-img {
   position: absolute;
-  width: 90%;
-  height: 45%;
-  left: 5%;
-  top: 5%;
+  width: 75vw;
+  height: 28.539vw;
+  left: 12.5vw;
+  top: 1vw;
   background-image: url('./assets/ethicalheader.png');
   background-size: cover;
   background-position: 50% 10%;
   border-radius: 10px;
+  border: 1px solid #c4c4c4;
 }
 
 /*====================================*/
@@ -17,9 +18,10 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 58.5%;
-  left: 5%;
-  top: 52%;
+  width: 43.99vw;
+  left: 12.5vw;
+  top: 30.539vw;
+  margin-bottom: 3vw;
 }
 
 .logo-box {
@@ -54,17 +56,17 @@
 
 .club-title {
   margin-left: 3%;
-  top: 0px;
+  margin-top: 1%;
   font-family: montserrat, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 2.7vw;
+  font-size: 2.1vw;
   letter-spacing: 0.02em;
   color: #000000;
 }
 
 .tags-flex {
-  margin-top: 0.8vw;
+  margin-top: 0.5vw;
   margin-left: 2%;
   display: flex;
   flex-direction: row;
@@ -74,14 +76,14 @@
   margin-left: 0.5vw;
   background-color: #e2e2e2;
   border-radius: 6px;
-  padding: 0.2vw 1vw 0.2vw 1vw;
+  padding: 0.1vw 0.5vw 0.1vw 0.5vw;
   font-family: roboto, sans-serif;
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   flex-direction: row;
 }
 
 .app-flex {
-  margin-top: 0.8vw;
+  margin-top: 0.3vw;
   margin-left: 2%;
   display: flex;
   flex-direction: row;
@@ -122,7 +124,7 @@
   margin-bottom: 3%;
   font-family: roboto, sans-serif;
   font-style: normal;
-  font-size: 1.3vw;
+  font-size: 1.2vw;
   line-height: 150%;
   letter-spacing: 0.02em;
 }
@@ -131,12 +133,11 @@
   margin-top: 1.5%;
   width: 100%;
   left: 0%;
-
-  background: #ffffff;
   border: 1px solid #c4c4c4;
   box-sizing: border-box;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  padding-bottom: 10px;
 }
 
 /*====================================*/
@@ -145,9 +146,9 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 30.5%;
-  top: 52%;
-  left: 64.5%;
+  width: 30.008vw;
+  top: 30.539vw;
+  left: 57.49vw;
 }
 
 .contact-box {
@@ -161,7 +162,7 @@
 
 .resources-box {
   width: 100%;
-  margin-top: 1.5%;
+  margin-top: 2%;
   background: #ffffff;
   border: 1px solid #c4c4c4;
   box-sizing: border-box;
@@ -191,21 +192,17 @@
   margin: 1vw 1vw 1vw 1vw;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .link-image {
   width: 2.5vw;
+  margin-left: 1vw;
   height: auto;
 }
 
-.twt {
-  width: 2.2vw;
-  height: auto;
-}
 
-.fb {
-  width: 3.3vw;
-}
 
 /*====================================*/
 /*GENERAL TAGS*/
@@ -220,34 +217,37 @@
   font-family: monserrat, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 1.4vw;
+  font-size: 1.3vw;
   color: #3d3d3d;
 }
 
 /*====================================*/
 /*ACCORDION TAGS*/
 .accordion-club {
-  /* border: 1px solid rgba(0, 0, 0, 0.1); */
-  width: 100%;
+  width: 90%;
   text-align: left;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
 .accordion__button-club {
   /* background-color: #f4f4f4; */
+  display: inline;
   color: #444;
   cursor: pointer;
   padding-top: 0.5vw;
   padding-left: 1vw;
   left: 3%;
-  padding-bottom: 1vw;
-  width: 95%;
+  padding-bottom: 0vw;
   text-align: left;
   border-radius: 10px;
 }
-
+.accordion__heading {
+  display: inline-block;
+  width: 1%;
+}
 .event-flex-container {
   width: 87%;
+  margin-left: 1.5vw;
   display: inline-flex;
   font-family: roboto, sans-serif;
   font-size: 1.2vw;
@@ -291,7 +291,7 @@
   margin-left: 2vw;
   padding: 1vw 1vw 1vw 1vw;
   margin-top: 0.5vw;
-  margin-bottom: 1vw;
+  margin-bottom: 0vw;
   background-color: #e2e2e2;
   border-radius: 6px;
 }

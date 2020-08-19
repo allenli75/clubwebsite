@@ -2,26 +2,36 @@ import React from 'react';
 import './ClubPage.css';
 import EventAccord from './EventAccord';
 
-const resList = [
-  { name: 'Design Workshop Slides', link: 'https://www.coolmathgames.com/' },
-  { name: 'Infosession Slides', link: 'https://www.poptropica.com/' },
-  { name: 'Infosession Recording', link: 'https://www.target.com/' },
-];
-
-const resComps = resList.map((res) => (
-  <div className="desc-text" id="resources">
-    {res.name}
-    <a target="_blank" rel="noopener noreferrer" href={res.link}>
-      <img
-        className="res-img"
-        src={require('./assets/linkImages/resLink.png')}
-        alt="resource"
-      />
-    </a>
-  </div>
-));
-
 function ClubPage(props) {
+  const contactComps = props.data.socials.map((soc) => (
+    (soc.link !== "") ? 
+      (<a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={soc.link}
+      >
+        <img
+          className="link-image"
+          src={require('./assets/linkImages/' + soc.social + 'Link.png')}
+          alt="web link"
+        />
+      </a>)
+      : null
+  ))
+
+  const resComps = props.data.resources.map((res) => (
+    <div className="desc-text" id="resources">
+      {res.name}
+      <a target="_blank" rel="noopener noreferrer" href={res.link}>
+        <img
+          className="res-img"
+          src={require('./assets/linkImages/resLink.png')}
+          alt="resource"
+        />
+      </a>
+    </div>
+  ));
+
   const tagList = props.data.tags.map((tag) => (
     <div className="tag"> {tag} </div>
   ));
@@ -59,11 +69,11 @@ function ClubPage(props) {
           />
           <div className="club-info-flex">
             <div className="club-title">{props.data.name}</div>
-            <div className="tags-flex">{tagList}</div>
             <div className="app-flex">
               {appReq}
               {clubOpen}
             </div>
+            <div className="tags-flex">{tagList}</div>    
           </div>
         </div>
 
@@ -82,67 +92,15 @@ function ClubPage(props) {
         <div className="contact-box">
           <p>Contact Us</p>
           <div className="link-flex">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.data.socials[0].web}
-            >
-              <img
-                className="link-image"
-                src={require('./assets/linkImages/webLink.png')}
-                alt="web link"
-              />
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.data.socials[0].email}
-            >
-              <img
-                className="link-image"
-                src={require('./assets/linkImages/emailLink.png')}
-                alt="email link"
-              />
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.data.socials[0].ig}
-            >
-              <img
-                className="link-image"
-                src={require('./assets/linkImages/igLink.png')}
-                alt="instagram link"
-              />
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.data.socials[0].fb}
-            >
-              <img
-                className="link-image"
-                src={require('./assets/linkImages/fbLink.png')}
-                alt="facebook link"
-              />
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.data.socials[0].twt}
-            >
-              <img
-                className="link-image"
-                src={require('./assets/linkImages/twtLink.png')}
-                alt="twitter link"
-              />
-            </a>
+            {contactComps}
           </div>
         </div>
 
         <div className="resources-box">
           <p>Resources</p>
-          <div className="resources-flex">{resComps}</div>
+          <div className="resources-flex">
+            {resComps}
+          </div>
         </div>
       </div>
     </div>
