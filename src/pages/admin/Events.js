@@ -89,6 +89,7 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
 
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <div className="add-resource">
+          <div id="test-ev-center">
           <div className="formElement ">
             <p>Event Name</p>
             <input
@@ -97,6 +98,7 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
               value={title}
               placeholder="Enter the title of your event"
               className="userInput modal-input"
+              maxLength="30"
             />
           </div>
           <div className="formElement">
@@ -128,9 +130,10 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
             </div>
           </div>
           <div className="formElement formElementDescription">
-            <p>Description</p>
+            <p id="modal-desc-title">Description</p>
             <textarea
               className="descriptionInput"
+              id="modal-desc"
               value={text}
               placeholder="Enter a short description about what your event is about and what attendees can expect!"
               onChange={(e) => setText(e.target.value)}
@@ -139,6 +142,7 @@ const Events = ({ addEvent, updateEvent, profile: { events } }) => {
           <div id="edit-ev-buttons">
             <button id="edit-ev-cancel" onClick={() => setShowModal(false)}> Cancel </button> 
             <button id="edit-ev-save" type="submit">{activeEvent ? 'Update' : 'Save'}</button>
+          </div>
           </div>
         </div>
       </Modal> 
