@@ -31,11 +31,11 @@ function ClubPage(props) {
       </a>
     </div>
   ));
-
+  
   const tagList = props.data.tags.map((tag) => (
     <div className="tag"> {tag} </div>
   ));
-
+ 
   const appReq = props.data.reqApp ? (
     <div className="tag" id="app-req">
       ✎ Requires App
@@ -45,7 +45,7 @@ function ClubPage(props) {
       😊 No App Required
     </div>
   );
-
+ 
   const clubOpen = props.data.open ? (
     <div className="tag" id="open-tag">
       ✓ Taking New Members
@@ -55,11 +55,11 @@ function ClubPage(props) {
       ✗ Not Taking New Members
     </div>
   );
-
+ 
   return (
     <div>
       <div className="header-img"></div>
-
+ 
       <div className="flex-container-left">
         <div className="logo-box">
           <img
@@ -76,18 +76,18 @@ function ClubPage(props) {
             <div className="tags-flex">{tagList}</div>    
           </div>
         </div>
-
+ 
         <div className="desc-box">
           <p>Description</p>
           <body className="desc-text">{props.data.desc}</body>
         </div>
-
+ 
         <div className="events-box">
           <p>Events</p>
           <EventAccord data={props.data} />
         </div>
       </div>
-
+ 
       <div className="flex-container-right">
         <div className="contact-box">
           <p>Contact Us</p>
@@ -95,7 +95,7 @@ function ClubPage(props) {
             {contactComps}
           </div>
         </div>
-
+ 
         <div className="resources-box">
           <p>Resources</p>
           <div className="resources-flex">
@@ -106,5 +106,6 @@ function ClubPage(props) {
     </div>
   );
 }
-
+ 
 export default ClubPage;
+

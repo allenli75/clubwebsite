@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Dropdown from './AdminDropdown.js';
+import { connect } from 'react-redux';
 import ImageUploader from '../../react-images-upload';
+import { updateProfile } from '../../actions/profile';
 
-const Profile = ({ profile }) => {
+const Profile = ({ profile, updateProfile }) => {
   var tagOptions = [
     { label: 'Advocacy', value: 0 },
     { label: 'Business', value: 1 },
@@ -39,30 +41,36 @@ const Profile = ({ profile }) => {
   ];
 
   const [orgName, setOrgName] = useState(profile.name);
-  const [orgEmail, setOrgEmail] = useState(profile.email);
-  const [descr, setDescr] = useState(profile.description);
+  const [orgEmail, setOrgEmail] = useState(profile.owner);
+  const [descr, setDescr] = useState(profile.about_us);
   const [descrChars, setChars] = useState(1000 - descr.length);
+  const [tags, setTags] = useState(profile.tags.map((tag) => tagOptions[tag]));
+  const [appReq, setAppReq] = useState(true);
+  const [recruiting, setRecruit] = useState(false);
 
   const submit = () => {
-    const profileInfo = {
-      'org-name': orgName,
-      'org-email': orgEmail,
-      'org-description': descr,
+    const newProfile = {
+      ...profile,
+      name: orgName,
+      tags: tags.map((tags) => tags.value),
+      about_us: descr,
+      app_required: appReq,
+      new_members: recruiting,
     };
-    console.log(profileInfo);
+    updateProfile(newProfile);
   };
 
   const descrChange = (e) => {
     setDescr(e.target.value);
-    setChars(1000 - e.target.value.length);
+    setChars(500 - e.target.value.length);
   };
 
   return (
     <div>
       <h3>Profile</h3>
       <div className="admin-text">
-        Add an organization logo and profile banner, and edit your tags,
-        membership status, application requirements, and club's description.
+        Add an organization logo, profile banner, edit your tags, membership
+        status, application requirements, and organization description.
       </div>
       <div className="formGroup">
         <div className="formElement">
@@ -97,6 +105,7 @@ const Profile = ({ profile }) => {
             search={false}
             defaultValue={profile.tags.map((tag) => tagOptions[tag])}
             placeholder="Add up to 3 tags"
+            set={setTags}
           />
         </div>
         <div className="formElement">
@@ -107,6 +116,7 @@ const Profile = ({ profile }) => {
             search={false}
             defaultValue={appOptions[profile.appRequired === true ? 0 : 1]}
             placeholder="Select application requirement"
+            set={setAppReq}
           />
         </div>
         <div className="formElement">
@@ -117,6 +127,7 @@ const Profile = ({ profile }) => {
             search={false}
             defaultValue={recruitOptions[profile.newMembers === true ? 0 : 1]}
             placeholder="Select recruitment status"
+            set={setRecruit}
           />
         </div>
         <div className="formElement">
@@ -147,7 +158,7 @@ const Profile = ({ profile }) => {
         <div className="formElement">
           <p>Banner</p>
           <ImageUploader
-            label="16:9 ratio - e.g. Facebook cover image"
+            label="820 x 312 pixels - e.g. Facebook cover image"
             buttonStyles={{
               background: '#54a0f1',
             }}
@@ -169,13 +180,13 @@ const Profile = ({ profile }) => {
             maxFileSize={5242880}
           />
         </div>
-        <div className="formElementDescription">
+        <div className="formElement">
           <p>Description</p>
           <textarea
             className="descriptionInput"
             placeholder="Enter a short description about your organization."
             type="text"
-            maxLength={1000}
+            maxLength={500}
             value={descr}
             onChange={descrChange}
           />
@@ -189,4 +200,4 @@ const Profile = ({ profile }) => {
   );
 };
 
-export default Profile;
+export default connect(null, { updateProfile })(Profile);

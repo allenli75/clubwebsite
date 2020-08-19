@@ -6,7 +6,7 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
   } from 'react-accessible-accordion';
-
+ 
 function EventAccord(props) {
     const accordList = props.data.events.map((event) =>
     <Accordion className="accordion-club" allowZeroExpanded >

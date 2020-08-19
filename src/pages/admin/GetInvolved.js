@@ -1,31 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { updateProfile } from '../../actions/profile';
 import { connect } from 'react-redux';
 
-const GetInvolved = ({ profile }) => {
-  const [involvedDesc, setInvolvedDesc] = useState(profile.description);
+const GetInvolved = ({ profile, updateProfile }) => {
+  const [involvedDesc, setInvolvedDesc] = useState(profile.get_involved);
+  const [descrChars, setChars] = useState(250 - involvedDesc.length);
+
+  const descrChange = (e) => {
+    setInvolvedDesc(e.target.value);
+    setChars(250 - e.target.value.length);
+  };
 
   const submitValue = (e) => {
-    const formDetails = {
-      'involved-desc': involvedDesc,
-    };
-
-    // axios({
-    //   method: 'POST',
-    //   url: 'https://sc-backend-v0.herokuapp.com/api/future-sign-up',
-    //   data: formDetails,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //   },
-    // })
-    //   .then(function (response) {
-    //     //handle success
-    //   })
-    //   .catch(function (error) {
-    //     //handle error
-    //     alert(error.response.data.reason);
-    //   });
+    updateProfile({ ...profile, get_involved: involvedDesc });
   };
 
   return (
@@ -36,17 +23,21 @@ const GetInvolved = ({ profile }) => {
         organization!
       </div>
       <div className="formGroup">
-        <div className="formElementDescription">
+        <div className="formElement">
           <p>Description</p>
           <textarea
             className="descriptionInput"
-            placeholder="Enter a short description about how to get involved! (500 char. max)"
+            placeholder="Enter a short description about how to get involved!"
             type="text"
-            maxLength={500}
-            value={involvedDesc}
+            maxLength={250}
+            /*value={involvedDesc}
             onChange={(e) => setInvolvedDesc(e.target.value)}
+            */
+            value={involvedDesc}
+            onChange={descrChange}
           />
         </div>
+        <p className="subtitle">{descrChars} characters remaining</p>
       </div>
       <button className="saveButton" onClick={submitValue}>
         Save changes{' '}
@@ -55,4 +46,4 @@ const GetInvolved = ({ profile }) => {
   );
 };
 
-export default GetInvolved;
+export default connect(null, { updateProfile })(GetInvolved);
