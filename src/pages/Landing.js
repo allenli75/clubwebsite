@@ -21,8 +21,7 @@ import Preview from './Preview';
 
 const Landing = () => {
   return (
-    <Preview/>)
-    {/*<div className="landing">
+    <div className="landing">
       <Navbar />
       <div className="content">
         <div className="imageContainer">
@@ -106,7 +105,7 @@ const Landing = () => {
           </div>
       </div>
       <Footer />
-  </div>*/}
-};
+  </div>
+  )};
 
 export { Landing };

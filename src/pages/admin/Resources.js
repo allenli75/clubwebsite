@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../../layout/Modal';
 import ResComp from './ResComp';
 import { connect } from 'react-redux';
@@ -16,9 +16,10 @@ const Resources = ({
   updateResource,
   deleteResource,
 }) => {
-  /*Holds all existing resources and keeps count*/
+  /*Holds all existing resources*/
   const [resources, setResources] = useState(resourceState);
-  const [resCount, setResCount] = useState(0);
+  console.log(resources)
+
 
   /*Determines if add resource shown*/
   const [showModal, setShowModal] = useState(false);
@@ -36,6 +37,8 @@ const Resources = ({
       link: link,
     };
     tempArr[id] = tempObj;
+    //update resource action
+    updateResource(id, {name: name, link: link})
     setResources(tempArr);
   }
 
@@ -55,8 +58,6 @@ const Resources = ({
     };
     if (!validURL(newLink)) return alert('Please enter a valid URL');
     setResources([...resources, emptyRes]);
-    setResCount((prevCount) => prevCount + 1);
-    console.log('resources: ', resCount);
     // call add resource action
     addResource(emptyRes);
     setNewName('');
@@ -72,20 +73,15 @@ const Resources = ({
 
   /*Passed down to resComp to allow it to remove resource from state array, count--*/
   function removeRes(id) {
-    /*Split into left and right to decrement id's of listings to right of delete entry*/
-    const newResLeft = resources.filter((res) => res.id < id);
-    const newResRight = resources.filter((res) => res.id > id);
-    const renumberedRight = newResRight.map(function test(res) {
-      return {
-        id: res.id - 1,
-        name: res.name,
-        link: res.link,
-      };
-    });
-    const newResList = [...newResLeft, ...renumberedRight];
-    setResCount((prevCount) => prevCount - 1);
+    deleteResource(id)
+    const testResList = resources.filter((res) => res.id !== id);
+    const newResList = [...testResList];
     setResources(newResList);
   }
+
+  useEffect(() => {
+    setResources(resourceState)
+  }, [resourceState])
 
   /*Create all resource components based on content saved in array*/
   const resComps = resources.map((res, i) => (
