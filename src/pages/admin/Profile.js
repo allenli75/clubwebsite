@@ -2,34 +2,10 @@ import React, { useState } from 'react';
 import Dropdown from './AdminDropdown.js';
 import { connect } from 'react-redux';
 import ImageUploader from '../../react-images-upload';
-import { updateProfile } from '../../actions/profile';
+import { updateProfile, uploadImages } from '../../actions/profile';
+import { tagOptions } from '../../data/tagOptions';
 
-const Profile = ({ profile, updateProfile }) => {
-  var tagOptions = [
-    { label: 'Advocacy', value: 0 },
-    { label: 'Business', value: 1 },
-    { label: 'CalGreek', value: 2 },
-    { label: 'Community Service', value: 3 },
-    { label: 'Computer Science', value: 4 },
-    { label: 'Consulting', value: 5 },
-    { label: 'Cultural', value: 6 },
-    { label: 'Design', value: 7 },
-    { label: 'Engineering', value: 8 },
-    { label: 'Environmental', value: 9 },
-    { label: 'Health', value: 10 },
-    { label: 'Media', value: 11 },
-    { label: 'Performing Arts', value: 12 },
-    { label: 'Political', value: 13 },
-    { label: 'Pre-professional', value: 14 },
-    { label: 'Religious & Spiritual', value: 15 },
-    { label: 'Research', value: 16 },
-    { label: 'Sciences', value: 17 },
-    { label: 'Social', value: 18 },
-    { label: 'Social Good', value: 19 },
-    { label: 'Sports & Rec.', value: 20 },
-    { label: 'Technology', value: 21 },
-  ];
-
+const Profile = ({ profile, updateProfile, uploadImages, images }) => {
   var appOptions = [
     { value: 1, label: 'Application required' },
     { value: 0, label: 'No application required' },
@@ -40,24 +16,41 @@ const Profile = ({ profile, updateProfile }) => {
     { value: 0, label: 'Not accepting members' },
   ];
 
+  const [tagError, setTagError] = useState('tagErrorNone');
   const [orgName, setOrgName] = useState(profile.name);
   const [orgEmail, setOrgEmail] = useState(profile.owner);
   const [descr, setDescr] = useState(profile.about_us);
-  const [descrChars, setChars] = useState(1000 - descr.length);
+  const [descrChars, setChars] = useState(500 - descr.length);
   const [tags, setTags] = useState(profile.tags.map((tag) => tagOptions[tag]));
-  const [appReq, setAppReq] = useState(true);
-  const [recruiting, setRecruit] = useState(false);
+  const [appReq, setAppReq] = useState(
+    appOptions[profile.app_required === true ? 0 : 1]
+  );
+  const [recruiting, setRecruit] = useState(
+    recruitOptions[profile.new_members === true ? 0 : 1]
+  );
+  const [logoImage, setLogoImage] = useState(null);
+  const [bannerImage, setBannerImage] = useState(null);
 
   const submit = () => {
     const newProfile = {
-      ...profile,
       name: orgName,
       tags: tags.map((tags) => tags.value),
       about_us: descr,
-      app_required: appReq,
-      new_members: recruiting,
+      app_required: !!appReq.value,
+      new_members: !!recruiting.value,
     };
     updateProfile(newProfile);
+    let newImages;
+    if (logoImage && bannerImage) {
+      newImages = { logo: logoImage[0], banner: bannerImage[0] };
+    } else if (logoImage) {
+      newImages = { logo: logoImage[0] };
+    } else if (bannerImage) {
+      newImages = { banner: bannerImage[0] };
+    } else {
+      return;
+    }
+    uploadImages(newImages);
   };
 
   const descrChange = (e) => {
@@ -94,8 +87,14 @@ const Profile = ({ profile, updateProfile }) => {
         </div>
         <p className="subtitle">
           This setting cannot be changed. Please contact{' '}
-          <span style={{ color: '#54a0f1' }}>sproul.club@gmail.com</span> for
-          further assistance.
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:sproul.club@gmail.com"
+          >
+            <span style={{ color: '#54a0f1' }}>sproul.club@gmail.com</span>
+          </a>{' '}
+          for further assistance.
         </p>
         <div className="formElement">
           <p>Tags</p>
@@ -114,7 +113,7 @@ const Profile = ({ profile, updateProfile }) => {
             options={appOptions}
             multi={false}
             search={false}
-            defaultValue={appOptions[profile.appRequired === true ? 0 : 1]}
+            defaultValue={appOptions[profile.app_required === true ? 0 : 1]}
             placeholder="Select application requirement"
             set={setAppReq}
           />
@@ -125,7 +124,7 @@ const Profile = ({ profile, updateProfile }) => {
             options={recruitOptions}
             multi={false}
             search={false}
-            defaultValue={recruitOptions[profile.newMembers === true ? 0 : 1]}
+            defaultValue={recruitOptions[profile.new_members === true ? 0 : 1]}
             placeholder="Select recruitment status"
             set={setRecruit}
           />
@@ -150,7 +149,7 @@ const Profile = ({ profile, updateProfile }) => {
             singleImage={true}
             withPreview={true}
             buttonText="Choose image"
-            onChange={(e) => console.log(e)}
+            onChange={(e) => setLogoImage(e)}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
             maxFileSize={5242880}
           />
@@ -175,7 +174,7 @@ const Profile = ({ profile, updateProfile }) => {
             singleImage={true}
             withPreview={true}
             buttonText="Choose image"
-            onChange={(e) => console.log(e)}
+            onChange={(e) => setBannerImage(e)}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
             maxFileSize={5242880}
           />
@@ -200,4 +199,11 @@ const Profile = ({ profile, updateProfile }) => {
   );
 };
 
-export default connect(null, { updateProfile })(Profile);
+const mapStateToProps = (state) => ({
+  profile: state.profile.profile,
+  images: state.profile.images,
+});
+
+export default connect(mapStateToProps, { updateProfile, uploadImages })(
+  Profile
+);

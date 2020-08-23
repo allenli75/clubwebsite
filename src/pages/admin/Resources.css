@@ -1,11 +1,5 @@
-.gray-back {
-  display: flex;
-  flex-direction: column;
-  background: #f8f8f8;
-  align-items: center;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  width: 90%;
+.resources .formGroup {
+  align-items:center;
 }
 
 .add-button {
@@ -86,7 +80,6 @@
   flex-direction: column;
   background: #f8f8f8;
   margin-bottom: 10px;
-  border-radius: 5px;
   margin-left: 5%;
   width: 85%;
   padding-bottom: 40px;

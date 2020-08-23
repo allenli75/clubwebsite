@@ -4,33 +4,10 @@ import registerImage from './assets/register.png';
 import error from './assets/error.svg';
 import { connect } from 'react-redux';
 import { register } from '../actions/auth';
+import { tagOptions } from '../data/tagOptions';
 
 
-const MultiStepForm = ({ register }) => {
-  var tagOptions = [
-    { label: 'Advocacy', value: 0 },
-    { label: 'Business', value: 1 },
-    { label: 'CalGreek', value: 2 },
-    { label: 'Community Service', value: 3 },
-    { label: 'Computer Science', value: 4 },
-    { label: 'Consulting', value: 5 },
-    { label: 'Cultural', value: 6 },
-    { label: 'Design', value: 7 },
-    { label: 'Engineering', value: 8 },
-    { label: 'Environmental', value: 9 },
-    { label: 'Health', value: 10 },
-    { label: 'Media', value: 11 },
-    { label: 'Performing Arts', value: 12 },
-    { label: 'Political', value: 13 },
-    { label: 'Pre-professional', value: 14 },
-    { label: 'Religious & Spiritual', value: 15 },
-    { label: 'Research', value: 16 },
-    { label: 'Sciences', value: 17 },
-    { label: 'Social', value: 18 },
-    { label: 'Social Good', value: 19 },
-    { label: 'Sports & Rec.', value: 20 },
-    { label: 'Technology', value: 21 },
-  ];
+const MultiStepForm = ({ register }) => {  
 
   var appOptions = [
     { value: true, label: 'Application required' },
@@ -41,8 +18,6 @@ const MultiStepForm = ({ register }) => {
     { value: true, label: 'Accepting members' },
     { value: false, label: 'Not accepting members' },
   ];
-
-  var emails = ["ethicalapparel@gmail.com"];
 
   const [clubName, setClubName] = useState('');
   const [email, setEmail] = useState('');
@@ -58,15 +33,18 @@ const MultiStepForm = ({ register }) => {
   const [emailError, setEmailError] = useState('emailErrorNone');
   const [tagError, setTagError] = useState('tagErrorNone');
 
+  const [noNameError, setNoNameError] = useState('unset');
+
+  const [emptyError1, setEmptyError1] = useState('unset');
+  const [emptyError2, setEmptyError2] = useState('unset');
+  const [emptyError3, setEmptyError3] = useState('unset');
+
   const submitValue = () => {
-    
     const tagsList = [];
     for (var i = 0; i < tags.length; i++) {
       tagsList.push(tags[i].value);
     }
-
     register(clubName, email, pw, tagsList, !!appReq.value, !!recruiting.value);
-
     setStep(currStep + 1);
   };
 
@@ -75,20 +53,42 @@ const MultiStepForm = ({ register }) => {
   };
 
   const _next = () => {
-    if (email != 'b') {
-      setEmailInvalid('emailInputInvalid');
-      setEmailError('emailError');
+    let haveError = false;
+    /* step 1 errors */
+    if (currStep == 1) {
+      // if (email != 'b') {
+      //   setEmailInvalid('emailInputInvalid');
+      //   setEmailError('emailError');
+      //   haveError = true;
+      // }
+      if (pw != con || pw === '') {
+        setConInvalid('conInputInvalid');
+        setConError('conError');
+        haveError = true;
+      }
     }
-
-    if (pw != con || pw === '') {
-      setConInvalid('conInputInvalid');
-      setConError('conError');
+    /* step 2 errors */
+    else if (currStep == 2) {
+      if (tags === null || tags.length == 0) {
+        setEmptyError1('emptyError1');
+        haveError = true;
+      }
+      if (emptyError2 == 'unset') {
+        setEmptyError2('emptyError2');
+        haveError = true;
+      }
+      if (emptyError3 == 'unset') {
+        setEmptyError3('emptyError3');
+        haveError = true;
+      }
     }
-
-    if (pw === con && email ==='b') {
+    /* if no errors, go to next step / submit */
+    if (!haveError) {
       setStep(currStep + 1);
+      if (currStep == 3) {
+        submitValue();
+      }
     }
-
   };
 
   const conChange = (event) => {
@@ -110,6 +110,25 @@ const MultiStepForm = ({ register }) => {
       setEmailError('emailErrorNone');
     }
   };
+
+  const tagsOnChange = (event) => {
+    setTags(event);
+    if (emptyError1 !== 'emptyErrorNone') {
+      setEmptyError1('emptyErrorNone');
+    }
+  }
+  const appReqOnChange = (event) => {
+    setAppReq(event);
+    if (emptyError2 !== 'emptyErrorNone') {
+      setEmptyError2('emptyErrorNone');
+    }
+  }
+  const recruitOnChange = (event) => {
+    setRecruit(event);
+    if (emptyError3 !== 'emptyErrorNone') {
+      setEmptyError3('emptyErrorNone');
+    }
+  }
 
   return (
     <>
@@ -133,11 +152,10 @@ const MultiStepForm = ({ register }) => {
       />
       <StepTwo
         currStep={currStep}
-        submitValue={submitValue}
         setStep={setStep}
-        setAppReq={setAppReq}
-        setTags={setTags}
-        setRecruit={setRecruit}
+        setTags={tagsOnChange}
+        setAppReq={appReqOnChange}
+        setRecruit={recruitOnChange}
         setTagError={setTagError}
         _prev={_prev}
         _next={_next}
@@ -148,6 +166,9 @@ const MultiStepForm = ({ register }) => {
         appOptions={appOptions}
         recruitOptions={recruitOptions}
         tagError={tagError}
+        emptyError1={emptyError1}
+        emptyError2={emptyError2}
+        emptyError3={emptyError3}
       />
       <StepThree currStep={currStep} />
     </>
@@ -159,19 +180,23 @@ const StepOne = (props) => {
     return null;
   }
   let conForm = props.conInvalid;
-  let conError = props.conError;
   let emailForm = props.emailInvalid;
-  let emailError = props.emailError;
   return (
     <div className="formGroup">
-      <div className={conError}>
-        <img alt="error" src={error} className="errorIcon" />
-        <p>passwords do not match</p>
+      
+      <div className={`error ${props.emailError}`}>
+        <img src={error} className="errorIcon" />
+        <p>this field is required</p>
       </div>
-      <div className={emailError}>
+      <div className={`error ${props.emailError}`}>
         <img src={error} className="errorIcon" />
         <p>email is invalid</p>
       </div>
+      <div className={`error ${props.conError}`}>
+        <img alt="error" src={error} className="errorIcon" />
+        <p>passwords do not match</p>
+      </div>
+
       <div className="formHeader">
         <div className="imageContainer">
           <img src={registerImage} alt="register" />
@@ -223,12 +248,28 @@ const StepTwo = (props) => {
   if (props.currStep !== 2) {
     return null;
   }
+  let haveError3 = props.emptyError3=='emptyError3';
+  // console.log("haveError3=" + haveError3);
   return (
     <div className="formGroup">
-      <div className={props.tagError}>
-        <img src={error} className="errorIcon" />
+      <div className={`error ${props.tagError}`}>
+        <img alt="error" src={error} className="errorIcon" />
         <p>reached max tag number</p>
       </div>
+
+      <div className={`error ${props.emptyError1}`}>
+        <img alt="error" src={error} className="errorIcon" />
+        <p>this field is required</p>
+      </div>
+      <div className={`error ${props.emptyError2}`}>
+        <img alt="error" src={error} className="errorIcon" />
+        <p>this field is required</p>
+      </div>
+      <div className={`error ${props.emptyError3}`}>
+        <img alt="error" src={error} className="errorIcon" />
+        <p>this field is required</p>
+      </div>
+
       <div className="formHeader">
         <div className="imageContainer">
           <img src={registerImage} alt="" />
@@ -242,6 +283,7 @@ const StepTwo = (props) => {
           search={false}
           placeholder="Select recruitment status"
           set={props.setRecruit}
+          error={haveError3}
         />
         <Dropdown
           options={props.appOptions}
@@ -249,14 +291,16 @@ const StepTwo = (props) => {
           search={false}
           placeholder="Select application requirement"
           set={props.setAppReq}
+          // error={haveError3}
         />
         <Dropdown
-          options={props.tagOptions}
+          options={tagOptions}
           multi={true}
           search={false}
           placeholder="Add up to 3 tags"
           set={props.setTags}
-          error={props.setTagError}
+          errorPopup={props.setTagError}
+          // error={haveError3}
         />
       </div>
 
@@ -264,7 +308,7 @@ const StepTwo = (props) => {
         <button className="prevButton" onClick={props._prev}>
           ← Back
         </button>
-        <button className="submitButton" onClick={props.submitValue}>
+        <button className="submitButton" onClick={props._next}>
           Sign up
         </button>
       </div>

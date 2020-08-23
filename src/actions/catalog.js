@@ -1,5 +1,4 @@
-import { SEARCH_CLUBS } from './types';
-import { catalogTestApi } from '../utils/testApi';
+import { SEARCH_CLUBS, GET_ORGANIZATION, CLEAR_ORGANIZATION } from './types';
 import axios from 'axios';
 
 // Search Clubs
@@ -17,7 +16,6 @@ export const loadClubs = () => async (dispatch) => {
     const params = JSON.stringify({ limit: 30, skip: 0 });
 
     const res = await axios.post('/api/catalog/organizations', params, config);
-    console.log(res);
 
     dispatch({ type: SEARCH_CLUBS, payload: res.data });
   } catch (err) {
@@ -40,11 +38,28 @@ export const searchClubs = ({
     };
 
     const params = JSON.stringify({ search, tags, app_required, new_members });
-    console.log(params);
-    const res = await axios.post('/api/catalog/search', params, config);
 
+    const res = await axios.post('/api/catalog/search', params, config);
     dispatch({ type: SEARCH_CLUBS, payload: res.data });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getOrganization = (orgId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/catalog/organizations/${orgId}`);
+
+    dispatch({ type: GET_ORGANIZATION, payload: res.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const clearOrganization = () => (dispatch) => {
+  try {
+    dispatch({ type: CLEAR_ORGANIZATION });
+  } catch (err) {
+    console.log(err)
   }
 };

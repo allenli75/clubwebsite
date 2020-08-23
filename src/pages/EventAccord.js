@@ -8,14 +8,15 @@ import {
   } from 'react-accessible-accordion';
  
 function EventAccord(props) {
-    const accordList = props.data.events.map((event) =>
-    <Accordion className="accordion-club" allowZeroExpanded >
+    const accordList = props.data.events.map((event, i) =>
+    <Accordion className="accordion-club" allowZeroExpanded key={i}>
         <AccordionItem key={event.time} className="accordion-group">
             <div className="event-flex-container">
                 <div className="event-flex-left">{event.name}</div>
                 <div className="event-flex-right">{event.time}</div>
             </div>
-            <AccordionItemHeading className="accordion__heading">
+            <AccordionItemHeading className="accordion__heading-club">
+
                     <AccordionItemButton className="accordion__button-club">   
                     </AccordionItemButton>
             </AccordionItemHeading>

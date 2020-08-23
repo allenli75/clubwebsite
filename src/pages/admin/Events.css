@@ -3,51 +3,60 @@
   display: flex;
   justify-content: space-between;
 }
-
-.formGroup .event {
+ 
+.event .formGroup {
+  align-items: center;
+  justify-content: center;
+}
+ 
+.events .formGroup .event {
+  margin: 0px;
   display: flex;
   flex-direction: row;
+  margin-left: 6%;
+  width: 80%;
   padding: 30px;
-  /* margin: 20px; */
   margin-bottom: 20px;
-  height: 150px;
   background: white;
   border-radius: 5px;
   border: 1px solid #ccc;
   box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.5);
 }
-
+ 
 .event-content {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
 }
-
-.event-controls {
-  width: calc(20% - 40px);
-  padding-left: 50px;
-  position: relative;
+ 
+.events .event-content-header img {
+  width: 35px;
+  margin-left: 10px;
 }
-
-.event-controls .fas {
-  margin-left: 20px;
-  font-size: 24px;
-  color: #777;
+ 
+.events .event-content-header img:hover {
   cursor: pointer;
-  float: right;
 }
-
+ 
 .event-content-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   font-size: 20px;
+  width: 100%;
+  margin-bottom: 10px;
 }
-
+ 
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
+}
+ 
 .event-title {
   font-weight: 700;
 }
-
+ 
 .event-content-text {
   height: 100px;
   margin-top: 15px;
@@ -56,15 +65,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+ 
 .formElement .textarea {
   width: 418px;
 }
-
-.events-list {
-  padding: 20px;
-}
-
+ 
 .add-resource {
   padding: 30px 80px;
   padding-left: 0px;
@@ -77,13 +82,13 @@
 #test-ev-center {
   margin-left: -100px;
 }
-
+ 
 .add-resource .input {
   display: flex;
   flex-direction: row;
   margin: 10px;
 }
-
+ 
 .modal-input {
   border: 1px solid #555;
   font-size: 16px;
@@ -92,73 +97,79 @@
   padding-left: 12px;
   border-radius: 5px;
 }
-
-/*EVENTS STYLING BY SATIYA*/
-.add-event-button {
-  width: 160px;
-  align-self: flex-start;
-  margin-left: 2%;
-  cursor: pointer;
+ 
+.events .formElement {
+  margin: 0px;
+  margin-top: 10px;
 }
-
-.add-event-button:hover {
-  filter: brightness(125%);
+ 
+.events .formElement p {
+  width: 20%;
 }
-
-#cancelb {
-  color: black;
-  padding: 10px 10px;
-  margin-right: 5px;
-  font-size: 14px;
-  background: #c4c4c4;
+ 
+.events .formElement .descriptionInput {
+  height: 100px;
+  padding: 16px;
 }
-
-#cancelb:hover {
-  background: #e6e6e6;
-  cursor: pointer;
+ 
+.events .gray-modal {
+  padding: 10px;
+  width: 790px;
 }
-
-#delb {
-  padding: 10px 10px;
-  font-size: 14px;
+ 
+.admin-page .formElement .userInput{
+  width: 400px;
 }
-
-#edit-ev-buttons {
+ 
+.admin-page .formElement .descriptionInput {
+  width: 460px;
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
+ 
+.eventModal {
+  width: 900px;
+}
+ 
+.events button {
+  margin-right: 5%;
+}
+ 
+.modal-input {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  margin-right: 10px;
+}
+ 
+ 
+.event-date {
+  font-size: 15px;
+}
+ 
+#title-date {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: 85%;
-  margin-left: 15%;
-  justify-content: flex-end;
 }
-
-#edit-ev-cancel {
-  margin-bottom: 20px;
-  margin-right: 10px;
-  float: right;
-  background: #ffffff;
-  border-radius: 5px;
-  padding: 10px 25px;
-  color: #ff2d2d;
-  font-weight: 700;
-  font-size: 14px;
-  border: 1px solid #ff2d2d;
+ 
+#title-link {
+  display: flex;
+  flex-direction: row;
 }
-
-#edit-ev-cancel:hover {
-  color: #ff9999;
-  border: 1px solid #ff9999;
+ 
+#title-link img{
+  width: 25px;
 }
-#edit-ev-save {
-  font-size: 14px;
+ 
+#add-button {
+  width: 140px;
+  margin-left: 6%;
 }
-
-#modal-desc-title {
-  position: relative;
-  top: -105px;
+ 
+.event-description{
+  width: 75%;
 }
-#modal-desc {
-  width: 394px;
-}
-
-
-

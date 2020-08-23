@@ -8,17 +8,18 @@ const customStyles = {
     color: '#2b2b2b',
     'border-radius': 4,
   }),
-  control: () => ({
+  control: (provided, state) => ({
     display: 'flex',
     width: 310,
     margin: 7,
     marginBottom: 8,
     fontSize: 12,
-    fontFamily: 'montserrat, sans-serif',
+    fontFamily: 'Roboto, sans-serif',
     fontWeight: 400,
     fontStyle: 'normal',
-    border: 'solid 1px #949494',
     borderRadius: 5,
+    border: 'solid 1px #949494',
+    // border: (state.selectProps.error) ? 'solid 1px #ff2d2d' : 'solid 1px #949494',
   }),
   menu: (provided, state) => ({
     ...provided,
@@ -26,7 +27,7 @@ const customStyles = {
     marginTop: 2,
     width: 310,
     fontSize: '12px',
-    fontFamily: 'montserrat, sans-serif',
+    fontFamily: 'Roboto, sans-serif',
     fontWeight: 300,
     fontStyle: 'normal',
     textAlign: 'left',
@@ -76,9 +77,9 @@ const handleChange = (value, props) => {
     if (value && value.length >= 3) {
       // recolor option text to light grey, to look unclickable :'(
       if (value.length > 3) {
-        value.pop();                // remove 4th tag
-        props.error('tagError');    // make popup visible for ~2s
-        setTimeout(function() {props.error('tagErrorNone');}, 1000);
+        value.pop();                     // remove 4th tag
+        props.errorPopup('tagError');    // make popup visible for ~2s
+        setTimeout(function() {props.errorPopup('tagErrorNone');}, 1000);
       }
     }
   }

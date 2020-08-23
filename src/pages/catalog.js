@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import './catalog.css';
 import GridComponent from './GridComponent';
-import Navbar from '../layout/Navbar';
 import Footer from '../layout/Footer';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchClubs } from '../actions/catalog';
 import Dropdown from './Dropdown.js';
-
-// import ethicalheader from './assets/ethicalheader.png';
-
 import {
   Accordion,
   AccordionItem,
@@ -18,35 +14,10 @@ import {
   AccordionItemPanel,
 } from 'react-accessible-accordion';
 import { Form, TextBox, CheckBox } from 'react-form-elements';
-
 import { makeStyles } from '@material-ui/core/styles';
+import { tagOptions } from '../data/tagOptions';
 
 const Catalog = ({ searchClubs }) => {
-  var tagOptions = [
-    { label: 'Advocacy', value: 0 },
-    { label: 'Business', value: 1 },
-    { label: 'CalGreek', value: 2 },
-    { label: 'Community Service', value: 3 },
-    { label: 'Computer Science', value: 4 },
-    { label: 'Consulting', value: 5 },
-    { label: 'Cultural', value: 6 },
-    { label: 'Design', value: 7 },
-    { label: 'Engineering', value: 8 },
-    { label: 'Environmental', value: 9 },
-    { label: 'Health', value: 10 },
-    { label: 'Media', value: 11 },
-    { label: 'Performing Arts', value: 12 },
-    { label: 'Political', value: 13 },
-    { label: 'Pre-professional', value: 14 },
-    { label: 'Religious & Spiritual', value: 15 },
-    { label: 'Research', value: 16 },
-    { label: 'Sciences', value: 17 },
-    { label: 'Social', value: 18 },
-    { label: 'Social Good', value: 19 },
-    { label: 'Sports & Rec.', value: 20 },
-    { label: 'Technology', value: 21 },
-  ];
-
   const useStyles = makeStyles({
     root: {
       minWidth: 200,
@@ -73,12 +44,12 @@ const Catalog = ({ searchClubs }) => {
     // Calls searchClubs redux action, which hits the backend API
     // then updates the apps state in redux to be the response
     // This data is then read in the GridComponent through mapStateToProps
+    console.log(searchParams);
     searchClubs(searchParams);
   };
 
   return (
     <div className="App">
-      <Navbar />
       <div className="content">
         <div className="sidebar">
           <Accordion
@@ -120,7 +91,7 @@ const Catalog = ({ searchClubs }) => {
             </AccordionItem>
             <AccordionItem className="accordion-group" uuid="b">
               <AccordionItemHeading>
-                <AccordionItemButton>Club Tags</AccordionItemButton>
+                <AccordionItemButton>Club Tags </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
                 <Dropdown
@@ -140,6 +111,7 @@ const Catalog = ({ searchClubs }) => {
               </AccordionItemHeading>
               <AccordionItemPanel>
                 <CheckBox
+                  className="checkbox"
                   label="Requires app"
                   isChecked={appReq}
                   onClick={() => setAppReq(true)}
@@ -147,6 +119,7 @@ const Catalog = ({ searchClubs }) => {
                   value="checkbox value"
                 />
                 <CheckBox
+                  className="checkbox"
                   label="No app required"
                   isChecked={!appReq && appReq !== null}
                   onClick={() => setAppReq(false)}
@@ -161,6 +134,7 @@ const Catalog = ({ searchClubs }) => {
               </AccordionItemHeading>
               <AccordionItemPanel>
                 <CheckBox
+                  className="checkbox"
                   label="Looking for members"
                   isChecked={status}
                   onClick={() => setStatus(true)}
@@ -168,6 +142,7 @@ const Catalog = ({ searchClubs }) => {
                   value="checkbox value"
                 />
                 <CheckBox
+                  className="checkbox"
                   label="Not looking for members"
                   isChecked={!status && appReq !== null}
                   onClick={() => setStatus(false)}
@@ -179,7 +154,7 @@ const Catalog = ({ searchClubs }) => {
           </Accordion>
         </div>
         <div className="cards">
-          <GridComponent classes={classes} />
+          <GridComponent tagOptions={tagOptions} classes={classes} />
         </div>
       </div>
       <Footer />

@@ -11,15 +11,12 @@ import './Resources.css';
 import { validURL, normalizeUrl } from '../../utils/normalizeUrl';
 
 const Resources = ({
-  resources: resourceState,
+  resources,
   addResource,
   updateResource,
   deleteResource,
 }) => {
   /*Holds all existing resources*/
-  const [resources, setResources] = useState(resourceState);
-  console.log(resources)
-
 
   /*Determines if add resource shown*/
   const [showModal, setShowModal] = useState(false);
@@ -38,8 +35,7 @@ const Resources = ({
     };
     tempArr[id] = tempObj;
     //update resource action
-    updateResource(id, {name: name, link: link})
-    setResources(tempArr);
+    updateResource(id, { name: name, link: link });
   }
 
   function changeTitle(event) {
@@ -57,7 +53,6 @@ const Resources = ({
       link: normalizeUrl(newLink),
     };
     if (!validURL(newLink)) return alert('Please enter a valid URL');
-    setResources([...resources, emptyRes]);
     // call add resource action
     addResource(emptyRes);
     setNewName('');
@@ -73,10 +68,7 @@ const Resources = ({
 
   /*Passed down to resComp to allow it to remove resource from state array, count--*/
   function removeRes(id) {
-    deleteResource(id)
-    const testResList = resources.filter((res) => res.id !== id);
-    const newResList = [...testResList];
-    setResources(newResList);
+    deleteResource(id);
   }
 
   useEffect(() => {
@@ -95,12 +87,12 @@ const Resources = ({
   ));
 
   return (
-    <div>
+    <div className="resources">
       <h3>Resources</h3>
       <div className="admin-text">
         Link important resources for prospective or current members!
       </div>
-      <div className="gray-back">
+      <div className="formGroup">
         {resComps}
         <img
           className="add-button"
