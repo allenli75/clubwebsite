@@ -30,14 +30,14 @@ function ClubPage({
       <a key={i} target="_blank" rel="noopener noreferrer" href={key == "contact_email" ? "mailto:"+socLinks[key] : socLinks[key]}>
         <img
           className="link-image"
-          src={require('./assets/linkImages/' + key + 'Link.png')}
+          src={require('./assets/linkImages/' + key + '.png')}
           alt="web link"
         />
       </a>
     ) : null
   );
   const resComps = organization.resources.map((res, i) => (
-    <div className="desc-text">
+    <div className="desc-text" id="resources">
       {res.name}
       <a target="_blank" rel="noopener noreferrer" href={res.link} key={i}>
         <img

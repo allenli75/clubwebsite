@@ -134,12 +134,13 @@
 .desc-text {
   position: relative;
   left: 3%;
-  margin: 0vw 1vw 1.7vw 0.7vw;
+  margin: 0vw 1vw 1.5vw 0.7vw;
   font-family: roboto, sans-serif;
   font-style: normal;
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   line-height: 150%;
   letter-spacing: 0.02em;
+  width: 90%;
 }
 
 /*====================================*/
@@ -189,10 +190,11 @@
 .resources-flex {
   display: flex;
   flex-direction: column;
+  margin-bottom: 0.8vw;
 }
 
 #resources {
-  margin-left: 1.65vw;
+  margin-bottom: 0.4vw;
 }
 
 .res-img {
@@ -203,9 +205,9 @@
 }
 .link-flex {
   position: relative;
-  width: 75%;
+  width: 90%;
   justify-content: space-around;
-  margin: 1vw 1vw 1vw 1vw;
+  margin: 1vw 1vw 1vw 0.5vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -216,6 +218,10 @@
   width: 2.5vw;
   margin-left: 1vw;
   height: auto;
+}
+
+.link-image:hover {
+  filter: invert(67%) sepia(33%) saturate(4603%) hue-rotate(186deg) brightness(96%) contrast(97%);
 }
 /*====================================*/
 /*GENERAL TAGS*/
@@ -268,10 +274,15 @@
   font-family: roboto, sans-serif;
   font-size: 1.2vw;
   justify-content: space-between;
+  align-items: center;
 }
 
 .event-flex-left {
   font-weight: bold;
+}
+
+.event-flex-right {
+  font-size: 13px;
 }
 .accordion__button-club:focus {
   outline: 0;
@@ -394,6 +405,7 @@
   .link-image {
     width: 4.5vw;
     margin-left: 1vw;
+    margin-top: 1vw;
     height: auto;
   }
 
