@@ -116,6 +116,7 @@ export const updateEvent = (eventId, eventInfo) => async (dispatch) => {
     const event = JSON.stringify(eventInfo);
 
     const res = await axios.put(`/api/admin/events/${eventId}`, event, config);
+    console.log(res)
 
     dispatch({ type: UPDATE_EVENT, payload: res.data });
   } catch (err) {
