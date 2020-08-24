@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 1.5%;
 }
 
 /*====================================*/
@@ -115,11 +116,10 @@
   background-color: #ffd6d6;
 }
 
-.desc-box {
+.left-box {
   margin-top: 1.5%;
   width: 100%;
   left: 0%;
-  top: 165px;
 
   background: #ffffff;
   border: 1px solid #c4c4c4;
@@ -128,8 +128,12 @@
   border-radius: 10px;
 }
 
+#desc-shift {
+  margin-left: 2vw;
+}
+
 .desc-text {
-  margin-left: 4%;
+  margin-left: 1.65vw;
   margin-right: 3%;
   margin-bottom: 3%;
   font-family: roboto, sans-serif;
@@ -137,17 +141,6 @@
   font-size: 1.2vw;
   line-height: 150%;
   letter-spacing: 0.02em;
-}
-
-.events-box {
-  margin-top: 1.5%;
-  width: 100%;
-  left: 0%;
-  border: 1px solid #c4c4c4;
-  box-sizing: border-box;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  padding-bottom: 10px;
 }
 
 /*====================================*/
@@ -178,6 +171,20 @@
   box-sizing: border-box;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+}
+
+.right-box {
+  width: 100%;
+  background: #ffffff;
+  margin-top: 2%;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+#right-text {
+  width: 90%;
 }
 
 .resources-flex {
@@ -213,10 +220,11 @@
 }
 /*====================================*/
 /*GENERAL TAGS*/
-.desc-box p,
-.events-box p,
+
 .contact-box p,
-.resources-box p {
+.resources-box p,
+.right-box p,
+.left-box p {
   position: relative;
   margin: 1vw 1vw 1.7vw 0.7vw;
   left: 3%;
@@ -342,16 +350,7 @@
     flex-direction: row;
   }
 
-  .desc-text {
-    margin-left: 4%;
-    margin-right: 3%;
-    margin-bottom: 3%;
-    font-family: roboto, sans-serif;
-    font-style: normal;
-    font-size: 8pt;
-    line-height: 150%;
-    letter-spacing: 0.02em;
-  }
+ 
 
   .desc-box p,
   .events-box p,
@@ -391,9 +390,6 @@
     border-radius: 6px;
   }
 
-  #resources {
-    margin-left: 4%;
-  }
 
   .link-image {
     width: 4.5vw;

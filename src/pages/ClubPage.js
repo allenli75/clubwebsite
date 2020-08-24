@@ -37,7 +37,7 @@ function ClubPage({
     ) : null
   );
   const resComps = organization.resources.map((res, i) => (
-    <div className="desc-text" id="resources">
+    <div className="desc-text">
       {res.name}
       <a target="_blank" rel="noopener noreferrer" href={res.link} key={i}>
         <img
@@ -101,12 +101,12 @@ function ClubPage({
             </div>
           </div>
 
-          <div className="desc-box">
+          <div className="left-box">
             <p>Description</p>
-            <div className="desc-text">{organization.about_us}</div>
+            <div className="desc-text" id="desc-shift">{organization.about_us}</div>
           </div>
 
-          <div className="events-box">
+          <div className="left-box">
             <p>Events</p>
             <EventAccord data={organization} />
           </div>
@@ -122,6 +122,14 @@ function ClubPage({
             <p>Resources</p>
             <div className="resources-flex">{resComps}</div>
           </div>
+
+          <div className="right-box">
+            <p>How to Get Involved</p>
+            <div className="desc-text" id="right-text">
+              {organization.get_involved}
+            </div>
+          </div>
+
         </div>
       </div>
       <Footer />

@@ -71,9 +71,6 @@ const Resources = ({
     deleteResource(id);
   }
 
-  useEffect(() => {
-    setResources(resourceState)
-  }, [resourceState])
 
   /*Create all resource components based on content saved in array*/
   const resComps = resources.map((res, i) => (
