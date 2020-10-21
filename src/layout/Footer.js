@@ -42,6 +42,17 @@ const Footer = () => {
             alt="instagram link"
           />
         </a>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://discord.gg/########"
+        >
+          <img
+            className="footer-link-image"
+            src={require('../pages/assets/linkImages/discordLink.png')}
+            alt="discord link"
+          />
+        </a>
       </div>
     </div>
   );

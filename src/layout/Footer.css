@@ -24,5 +24,6 @@
 
 .footer-link-image {
   width: 25px;
+  padding: 0 2px 0 2px;
   height: auto;
 }
