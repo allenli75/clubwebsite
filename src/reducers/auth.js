@@ -2,15 +2,18 @@ import {
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
   LOAD_PROFILE,
+  LOAD_PROFILE_NOT_LOGGED_IN,
   LOAD_PROFILE_ERROR,
   REFRESH_TOKEN,
   LOGOUT,
   AUTH_ERROR,
 } from '../actions/types';
 
+import { TOKENS } from '../utils/backendClient';
+
 const initialState = {
-  token: localStorage.getItem('token'),
-  refreshToken: localStorage.getItem('token'),
+  token: TOKENS.access.get(),
+  refreshToken: TOKENS.refresh.get(),
   isAuthenticated: false,
   loading: true,
   errors: null,
@@ -26,10 +29,15 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
+    case LOAD_PROFILE_NOT_LOGGED_IN:
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+      };
     case LOAD_PROFILE_ERROR:
       return { ...state, loading: false, isAuthenticated: false };
     case LOGIN_SUCCESS:
-      console.log('state before logging in reducer', state);
       return {
         ...state,
         token: payload.access,
@@ -52,7 +60,7 @@ export default function (state = initialState, action) {
     case AUTH_ERROR:
       return {
         ...state,
-        errors: payload,
+        errors: payload.response,
       };
     default:
       return state;

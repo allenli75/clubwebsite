@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import Dropdown from './AdminDropdown.js';
 import { connect } from 'react-redux';
 import ImageUploader from '../../react-images-upload';
-import { updateProfile, uploadImages } from '../../actions/profile';
-import { tagOptions } from '../../data/tagOptions';
+import { updateProfile, uploadLogo, uploadBanner } from '../../actions/profile';
+import { NotificationManager } from 'react-notifications';
 
-const Profile = ({ profile, updateProfile, uploadImages, images }) => {
+const Profile = ({
+  profile,
+  updateProfile,
+  uploadLogo,
+  uploadBanner,
+  images,
+  tagOptions,
+}) => {
   var appOptions = [
     { value: 1, label: 'Application required' },
     { value: 0, label: 'No application required' },
@@ -16,11 +23,10 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
     { value: 0, label: 'Not accepting members' },
   ];
 
-  const [tagError, setTagError] = useState('tagErrorNone');
   const [orgName, setOrgName] = useState(profile.name);
   const [orgEmail, setOrgEmail] = useState(profile.owner);
   const [descr, setDescr] = useState(profile.about_us);
-  const [descrChars, setChars] = useState(500 - descr.length);
+  const [descrChars, setChars] = useState(750 - descr.length);
   const [tags, setTags] = useState(profile.tags.map((tag) => tagOptions[tag]));
   const [appReq, setAppReq] = useState(
     appOptions[profile.app_required === true ? 0 : 1]
@@ -31,31 +37,96 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
   const [logoImage, setLogoImage] = useState(null);
   const [bannerImage, setBannerImage] = useState(null);
 
-  const submit = () => {
+  async function uploadLogoPic(logoUploads) {
+    if (logoUploads && logoUploads.length > 0) {
+      try {
+        NotificationManager.info('Uploading logo...', '', 1500);
+        await uploadLogo(logoUploads[0]);
+        NotificationManager.success('Logo uploaded successfully!', '', 1500);
+      } catch (err) {
+        if (err.response.status === 503) {
+          NotificationManager.error(
+            'Something went wrong on our end. Please try again later',
+            'Logo image upload unsuccessful',
+            5000
+          );
+        } else {
+          NotificationManager.error(
+            'For best results, please upload a logo that has an aspect ratio of 1:1',
+            'Logo image upload unsuccessful',
+            5000
+          );
+        }
+      }
+    }
+  }
+
+  async function uploadBannerPic(bannerUploads) {
+    if (bannerUploads && bannerUploads.length > 0) {
+      try {
+        NotificationManager.info('Uploading banner...', '', 1500);
+        await uploadBanner(bannerUploads[0]);
+        NotificationManager.success('Banner uploaded successfully!', '', 1500);
+      } catch (err) {
+        if (err.response.status === 503) {
+          NotificationManager.error(
+            'Something went wrong on our end. Please try again later',
+            'Banner image upload unsuccessful',
+            5000
+          );
+        } else {
+          NotificationManager.error(
+            'For best results, please upload a logo that has an aspect ratio of 8:3',
+            'Banner image upload unsuccessful',
+            5000
+          );
+        }
+      }
+    }
+  }
+
+  const submit = async () => {
     const newProfile = {
-      name: orgName,
+      name: orgName.trim(),
+      owner: orgEmail,
       tags: tags.map((tags) => tags.value),
       about_us: descr,
       app_required: !!appReq.value,
       new_members: !!recruiting.value,
     };
-    updateProfile(newProfile);
-    let newImages;
-    if (logoImage && bannerImage) {
-      newImages = { logo: logoImage[0], banner: bannerImage[0] };
-    } else if (logoImage) {
-      newImages = { logo: logoImage[0] };
-    } else if (bannerImage) {
-      newImages = { banner: bannerImage[0] };
-    } else {
-      return;
+
+    try {
+      await updateProfile(newProfile);
+      NotificationManager.success('Profile changes saved successfully!', '', 1500);
+    } catch (err) {
+      NotificationManager.error('Profile changes unsuccessful!', '', 1500);
     }
-    uploadImages(newImages);
+
+    await Promise.all([
+      uploadLogoPic(logoImage),
+      uploadBannerPic(bannerImage)
+    ]);
   };
 
   const descrChange = (e) => {
     setDescr(e.target.value);
-    setChars(500 - e.target.value.length);
+    setChars(750 - e.target.value.length);
+  };
+
+  const reqFieldsCheck = () => {
+    if (tags === null) {
+      NotificationManager.error(
+        'Please have at least one tag',
+        'Changes not saved',
+        1500
+      );
+    } else {
+      NotificationManager.error(
+        'Please enter an organization name',
+        'Changes not saved',
+        1500
+      );
+    }
   };
 
   return (
@@ -73,6 +144,7 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
             type="text"
             value={orgName}
             onChange={(e) => setOrgName(e.target.value)}
+            maxLength={100}
           />
         </div>
         <div className="formElement">
@@ -86,7 +158,8 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
           />
         </div>
         <p className="subtitle">
-          This setting cannot be changed. Please contact{' '}
+          <span style={{ color: '#FF0000' }}>*</span> This setting cannot be
+          changed. Please contact{' '}
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -101,7 +174,7 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
           <Dropdown
             options={tagOptions}
             multi={true}
-            search={false}
+            search={true}
             defaultValue={profile.tags.map((tag) => tagOptions[tag])}
             placeholder="Add up to 3 tags"
             set={setTags}
@@ -151,13 +224,25 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
             buttonText="Choose image"
             onChange={(e) => setLogoImage(e)}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
-            maxFileSize={5242880}
+            maxFileSize={16777216}
           />
         </div>
+        <p className="subtitle">
+          <span style={{ color: '#FF0000' }}>*</span> Please make sure your logo
+          is at least 360 x 360 pixels.{' '}
+          <a
+            href="https://www.photoresizer.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span style={{ color: '#54a0f1' }}>Click here</span>
+          </a>{' '}
+          for a resource that helps you resize your images.
+        </p>
         <div className="formElement">
           <p>Banner</p>
           <ImageUploader
-            label="820 x 312 pixels - e.g. Facebook cover image"
+            label="8:3 ratio - e.g. Facebook cover image"
             buttonStyles={{
               background: '#54a0f1',
             }}
@@ -176,23 +261,42 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
             buttonText="Choose image"
             onChange={(e) => setBannerImage(e)}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
-            maxFileSize={5242880}
+            maxFileSize={16777216}
           />
         </div>
+        <p className="subtitle">
+          <span style={{ color: '#FF0000' }}>*</span> Please make sure your
+          banner is at least 1640 x 624 pixels.{' '}
+          <a
+            href="https://www.photoresizer.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span style={{ color: '#54a0f1' }}>Click here</span>
+          </a>{' '}
+          for a resource that helps you resize your images.
+        </p>
         <div className="formElement">
           <p>Description</p>
           <textarea
             className="descriptionInput"
             placeholder="Enter a short description about your organization."
             type="text"
-            maxLength={500}
+            maxLength={750}
             value={descr}
             onChange={descrChange}
           />
         </div>
         <p className="subtitle">{descrChars} characters remaining</p>
       </div>
-      <button className="saveButton" onClick={submit}>
+      <button
+        className="saveButton"
+        onClick={
+          tags === null || orgName.match(/^ *$/) !== null
+            ? reqFieldsCheck
+            : submit
+        }
+      >
         Save changes
       </button>
     </div>
@@ -202,8 +306,11 @@ const Profile = ({ profile, updateProfile, uploadImages, images }) => {
 const mapStateToProps = (state) => ({
   profile: state.profile.profile,
   images: state.profile.images,
+  tagOptions: state.profile.tagOptions,
 });
 
-export default connect(mapStateToProps, { updateProfile, uploadImages })(
-  Profile
-);
+export default connect(mapStateToProps, {
+  updateProfile,
+  uploadLogo,
+  uploadBanner,
+})(Profile);

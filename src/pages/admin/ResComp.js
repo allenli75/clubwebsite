@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../../layout/Modal';
-import { normalizeUrl } from '../../utils/normalizeUrl';
+import { normalizeUrl, validURL } from '../../utils/normalizeUrl';
+import { NotificationManager } from 'react-notifications';
 
 const ResComp = (props) => {
   /*Tracks input values for edit modal*/
@@ -17,6 +18,14 @@ const ResComp = (props) => {
 
   /*Updates main resource array with entries in the edit modal*/
   function singleSave() {
+    if (link.length > 0 && !validURL(link)) {
+      NotificationManager.error('Please enter a valid URL', '', 1500);
+      return;
+    }
+    if (name.length === 0) {
+      NotificationManager.error('Please enter a resource name', '', 1500);
+      return;
+    }
     setShowEditModal(false);
     props.entryChange(props.data.id, name, normalizeUrl(link));
     setPropsName(name);
@@ -32,16 +41,6 @@ const ResComp = (props) => {
     setShowEditModal(false);
     setName(propsName);
     setLink(propsLink);
-  }
-
-  /*onChange for name input in edit modal*/
-  function changeName(event) {
-    setName(event.target.value);
-  }
-
-  /*onChange for link input in edit modal*/
-  function changeLink(event) {
-    setLink(event.target.value);
   }
 
   /*Update states to reflect current value in array*/
@@ -63,7 +62,6 @@ const ResComp = (props) => {
       <div className="title-buttons-flex">
         <div className="res-num">Resource #{props.num + 1}</div>
         <div className="del-edit-flex">
-          
           <img
             alt="edit"
             onClick={() => setShowEditModal(true)}
@@ -88,7 +86,11 @@ const ResComp = (props) => {
       </div>
 
       {/*EDIT RESOURCE MODAL*/}
-      <Modal showModal={showEditModal} setShowModal={setShowEditModal}>
+      <Modal
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+        close={cancelEdit}
+      >
         <div className="res-modal">
           <h3 id="res-bold">Edit Resource</h3>
           <p id="res-desc">Update the information for this resource!</p>
@@ -100,7 +102,7 @@ const ResComp = (props) => {
                 placeholder="Type resource name"
                 className="resourcesInput"
                 type="text"
-                onChange={changeName}
+                onChange={(e) => setName(e.target.value)}
               ></input>
               <div className="input-title">URL Link</div>
               <input
@@ -108,7 +110,7 @@ const ResComp = (props) => {
                 placeholder="+ Add a link (google drive, google form, youtube, etc)"
                 className="resourcesInput"
                 type="text"
-                onChange={changeLink}
+                onChange={(e) => setLink(e.target.value)}
               ></input>
             </div>
           </div>
@@ -126,7 +128,11 @@ const ResComp = (props) => {
       </Modal>
 
       {/*DELETE RESOURCE MODAL*/}
-      <Modal showModal={showDelModal} setShowModal={setShowDelModal}>
+      <Modal
+        showModal={showDelModal}
+        setShowModal={setShowDelModal}
+        close={() => setShowDelModal(false)}
+      >
         <div className="del-modal">
           <p className="del-text">Are you sure you want to delete this?</p>
           <div className="del-buttons-flex">

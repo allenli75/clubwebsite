@@ -26,6 +26,7 @@
   padding-top: 40px;
   align-items: center;
   flex-direction: column;
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 
@@ -44,7 +45,7 @@
   color: #2b2b2b;
   font-size: 2em;
   line-height: 1.2em;
-  font-family: montserrat, sans-serif;
+  font-family: Qanelas Soft Extra Bold;
   font-weight: 700;
   font-style: normal;
   line-height: 42px;
@@ -55,7 +56,7 @@
   color: #2b2b2b;
   font-size: 1.1em;
   line-height: 1.4em;
-  font-family: roboto, sans-serif;
+  font-family: Qanelas Soft;
   font-weight: 400;
   font-style: normal;
   padding-bottom: 12px;
@@ -64,10 +65,10 @@
 
 .landing .text a {
   width: 250px;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1em;
   background: white;
-  font-family: montserrat, sans-serif;
+  font-family: Qanelas Soft Semi Bold;
   font-weight: 700;
   font-style: normal;
   display: inline-block;
@@ -101,7 +102,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 2700px;
+  /* height: 2700px; */
   align-items: center;
   justify-content: flex-start;
 }
@@ -112,7 +113,9 @@
   flex-direction: column;
 }
 
-.landing .moreContent .feature1, .feature2, .feature3 {
+.landing .moreContent .feature1,
+.feature2,
+.feature3 {
   justify-content: flex-end;
   display: flex;
   flex-direction: row;
@@ -127,7 +130,8 @@
   padding-left: 30px;
 }
 
-.landing .moreContent .feature1 .description, .feature3 .description {
+.landing .moreContent .feature1 .description,
+.feature3 .description {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -142,7 +146,8 @@
   margin-left: 50px;
 }
 
-.landing .moreContent .feature1 img, .feature3 img {
+.landing .moreContent .feature1 img,
+.feature3 img {
   width: 542px;
   position: relative;
   margin-right: 74px;
@@ -154,18 +159,21 @@
 }
 
 .landing .moreContent .featureWrapper p {
+  font-size: 1.1em;
   width: 400px;
-  font-family: roboto, sans-serif;
+  font-family: Qanelas Soft;
   font-weight: 400;
   font-style: normal;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-align: left;
+  line-height: 1.6;
 }
 
 .landing .moreContent .featureWrapper h2 {
+  font-size: 1.6em;
   line-height: 40px;
   width: 500px;
-  font-family: montserrat, sans-serif;
+  font-family: Qanelas Soft Bold;
   font-weight: 700;
   font-style: normal;
   margin: 0;
@@ -209,7 +217,9 @@
 }
 
 @media screen and (max-width: 1235px) and (min-width: 980px) {
-  .landing .moreContent .feature1 img, .feature2 img, .feature3 img {
+  .landing .moreContent .feature1 img,
+  .feature2 img,
+  .feature3 img {
     width: 42vw !important;
     max-width: 542px;
   }
@@ -236,6 +246,7 @@
 
   .landing .content {
     width: 100%;
+    margin-top: 10px;
     margin-bottom: 30px;
   }
 
@@ -305,7 +316,8 @@
     width: 98%;
   }
 
-  .landing .moreContent .featureWrapper .feature1, .feature3 {
+  .landing .moreContent .featureWrapper .feature1,
+  .feature3 {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
@@ -332,7 +344,7 @@
 
   .landing .moreContent {
     flex-direction: column;
-    height: 2450px;
+    /* height: 2450px; */
     text-align: center;
     margin-top: 0px;
   }
@@ -395,12 +407,9 @@
     width: 600px;
   }
 
-  .landing .moreContent {
-    height: 3400px;
-  }
-
   .landing .moreContent img {
-    min-height: 600px;
+    min-height: 50s0px;
+    min-width: 750px;
   }
 
   .landing .moreContent .description {
@@ -417,7 +426,9 @@
     width: 550px;
   }
 
-  .landing .moreContent .feature1, .feature2, .feature3 {
+  .landing .moreContent .feature1,
+  .feature2,
+  .feature3 {
     margin-bottom: 150px;
   }
 

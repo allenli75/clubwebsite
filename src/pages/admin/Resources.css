@@ -1,5 +1,5 @@
 .resources .formGroup {
-  align-items:center;
+  align-items: center;
 }
 
 .add-button {
@@ -21,10 +21,10 @@
   background: #ffffff;
   border: 1px solid #c4c4c4;
   box-sizing: border-box;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   margin-top: 3%;
   width: 90%;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .title-buttons-flex {
@@ -33,6 +33,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 90%;
 }
 
@@ -105,7 +106,7 @@
   padding-left: 12px;
   border: solid 1px;
   border-radius: 5px;
-} 
+}
 
 #buttons-flex {
   display: flex;
@@ -175,3 +176,45 @@
   font-size: 14px;
 }
 
+@media screen and (max-width: 850px) {
+  .resources .formGroup {
+    padding: 0px;
+  }
+  .resources .formGroup .res-flex {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .add-button {
+    margin: 20px;
+    margin-left: 100px;
+  }
+  .res-modal {
+    width: calc(100vw - 40px);
+  }
+  .gray-modal {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    margin-bottom: 10px;
+    margin-left: 0;
+    width: 100%;
+    padding-bottom: 40px;
+    padding-top: 10px;
+  }
+  #res-desc {
+    margin: 0;
+  }
+  #res-bold {
+    margin: 0;
+  }
+
+  .resourcesInput {
+    width: 320px;
+  }
+  .input-holder {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0;
+  }
+}

@@ -1,24 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Landing.css';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Footer from '../layout/Footer';
 import 'animate.css/animate.min.css';
-// import sproul from './assets/sproul.svg';
-// import ball1 from './assets/ball1.svg';
-// import ball2 from './assets/ball2.svg';
-// import ball3 from './assets/ball3.svg';
-// import ball4 from './assets/ball4.svg';
-// import screen1 from './assets/screen1.svg';
-// import screen2 from './assets/screen2.svg';
-// import screen3 from './assets/screen3.svg';
 import mock1 from './assets/mock1.png';
 import mock2 from './assets/mock2.png';
 import mock3 from './assets/mock3.png';
 import bearshehe from './assets/landingbears.svg';
-import LandingForm from './LandingForm.js';
-import Preview from './Preview';
+import ReactGA from 'react-ga';
 
 const Landing = () => {
+  ReactGA.initialize('UA-176775736-1');
+  ReactGA.pageview('/landing');
   return (
     <div className="landing">
       <div className="content">
@@ -31,7 +25,8 @@ const Landing = () => {
             sproul.club helps you discover student clubs, organizations, and
             communities on campus - built by students, for students!
           </p>
-          <a href="#interestform">Sign up for early access</a>
+          {/* <Link to="/signup">Register Your Club</Link> */}
+          <Link to="/catalog">Explore Student Orgs</Link>
         </div>
       </div>
       <div className="moreContent">
@@ -93,12 +88,6 @@ const Landing = () => {
             >
               <img src={mock3} className="screenshot" alt="mock3" />
             </ScrollAnimation>
-          </div>
-        </div>
-        <div className="interestForm" id="interestform">
-          <h2>Now accepting student clubs and organizations!</h2>
-          <div className="form">
-            <LandingForm />
           </div>
         </div>
       </div>

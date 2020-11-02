@@ -9,6 +9,7 @@ import {
   ADD_RESOURCE,
   UPDATE_RESOURCE,
   DELETE_RESOURCE,
+  GET_TAGS,
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
   },
   social_media_links: {},
   get_involved: '',
+  tagOptions: [],
 };
 
 export default function (state = initialState, action) {
@@ -42,21 +44,24 @@ export default function (state = initialState, action) {
         ...state,
         profile: payload,
         owner: payload.owner,
-        id: payload.id,
+        link_name: payload.link_name,
         resources: payload.resources,
         events: payload.events,
         images: { logo_url, banner_url },
         social_media_links: payload.social_media_links,
-        get_involved: payload.get_involved
+        get_involved: payload.get_involved,
       };
     case UPDATE_PROFILE:
       const updateSocial = payload.social_media_links
         ? payload.social_media_links
         : state.social_media_links;
-      console.log('payload: ', payload);
+      const updateGetInvolved = payload.get_involved
+        ? payload.get_involved
+        : state.get_involved;
       return {
         ...state,
         profile: payload,
+        get_involved: updateGetInvolved,
         social_media_links: updateSocial,
       };
     case UPLOAD_IMAGES:
@@ -72,6 +77,8 @@ export default function (state = initialState, action) {
     case UPDATE_RESOURCE:
     case DELETE_RESOURCE:
       return { ...state, resources: payload };
+    case GET_TAGS:
+      return { ...state, tagOptions: payload };
     default:
       return state;
   }

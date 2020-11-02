@@ -9,6 +9,7 @@ import {
 } from '../../actions/profile';
 import './Resources.css';
 import { validURL, normalizeUrl } from '../../utils/normalizeUrl';
+import { NotificationManager } from 'react-notifications';
 
 const Resources = ({
   resources,
@@ -16,8 +17,6 @@ const Resources = ({
   updateResource,
   deleteResource,
 }) => {
-  /*Holds all existing resources*/
-
   /*Determines if add resource shown*/
   const [showModal, setShowModal] = useState(false);
 
@@ -27,23 +26,8 @@ const Resources = ({
 
   /*Passed down to resComp to allow editing of resources array above*/
   function entryChange(id, name, link) {
-    let tempArr = [...resources];
-    const tempObj = {
-      id: id,
-      name: name,
-      link: link,
-    };
-    tempArr[id] = tempObj;
     //update resource action
-    updateResource(id, { name: name, link: link });
-  }
-
-  function changeTitle(event) {
-    setNewName(event.target.value);
-  }
-
-  function changeLink(event) {
-    setNewLink(event.target.value);
+    updateResource(id, { name, link });
   }
 
   /*Adds resource to array, count++, resets title and link state values */
@@ -52,7 +36,14 @@ const Resources = ({
       name: newName,
       link: normalizeUrl(newLink),
     };
-    if (!validURL(newLink)) return alert('Please enter a valid URL');
+    if (newLink.length > 0 && !validURL(newLink)) {
+      NotificationManager.error('Please enter a valid URL', '', 1500);
+      return;
+    }
+    if (newName.length === 0) {
+      NotificationManager.error('Please enter a resource name', '', 1500);
+      return;
+    }
     // call add resource action
     addResource(emptyRes);
     setNewName('');
@@ -100,7 +91,11 @@ const Resources = ({
       </div>
 
       {/*ADD RESOURCE MODAL*/}
-      <Modal showModal={showModal} setShowModal={setShowModal}>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        close={cancelAdd}
+      >
         <div className="res-modal">
           <h3 id="res-bold">Add New Resource</h3>
           <p id="res-desc">
@@ -114,7 +109,8 @@ const Resources = ({
                 placeholder="Type resource name"
                 className="resourcesInput"
                 type="text"
-                onChange={changeTitle}
+                onChange={(e) => setNewName(e.target.value)}
+                maxLength={100}
               ></input>
               <div className="input-title">URL Link</div>
               <input
@@ -122,7 +118,7 @@ const Resources = ({
                 placeholder="+ Add a link (google drive, google form, youtube, etc)"
                 className="resourcesInput"
                 type="text"
-                onChange={changeLink}
+                onChange={(e) => setNewLink(e.target.value)}
               ></input>
             </div>
           </div>

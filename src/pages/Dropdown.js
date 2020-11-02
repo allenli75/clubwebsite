@@ -27,7 +27,7 @@ const customStyles = {
     marginTop: 2,
     width: 310,
     fontSize: '12px',
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Qanelas Soft',
     fontWeight: 300,
     fontStyle: 'normal',
     textAlign: 'left',
@@ -38,6 +38,9 @@ const customStyles = {
     background: '#D1D3D4',
     color: '#2b2b2b',
     borderRadius: 10,
+    "&:hover": {
+      color: 'hsl(0,0%,40%)',
+    }
   }),
   singleValue: (provided, state) => ({
     ...provided,
@@ -46,6 +49,9 @@ const customStyles = {
   multiValueLabel: (provided, state) => ({
     ...provided,
     'margin-left': "4px",
+    'padding': '2px',
+    'padding-left': '5px',
+    fontSize: '12px',
   }),
   indicatorSeparator: (provided, state) => ({
     ...provided,
@@ -77,9 +83,9 @@ const handleChange = (value, props) => {
     if (value && value.length >= 3) {
       // recolor option text to light grey, to look unclickable :'(
       if (value.length > 3) {
-        value.pop();                     // remove 4th tag
-        props.errorPopup('tagError');    // make popup visible for ~2s
-        setTimeout(function() {props.errorPopup('tagErrorNone');}, 1000);
+        value.pop();                        // remove 4th tag
+        props.errorPopup('tagOverflow');    // make popup visible for ~2s
+        setTimeout(function() {props.errorPopup('tagOverflowNone');}, 1000);
       }
     }
   }
@@ -103,6 +109,7 @@ const Dropdown = (props) => (
     isMulti={props.multi}
     options={props.options}
     placeholder={props.placeholder}
+    defaultValue={props.defaultValue}
     onChange={(e) => handleChange(e, props)}
     closeMenuOnSelect={!props.multi}
     maxMenuHeight={200}

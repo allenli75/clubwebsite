@@ -1,107 +1,151 @@
 import React, { useState } from 'react';
 import './ResetPassword.css';
-import image from './assets/register.png';
+import image from './assets/resetpwd2.png';
 import error from './assets/error.svg';
+import { resetPassword } from '../actions/auth';
+import { NotificationManager } from 'react-notifications';
 
 const ResetPassword2Form = () => {
-    const [currStep, setStep] = useState(1);
-    const [pw, setPassword] = useState('');
-    const [con, setConfirm] = useState('');
-    const [conInvalid, setConInvalid] = useState('userInput');
-    const [conError, setConError] = useState('conErrorNone');
+  const [currStep, setStep] = useState(1);
+  const [pwd, setPassword] = useState('');
+  const [con, setConfirm] = useState('');
+  const [emptyPwd, setEmptyPwd] = useState('noError');
+  const [conError, setConError] = useState('noError');
 
-    const submitPassword = () => {
-        const fromdetails = {
-            "password": pw,
-            "confirm_password": con,
-        };
-        
-        if (pw != con || pw === '') {
-            setConInvalid('conInputInvalid');
-            setConError('conError');
-        } else {
-            setStep(currStep + 1);
-        }
-    };
+  const submitPassword = async (event) => {
+    event.preventDefault();
+    if (pwd === '' && con === '') {
+      setEmptyPwd('emptyPwd');
+    } else if (pwd !== con) {
+      setConError('conError');
+    } else {
+      const token = new URLSearchParams(window.location.search).get('token');
 
-    const conChange = (event) => {
-        setConfirm(event);
-        if (conInvalid === 'conInputInvalid') {
-          setConInvalid('userInput');
-        }
-        if (conError === 'conError') {
-          setConError('conErrorNone');
-        }
-      };
-    
+      try {
+        await resetPassword(pwd, token);
+        setStep(currStep + 1);
+      } catch (err) {
+        let errMessage;
+        if (err.response && err.response.data && err.response.data.reason)
+          errMessage = err.response.data.reason;
+        else
+          errMessage = 'Something went wrong on our end. Please contact us.';
 
-    return (
+        NotificationManager.error(errMessage, 'Unable to reset password', 5000);
+      }
+    }
+  };
+
+  const pwdOnChange = (event) => {
+    setPassword(event);
+    if (emptyPwd === 'emptyPwd') {
+      setEmptyPwd('noError');
+    }
+    if (conError === 'conError') {
+      setConError('noError');
+    }
+  };
+  const conOnChange = (event) => {
+    setConfirm(event);
+    if (emptyPwd === 'emptyPwd') {
+      setEmptyPwd('noError');
+    }
+    if (conError === 'conError') {
+      setConError('noError');
+    }
+  };
+
+  return (
     <>
-        <StepOne
+      <StepOne
         currStep={currStep}
-        conInvalid={conInvalid}
+        emptyPwd={emptyPwd}
         conError={conError}
-        setPassword={setPassword}
-        setConfirm={conChange}
+        setPassword={pwdOnChange}
+        setConfirm={conOnChange}
         submitPassword={submitPassword}
-        />
-        <StepTwo currStep={currStep} />
+      />
+      <StepTwo currStep={currStep} />
     </>
-    );
-}
+  );
+};
 
 const StepOne = (props) => {
-    if (props.currStep !== 1) {
-        return null;
-    }
-    return (
-    <>
-        <div className={props.conError}>
-            <img alt="error" src={error} className="errorIcon" />
-            <p>passwords do not match</p>
+  if (props.currStep !== 1) {
+    return null;
+  }
+  return (
+    <form>
+      <div className="errorWrapper">
+        <div className={`error ${props.emptyPwd}`}>
+          <img alt="error" src={error} className="errorIcon" />
+          <p>This field is required.</p>
         </div>
-        <div className="imgContainer two">
-            <img src={image} alt="forgot password" />
+        <div className={`error ${props.conError}`}>
+          <img alt="error" src={error} className="errorIcon" />
+          <p>Passwords do not match.</p>
         </div>
-        <div className="close text">
-            <h2>Reset your password</h2>
-            <p>Use 8 or more characters with a mix of letters, numbers and symbols!</p>
-        </div>
-        <input
-            className="userInput"
-            type="password"
-            placeholder="new password"
-            onChange={(e) => props.setPassword(e.target.value)}
-        />
-        <input
-            className={props.conInvalid}
-            type="password"
-            placeholder="re-type new password"
-            onChange={(e) => props.setConfirm(e.target.value)}
-        />
-        <button onClick={props.submitPassword} className="button submitPassword">
-          Submit
-        </button>
-    </>
-    )
-}
+      </div>
+      <div className="imgContainer two">
+        <img src={image} alt="forgot password" />
+      </div>
+      <div className="close text">
+        <h2>Reset your password</h2>
+        <p>
+          Use 8 or more characters with a mix of letters, numbers and symbols!
+        </p>
+      </div>
+      <input
+        className={`${
+          props.emptyPwd === 'emptyPwd' || props.conError === 'conError'
+            ? 'inputInvalid'
+            : 'userInput'
+        }`}
+        type="password"
+        placeholder="new password"
+        onChange={(e) => props.setPassword(e.target.value)}
+        required
+      />
+      <input
+        className={`${
+          props.emptyPwd === 'emptyPwd' || props.conError === 'conError'
+            ? 'inputInvalid'
+            : 'userInput'
+        }`}
+        type="password"
+        placeholder="re-type new password"
+        onChange={(e) => props.setConfirm(e.target.value)}
+        required
+      />
+      <button
+        type="submit"
+        onClick={(e) => props.submitPassword(e)}
+        className="button submitPassword"
+      >
+        Submit
+      </button>
+    </form>
+  );
+};
 
 const StepTwo = (props) => {
-    if (props.currStep !== 2) {
-        return null;
-    }
-    return (
+  if (props.currStep !== 2) {
+    return null;
+  }
+  return (
     <>
-        <div className="imgContainer one">
-            <img src={image} alt="forgot password" />
-        </div>
-        <div className="text">
-            <h2>Reset your password</h2>
-            <p>Your password has been successfully reset!</p>
-        </div>
-        <a href="/signin" class="button redirect">Continue to Sign-in</a>
+      <div className="imgContainer one">
+        <img src={image} alt="forgot password" />
+      </div>
+      <div className="text">
+        <h2>Reset your password</h2>
+        <p>Your password has been successfully reset!</p>
+      </div>
+      <a href="/signin" class="button redirect">
+        Continue to Sign-in
+      </a>
     </>
-    )
-}
+  );
+};
 
 export default ResetPassword2Form;

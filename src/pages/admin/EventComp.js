@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../../layout/Modal';
-import { normalizeUrl } from '../../utils/normalizeUrl';
+import { normalizeUrl, validURL } from '../../utils/normalizeUrl';
+import { NotificationManager } from 'react-notifications';
 
-const EventComp = (props) => {
+import Moment from 'react-moment';
+import { simplestRangeFormat, START_DATETIME, END_DATETIME } from '../../utils/formatTimeAndDate';
+
+const EventComp = ({ data, entryChange, removeEvent }) => {
   /*Tracks input values for edit modal*/
   const [title, setTitle] = useState('');
   const [eventLink, setEventLink] = useState('');
@@ -13,11 +17,11 @@ const EventComp = (props) => {
   const [text, setText] = useState('');
 
   /*Tracks current values in saved resources array*/
-  const [propsTitle, setPropsTitle] = useState(props.data.name);
-  const [propsEventLink, setPropsEventLink] = useState(props.data.link);
-  const [propsStart, setPropsStart] = useState(props.data.event_start);
-  const [propsEnd, setPropsEnd] = useState(props.data.event_end);
-  const [propsText, setPropsText] = useState(props.data.description);
+  const [propsTitle, setPropsTitle] = useState(data.name);
+  const [propsEventLink, setPropsEventLink] = useState(data.link);
+  const [propsStart, setPropsStart] = useState(data.event_start);
+  const [propsEnd, setPropsEnd] = useState(data.event_end);
+  const [propsText, setPropsText] = useState(data.description);
 
   /*Control displaying of each modal*/
   const [showEditModal, setShowEditModal] = useState(false);
@@ -25,9 +29,19 @@ const EventComp = (props) => {
 
   /*Updates main resource array with entries in the edit modal*/
   function singleSave() {
+    if (eventLink.length > 0 && !validURL(eventLink)) {
+      NotificationManager.error('Please enter a valid URL', '', 1500);
+      return;
+    }
+    const start = Date.parse(startDate + ' ' + startTime);
+    const end = Date.parse(endDate + ' ' + endTime);
+    if (end < start) {
+      NotificationManager.error('Event end must come before start', '', 3000);
+      return;
+    }
     setShowEditModal(false);
-    props.entryChange(
-      props.data.id,
+    entryChange(
+      data.id,
       title,
       normalizeUrl(eventLink),
       startDate,
@@ -45,7 +59,7 @@ const EventComp = (props) => {
 
   /*Removes selected resource from main resource array*/
   function singleDelete() {
-    props.removeEvent(props.data.id);
+    removeEvent(data.id);
     setShowDelModal(false);
   }
 
@@ -58,116 +72,21 @@ const EventComp = (props) => {
     setText(propsText);
   }
 
-  /*onChange functions for edit modal*/
-  function changeTitle(event) {
-    setTitle(event.target.value);
-  }
-
-  function changeLink(event) {
-    setEventLink(event.target.value);
-  }
-
-  function changeStartDate(event) {
-    setStartDate(event.target.value);
-  }
-
-  function changeStartTime(event) {
-    setStartTime(event.target.value);
-  }
-
-  function changeEndDate(event) {
-    setEndDate(event.target.value);
-  }
-
-  function changeEndTime(event) {
-    setEndTime(event.target.value);
-  }
-
-  function changeText(event) {
-    setText(event.target.value);
-  }
-
-  function convertTime(datetime) {
-    var dd = ' AM';
-
-    var hour = datetime.getUTCHours();
-    hour = hour - 7;
-    if (hour < 0) {
-      hour = hour + 24;
-    }
-    var h = hour;
-    if (h >= 12) {
-      hour = h - 12;
-      dd = ' PM';
-    }
-    if (hour === 0) {
-      hour = 12;
-    }
-
-    var minutes = datetime.getMinutes();
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-
-    return hour + ':' + minutes + dd;
-  }
-
-  function formatDate(datetime) {
-    const dayArr = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
-    const monthArr = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-
-    var month = monthArr[datetime.getMonth()];
-
-    var day = datetime.getDate().toString();
-    var year = datetime.getFullYear();
-    day = day.length > 1 ? day : '0' + day;
-
-    var time = convertTime(datetime);
-    return dayArr[datetime.getDay()] + ', ' + month + ' ' + day + ', ' + time;
-  }
-
-  function formatDates(start, end) {
-    var startDate = new Date(start);
-    var endDate = new Date(end);
-
-    if (
-      startDate.getDay() == endDate.getDay() &&
-      startDate.getMonth() === endDate.getMonth() &&
-      startDate.getDay() === endDate.getDay() &&
-      startDate.getFullYear() === endDate.getFullYear()
-    ) {
-      return formatDate(startDate) + ' - ' + convertTime(endDate) + ' PT';
-    } else {
-      return formatDate(startDate) + ' - ' + formatDate(endDate) + ' PT';
-    }
-  }
-
   /*Update states to reflect current value in array*/
-  if (propsTitle !== props.data.name) {
-    setPropsTitle(props.data.name);
+  if (propsTitle !== data.name) {
+    setPropsTitle(data.name);
   }
-  if (propsEventLink !== props.data.link) {
-    setPropsEventLink(props.data.link);
+  if (propsEventLink !== data.link) {
+    setPropsEventLink(data.link);
   }
-  if (propsStart !== props.data.event_start) {
-    setPropsStart(props.data.event_start);
+  if (propsStart !== data.event_start) {
+    setPropsStart(data.event_start);
   }
-  if (propsEnd !== props.data.event_end) {
-    setPropsEnd(props.data.event_end);
+  if (propsEnd !== data.event_end) {
+    setPropsEnd(data.event_end);
   }
-  if (propsText !== props.data.description) {
-    setPropsText(props.data.description);
+  if (propsText !== data.description) {
+    setPropsText(data.description);
   }
 
   /*Updates entries in the edit modal to reflect saved resources*/
@@ -188,12 +107,16 @@ const EventComp = (props) => {
           <div id="title-date">
             <div id="title-link">
               <div className="event-title">{propsTitle}</div>
-              <a href={propsEventLink} target="_blank">
-                <img src={require('../assets/linkImages/resLink.png')} />
+              <a
+                href={propsEventLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={require('../assets/linkImages/resLink.png')}
+                  alt="event"
+                />
               </a>
-            </div>
-            <div className="event-date">
-              {formatDates(propsStart, propsEnd)}
             </div>
           </div>
           <div className="buttonsWrapper">
@@ -209,11 +132,26 @@ const EventComp = (props) => {
             />
           </div>
         </div>
+        <div className="event-date">
+          <Moment
+            interval={0}
+            date={propsStart}
+            format={simplestRangeFormat(propsStart, propsEnd, START_DATETIME)}/>
+          {" - "}
+          <Moment
+            interval={0}
+            date={propsEnd}
+            format={simplestRangeFormat(propsStart, propsEnd, END_DATETIME)} />
+        </div>
         <div className="event-description">{propsText}</div>
       </div>
 
       {/*EDIT EVENT MODAL*/}
-      <Modal showModal={showEditModal} setShowModal={setShowEditModal}>
+      <Modal
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+        close={cancelEdit}
+      >
         <div className="eventModal">
           <h3 id="res-bold">Add New Event</h3>
           <p id="res-desc">Link an event for prospective or current members!</p>
@@ -222,17 +160,19 @@ const EventComp = (props) => {
               <p>Event Name</p>
               <input
                 type="text"
-                onChange={changeTitle}
+                onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 placeholder="Enter the title of your event"
                 className="userInput modal-input"
+                maxLength={100}
+                required
               />
             </div>
             <div className="formElement">
               <p>Event Link</p>
               <input
                 type="text"
-                onChange={changeLink}
+                onChange={(e) => setEventLink(e.target.value)}
                 value={eventLink}
                 placeholder="+ Add a link to your event (Zoom, FB, ZmURl, etc)"
                 className="userInput modal-input"
@@ -244,14 +184,16 @@ const EventComp = (props) => {
                 <input
                   className="modal-input"
                   type="date"
-                  onChange={changeStartDate}
+                  onChange={(e) => setStartDate(e.target.value)}
                   value={startDate}
+                  required
                 />
                 <input
                   className="modal-input"
                   type="time"
-                  onChange={changeStartTime}
+                  onChange={(e) => setStartTime(e.target.value)}
                   value={startTime}
+                  required
                 />
               </div>
             </div>
@@ -261,14 +203,16 @@ const EventComp = (props) => {
                 <input
                   className="modal-input"
                   type="date"
-                  onChange={changeEndDate}
+                  onChange={(e) => setEndDate(e.target.value)}
                   value={endDate}
+                  required
                 />
                 <input
                   className="modal-input"
                   type="time"
-                  onChange={changeEndTime}
+                  onChange={(e) => setEndTime(e.target.value)}
                   value={endTime}
+                  required
                 />
               </div>
             </div>
@@ -278,7 +222,8 @@ const EventComp = (props) => {
                 className="descriptionInput"
                 value={text}
                 placeholder="Enter a short description about what your event is about and what attendees can expect!"
-                onChange={changeText}
+                onChange={(e) => setText(e.target.value)}
+                maxLength={500}
               />
             </div>
           </div>
@@ -293,7 +238,11 @@ const EventComp = (props) => {
       </Modal>
 
       {/*DELETE RESOURCE MODAL*/}
-      <Modal showModal={showDelModal} setShowModal={setShowDelModal}>
+      <Modal
+        showModal={showDelModal}
+        setShowModal={setShowDelModal}
+        close={() => setShowDelModal(false)}
+      >
         <div className="del-modal">
           <p className="del-text">Are you sure you want to delete this?</p>
           <div className="del-buttons-flex">

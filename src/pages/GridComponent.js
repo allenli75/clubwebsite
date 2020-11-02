@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Card,
   CardActionArea,
@@ -13,24 +13,32 @@ import {
 import { connect } from 'react-redux';
 
 import { withRouter, Link } from 'react-router-dom';
-import { loadClubs, searchClubs } from '../actions/catalog';
+import { searchClubs } from '../actions/catalog';
 import './GridComponent.css';
+import { makeStyles } from '@material-ui/core/styles';
+import CreateIcon from '@material-ui/icons/CreateRounded';
+import HappyIcon from '@material-ui/icons/SentimentSatisfiedRounded';
+import CheckIcon from '@material-ui/icons/CheckRounded';
+import CrossIcon from '@material-ui/icons/CloseRounded';
 
-function GridComponent(props) {
-  const { tagOptions, clubs, classes, loadClubs } = props;
-
-  useEffect(() => {
-    // Return unfiltered clubs so there is some data there when first rendered
-    if (clubs.length === 0) loadClubs();
-  }, [clubs, loadClubs]);
+function GridComponent({ tagOptions, clubs, num_clubs, loading }) {
+  const useStyles = makeStyles({
+    root: {
+      minWidth: 200,
+    },
+    media: {
+      height: 140,
+    },
+  });
+  const { root, media } = useStyles();
 
   const GridList = clubs.map((club, i) => (
     <Grid item key={i} sm={12} md={6} lg={4} className="club-card">
-      <Card className={classes.root}>
+      <Card className={root}>
         <CardActionArea>
           <Link
             to={{
-              pathname: `/club/${club.id}`,
+              pathname: `/club/${club.link_name}`,
               state: { modal: true },
             }}
             style={{
@@ -40,15 +48,20 @@ function GridComponent(props) {
           >
             <CardMedia
               style={{ height: 0, paddingTop: '56%' }}
-              className={classes.media}
-              image={club.banner_url || require('./assets/ethicalheader.png')}
+              className={media}
+              image={club.banner_url || require('./assets/default_banner.jpg')}
             />
-            <CardContent>
+            <CardContent
+              style={{
+                padding: '14px',
+                paddingTop: '9px',
+              }}
+            >
               <div className="info-flex">
                 <div className="icon-title-flex">
                   <img
                     className="card-club-logo"
-                    src={club.logo_url || require('./assets/ethicalLogo.jpg')}
+                    src={club.logo_url || require('./assets/default_logo.jpg')}
                     alt="logo"
                   />
                   <div className="club-name">{club.name}</div>
@@ -57,32 +70,24 @@ function GridComponent(props) {
               <div className="req-flex">
                 {club.app_required ? (
                   <div className="grid-tag" id="app-req">
-                    <span role="img" aria-label="emoji">
-                      ✎
-                    </span>{' '}
-                    Requires App
+                    <CreateIcon style={{ fontSize: '1em'}} />
+                    <span>Requires App</span>
                   </div>
                 ) : (
                   <div className="grid-tag" id="app-not-req">
-                    <span role="img" aria-label="emoji">
-                      ☺︎
-                    </span>{' '}
-                    No App Required
+                    <HappyIcon style={{ fontSize: '1em'}} />
+                    <span>No App Required</span>
                   </div>
                 )}
                 {club.new_members ? (
                   <div className="grid-tag" id="open-tag">
-                    <span role="img" aria-label="emoji">
-                      ✓
-                    </span>{' '}
-                    Taking New Members
+                    <CheckIcon style={{ fontSize: '1em'}} />
+                    <span>Taking New Members</span>
                   </div>
                 ) : (
                   <div className="grid-tag" id="not-open-tag">
-                    <span role="img" aria-label="emoji">
-                      ✗
-                    </span>{' '}
-                    Not Taking New Members
+                    <CrossIcon style={{ fontSize: '1em'}} />
+                    <span>Not Taking New Members</span>
                   </div>
                 )}
               </div>
@@ -90,7 +95,7 @@ function GridComponent(props) {
                 {club.tags.map((tag, i) => (
                   <div className="grid-tag" key={i}>
                     {' '}
-                    {tagOptions[tag].label}{' '}
+                    {tagOptions.length > 0 && tagOptions[tag].label}{' '}
                   </div>
                 ))}
               </div>
@@ -102,6 +107,9 @@ function GridComponent(props) {
   ));
   return (
     <div className="wrapper">
+      <div className="num-results">
+        {num_clubs ? `${num_clubs} Results` : loading ? '' : 'No Results Found'}
+      </div>
       <Grid container spacing={2} className="card-grid">
         {GridList}
       </Grid>
@@ -112,8 +120,10 @@ function GridComponent(props) {
 // This function gets a piece of the app state that is stored in redux store
 const mapStateToProps = (state) => ({
   clubs: state.catalog.clubs,
+  num_clubs: state.catalog.num_clubs,
+  tagOptions: state.profile.tagOptions,
 });
 
-export default connect(mapStateToProps, { loadClubs, searchClubs })(
+export default connect(mapStateToProps, { searchClubs })(
   withRouter(GridComponent)
 );

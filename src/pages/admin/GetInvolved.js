@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
 import { updateProfile } from '../../actions/profile';
 import { connect } from 'react-redux';
+import { NotificationManager } from 'react-notifications';
 
 const GetInvolved = ({ profile, get_involved, updateProfile }) => {
   const [involvedDesc, setInvolvedDesc] = useState(get_involved);
-  const [descrChars, setChars] = useState(250 - involvedDesc.length);
+  const [descrChars, setChars] = useState(500 - involvedDesc.length);
 
   const descrChange = (e) => {
     setInvolvedDesc(e.target.value);
-    setChars(250 - e.target.value.length);
+    setChars(500 - e.target.value.length);
   };
 
   const submitValue = (e) => {
-    updateProfile({ ...profile, get_involved: involvedDesc });
+    updateProfile(
+      { ...profile, get_involved: involvedDesc },
+      function () {
+        NotificationManager.success(
+          'Description changes saved successfully!',
+          '',
+          3000
+        );
+      },
+      function () {
+        NotificationManager.error(
+          'Description changes unsuccessful!',
+          '',
+          3000
+        );
+      }
+    );
   };
 
   return (
@@ -29,7 +46,7 @@ const GetInvolved = ({ profile, get_involved, updateProfile }) => {
             className="descriptionInput"
             placeholder="Enter a short description about how to get involved!"
             type="text"
-            maxLength={250}
+            maxLength={500}
             /*value={involvedDesc}
             onChange={(e) => setInvolvedDesc(e.target.value)}
             */

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   withRouter,
 } from 'react-router-dom';
+
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 
 import { Landing } from './pages/Landing.js';
 import { ComingSoon } from './pages/ComingSoon.js';
@@ -15,17 +17,25 @@ import { SignIn } from './pages/SignIn.js';
 import { ResetPassword } from './pages/ResetPassword.js';
 import { ResetPassword2 } from './pages/ResetPassword2.js';
 import Security from './pages/admin/Security.js';
+import ErrorPage from './pages/ErrorPage';
 import Admin from './pages/admin/Admin.js';
-import Modal from './pages/Modal.js';
+import ClubPage from './pages/ClubPage';
 import store from './store';
-import { loadProfile } from './actions/profile';
+import ContactUs from './layout/ContactUs.js';
+import { loadProfile, getTags } from './actions/profile';
 import { Provider } from 'react-redux';
 import PrivateRoute from './utils/PrivateRoute';
 import Navbar from './layout/Navbar';
 
+import Moment from 'react-moment';
+import 'moment-timezone';
+
+Moment.globalTimezone = 'America/Los_Angeles';
+
 const App = () => {
   useEffect(() => {
     store.dispatch(loadProfile());
+    store.dispatch(getTags());
   }, []);
 
   return (
@@ -39,12 +49,16 @@ const App = () => {
           <Route path="/catalog" component={Catalog} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/recover" component={ComingSoon} />
-          <Route exact path="/resetpassword" component={ComingSoon} />
-          <Route exact path="/club/:id" component={Modal} />
+          <Route exact path="/recover" component={ResetPassword} />
+          <Route exact path="/resetpassword" component={ResetPassword2} />
+          <Route exact path="/club/:id" component={ClubPage} />
           <PrivateRoute exact path="/security" component={Security} />
-          <Route>{'404'}</Route>
+          <Route>
+            <ErrorPage />
+          </Route>
         </Switch>
+        <ContactUs />
+        <NotificationContainer />
       </Router>
     </Provider>
   );

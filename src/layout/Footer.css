@@ -1,11 +1,14 @@
 .footer-wrapper {
+
+  font-family: Qanelas Soft Semi Bold;
   position: static;
   bottom: 0;
   display: inline-block;
   width: 100%;
   text-align: center;
   border-top: 1px solid #ddd;
-  padding-top: 15px;
+  padding-top: 10px;
+  padding-bottom: 2px;
   font-size: 14px;
 }
 
@@ -15,7 +18,8 @@
 }
 
 .footer-wrapper .links {
-  padding-top: 5px;
+  padding-top: 8px;
+  padding-bottom:2px;
 }
 
 .footer-link-image {

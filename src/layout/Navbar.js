@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout, login } from '../actions/auth';
@@ -21,11 +21,17 @@ const Navbar = ({
   const toggleNavbar = () => setNavbarVis((navbarVis) => !navbarVis);
   const toggleDropdown = () => setDropownVis((dropdownVis) => !dropdownVis);
 
-  const ref = useRef();
+  const navbarRef = useRef();
   const authDropDownRef = useRef();
 
+  // Close navbar when on page change (mobile)
+  useEffect(() => {
+    setNavbarVis(false);
+    // eslint-disable-next-line
+  }, [window.location.pathname]);
+
   // If it is on mobile, and the navbar is visible, if click outside, hide sidebar
-  useOnClickOutside(ref, () => {
+  useOnClickOutside(navbarRef, () => {
     if (window.innerWidth <= 800 && navbarVis === true) {
       setNavbarVis(false);
     }
@@ -37,12 +43,12 @@ const Navbar = ({
     }
   });
 
+  useEffect(() => {}, [isAuthenticated]);
+
   const logoutSelect = () => {
     setDropownVis(false);
     logout(history);
   };
-
-  if (loading) return null;
 
   const loggedOutLinks = (
     <>
@@ -59,21 +65,27 @@ const Navbar = ({
   );
 
   const loggedInLinks = (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <Link to="/catalog" className="nav-link hide-sm">
+    <div className="logged-in-links">
+      <Link to="/catalog" className="nav-link">
         Discover
       </Link>
-      <Link to={`/club/${orgId}`} className="nav-link hide-sm">
+      <Link to={`/club/${orgId}`} className="nav-link">
         View Profile
       </Link>
-      <div className="org-menu" href="/signup" ref={authDropDownRef}>
-        <div className="org-email" onClick={toggleDropdown}>
+      <div
+        className="org-menu"
+        href="/signup"
+        ref={authDropDownRef}
+        onClick={toggleDropdown}
+      >
+        <div className="org-email">
           {organizationEmail}
           <i
             style={{ marginLeft: '5px' }}
             className={`fas ${dropdownVis ? 'fa-caret-down' : 'fa-caret-up'}`}
           ></i>
         </div>
+
         {dropdownVis && (
           <div className="dropdown">
             <Link className="option" to="/admin">
@@ -91,9 +103,11 @@ const Navbar = ({
     </div>
   );
 
+  const display = isAuthenticated ? loggedInLinks : (loading ? '' : loggedOutLinks);
+
   return (
     <>
-      <div className="header" ref={ref}>
+      <div className="header" ref={navbarRef}>
         <Link to="/" className="nav-link logo">
           sproul.club
         </Link>
@@ -101,9 +115,7 @@ const Navbar = ({
           <i className="fas fa-bars"></i>
         </div>
         {(navbarVis || window.innerWidth >= 800) && (
-          <div className="header-right">
-            {isAuthenticated ? loggedInLinks : loggedOutLinks}
-          </div>
+          <div className="header-right">{display}</div>
         )}
       </div>
     </>
@@ -113,7 +125,7 @@ const Navbar = ({
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   organizationEmail: state.profile.owner,
-  orgId: state.profile.id,
+  orgId: state.profile.link_name,
   loading: state.auth.loading,
 });
 

@@ -1,107 +1,62 @@
-import React from "react"
+import React from 'react';
 import {
-    Accordion,
-    AccordionItem,
-    AccordionItemHeading,
-    AccordionItemButton,
-    AccordionItemPanel,
-  } from 'react-accessible-accordion';
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
 
-function convertTime(datetime) {
-var dd = ' AM';
+import Moment from 'react-moment';
+import { simplestRangeFormat, START_DATETIME, END_DATETIME } from '../utils/formatTimeAndDate';
 
-var hour = datetime.getUTCHours();
-hour = hour - 7;
-if (hour < 0) {
-    hour = hour + 24;
-}
-var h = hour;
-if (h >= 12) {
-    hour = h - 12;
-    dd = ' PM';
-}
-if (hour === 0) {
-    hour = 12;
-}
+function EventAccord({ data }) {
 
-var minutes = datetime.getMinutes();
-minutes = minutes < 10 ? '0' + minutes : minutes;
+  const orderedEvents = data.events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
 
-return hour + ':' + minutes + dd;
-}
 
-function formatDate(datetime) {
-const dayArr = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
-const monthArr = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-];
-
-var month = monthArr[datetime.getMonth()];
-
-var day = datetime.getDate().toString();
-var year = datetime.getFullYear();
-day = day.length > 1 ? day : '0' + day;
-
-var time = convertTime(datetime);
-return dayArr[datetime.getDay()] + ', ' + month + ' ' + day + ', ' + time;
-}
-
-function formatDates(start, end) {
-var startDate = new Date(start);
-var endDate = new Date(end);
-
-if (
-    startDate.getDay() == endDate.getDay() &&
-    startDate.getMonth() === endDate.getMonth() &&
-    startDate.getDay() === endDate.getDay() &&
-    startDate.getFullYear() === endDate.getFullYear()
-) {
-    return formatDate(startDate) + ' - ' + convertTime(endDate) + ' PT';
-} else {
-    return formatDate(startDate) + ' - ' + formatDate(endDate) + ' PT';
-}
-}
-function EventAccord(props) {
-    const accordList = props.data.events.map((event, i) =>
+  return orderedEvents.map((event, i) => (
     <Accordion className="accordion-club" allowZeroExpanded key={i}>
-        <AccordionItem key={event.time} className="accordion-group">
-            <div className="event-flex-container">
-                <div className="event-flex-left">
-                    {event.name}
-                    <a target="_blank" rel="noopener noreferrer" href={event.link} key={i}>
-                        <img
-                        className="res-img"
-                        src={require('./assets/linkImages/resLink.png')}
-                        alt="resource"
-                        />
-                    </a>
-                </div>
-                <div className="event-flex-right">{formatDates(event.event_start, event.event_end)}</div>
-            </div>
-            <AccordionItemHeading className="accordion__heading-club">
-
-                    <AccordionItemButton className="accordion__button-club">   
-                    </AccordionItemButton>
-            </AccordionItemHeading>
-            <AccordionItemPanel className="accordion__panel-event">
-                {event.description}
-            </AccordionItemPanel>
-        </AccordionItem>
-    </Accordion>)
-    
-    return(
-        accordList
-    )
+      <AccordionItem key={event.event_start} className="accordion-group">
+        <div className="event-flex-container">
+          <div className="event-flex-left">{event.name}</div>
+          <div className="event-flex-right">
+            <Moment
+              interval={0}
+              date={event.event_start}
+              format={simplestRangeFormat(event.event_start, event.event_end, START_DATETIME)}/>
+            {" - "}
+            <Moment
+              interval={0}
+              date={event.event_end}
+              format={simplestRangeFormat(event.event_start, event.event_end, END_DATETIME)} />
+          </div>
+        </div>
+        <AccordionItemHeading className="accordion__heading-club">
+          <AccordionItemButton className="accordion__button-club"></AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel className="accordion__panel-event">
+          {event.description}
+          <br></br>
+          <div id="gray-ev-link">
+            event link
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={event.link}
+              key={i}
+            >
+              <img
+                className="res-img"
+                src={require('./assets/linkImages/resLink.png')}
+                alt="resource"
+              />
+            </a>
+          </div>
+        </AccordionItemPanel>
+      </AccordionItem>
+      <hr width="90%"></hr>
+    </Accordion>
+  ));
 }
-export default EventAccord
+export default EventAccord;

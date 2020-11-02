@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from '../../layout/Modal';
 import { connect } from 'react-redux';
 import EventComp from './EventComp.js';
-import {
-  addEvent,
-  updateEvent,
-  deleteEvent } from '../../actions/profile';
+import { addEvent, updateEvent, deleteEvent } from '../../actions/profile';
 import { validURL, normalizeUrl } from '../../utils/normalizeUrl';
 import './Events.css';
+import { NotificationManager } from 'react-notifications';
 
-const Events = ({
-  addEvent,
-  updateEvent,
-  deleteEvent,
-  events: eventState,
- }) => {
-  /*Holds all existing events*/
-  const [events, setEvents] = useState(eventState);
-
+const Events = ({ addEvent, updateEvent, deleteEvent, events }) => {
   /*Determines if add event modal is shown*/
   const [showModal, setShowModal] = useState(false);
 
@@ -31,7 +21,8 @@ const Events = ({
   const [text, setText] = useState('');
 
   /*Adds event to array, count++, resets title and link state values */
-  function addEv() {
+  function addEv(e) {
+    e.preventDefault();
     const start = startDate.concat(' ' + startTime);
     const end = endDate.concat(' ' + endTime);
     const emptyEvent = {
@@ -41,8 +32,11 @@ const Events = ({
       event_end: end,
       description: text,
     };
-    if (!validURL(eventLink)) return alert('Please enter a valid URL');
-    setEvents([...events, emptyEvent]);
+
+    if (eventLink.length > 0 && !validURL(eventLink)) {
+      NotificationManager.error('Please enter a valid URL', '', 1500);
+      return;
+    }
     // call add event action
     addEvent(emptyEvent);
 
@@ -56,10 +50,11 @@ const Events = ({
     setEndTime('');
     setText('');
   }
-  
+
   function cancelAdd() {
     setShowModal(false);
     setTitle('');
+    setEventLink('');
     setStartDate('');
     setStartTime('');
     setEndDate('');
@@ -68,64 +63,33 @@ const Events = ({
   }
 
   /*Passed down to eventComp to allow editing of event array above*/
-  function entryChange(id, title, eventLink, startDate, startTime, endDate, endTime, text) {
-    let tempArr = [...events];
+  function entryChange(
+    id,
+    title,
+    eventLink,
+    startDate,
+    startTime,
+    endDate,
+    endTime,
+    text
+  ) {
     const start = startDate.concat(' ' + startTime);
     const end = endDate.concat(' ' + endTime);
-    const tempObj = {
-      id: id,
+
+    //update event action
+    updateEvent(id, {
       name: title,
       link: eventLink,
       event_start: start,
       event_end: end,
       description: text,
-    };
-    tempArr[id] = tempObj;
-    //update event action
-    updateEvent(id, {name: title, link: eventLink, event_start: start, event_end: end, description: text})
-    setEvents(tempArr);
-  }
-
-  /*onChange functions for add modal*/
-  function changeTitle(event) {
-    setTitle(event.target.value);
-  }
- 
-  function changeLink(event) {
-    setEventLink(event.target.value);
-  }
-
-  function changeStartDate(event) {
-    setStartDate(event.target.value);
-  }
-
-  function changeStartTime(event) {
-    setStartTime(event.target.value);
-  }
-
-  function changeEndDate(event) {
-    setEndDate(event.target.value);
-  }
-
-  function changeEndTime(event) {
-    setEndTime(event.target.value);
-  }
-
-  function changeText(event) {
-    setText(event.target.value);
+    });
   }
 
   /*Passed down to eventComp to allow it to remove event from state array, count--*/
   function removeEvent(id) {
     deleteEvent(id);
-    const testEventList = events.filter((event) => event.id !== id);
-    const newEventList = [...testEventList];
-    setEvents(newEventList);
   }
-  
-  useEffect(() => {
-    setEvents(eventState)
-  }, [eventState])
 
   const eventComps = events.map((ev, i) => (
     <EventComp
@@ -137,50 +101,6 @@ const Events = ({
     />
   ));
 
-  function convertTime(datetime) {
-    var dd = 'AM'
-
-    var hour = datetime.getUTCHours();
-    var h = hour;
-    if (h >= 12) {
-      hour = h - 12;
-      dd = 'PM';
-    }
-    if (hour == 0) {
-      hour = 12;
-    }
-
-    var minutes = datetime.getMinutes();
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-
-    return hour + ':' + minutes + dd
-  }
-
-  function formatDate(datetime) {
-    const dayArr = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
-    
-    var month = (1 + datetime.getMonth()).toString();
-    var day = datetime.getDate().toString();
-    var year = datetime.getFullYear();
-    day = day.length > 1 ? day : '0' + day;
-
-    var time = convertTime(datetime);
-    return dayArr[datetime.getDay()] + ' ' + month + '/' + day + '/' + year + ' ' + time;
-  }
-
-  function formatDates(start, end) {
-    var startDate = new Date(start);
-    var endDate = new Date(end);
-
-    if (startDate.getDay() == endDate.getDay() && startDate.getMonth() == endDate.getMonth() && 
-    startDate.getDay() == endDate.getDay() && startDate.getFullYear() == endDate.getFullYear()) {
-      return formatDate(startDate) + ' - ' + convertTime(endDate);
-    }
-    else {
-      return formatDate(startDate) + ' - ' + formatDate(endDate);
-    }
-  }
-
   return (
     <div className="events">
       <h3>Events</h3>
@@ -188,9 +108,7 @@ const Events = ({
         Add events related to recruitment, meetings, and other public events!
       </div>
       <div className="formGroup">
-        <div className="events-list">
-            {eventComps}
-        </div>
+        <div className="events-list">{eventComps}</div>
         <img
           id="add-button"
           src={require('../assets/linkImages/addEvent.png')}
@@ -199,90 +117,95 @@ const Events = ({
         />
       </div>
 
-      <Modal showModal={showModal} setShowModal={setShowModal}>
-        <div className = "eventModal">
-        <h3 id="res-bold">Add New Event</h3>
-        <p id="res-desc">
-          Link an event for prospective or current members!
-        </p>
-        <div className="gray-modal">
-          <div className="formElement">
-            <p>Event Name</p>
-            <input
-              type="text"
-              onChange={changeTitle}
-              value={title}
-              placeholder="Enter the title of your event"
-              className="userInput modal-input"
-              maxLength="30"
-            />
-          </div>
-          <div className="formElement">
-            <p>Event Link</p>
-            <input
-              type="text"
-              onChange={changeLink}
-              value={eventLink}
-              placeholder="+ Add a link to your event (Zoom, FB, ZmURl, etc)"
-              className="userInput modal-input"
-            />
-          </div>
-          <div className="formElement">
-            <p>Event Start</p>
-            <div className="input-time">
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        close={cancelAdd}
+      >
+        <form className="eventModal" onSubmit={(e) => addEv(e)}>
+          <h3 id="res-bold">Add New Event</h3>
+          <p id="res-desc">Link an event for prospective or current members!</p>
+          <div className="gray-modal">
+            <div className="formElement">
+              <p>Event Name</p>
               <input
-                className="modal-input"
-                type="date"
-                onChange={changeStartDate}
-                value={startDate}
+                type="text"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                placeholder="Enter the title of your event"
+                className="userInput modal-input"
+                maxLength={100}
+                required
               />
+            </div>
+            <div className="formElement">
+              <p>Event Link</p>
               <input
-                className="modal-input"
-                type="time"
-                onChange={changeStartTime}
-                value={startTime}
+                type="text"
+                onChange={(e) => setEventLink(e.target.value)}
+                value={eventLink}
+                placeholder="+ Add a link to your event (Zoom, FB, ZmURl, etc)"
+                className="userInput modal-input"
+              />
+            </div>
+            <div className="formElement">
+              <p>Event Start</p>
+              <div className="input-time">
+                <input
+                  className="modal-input"
+                  type="date"
+                  onChange={(e) => setStartDate(e.target.value)}
+                  value={startDate}
+                  required
+                />
+                <input
+                  className="modal-input"
+                  type="time"
+                  onChange={(e) => setStartTime(e.target.value)}
+                  value={startTime}
+                  required
+                />
+              </div>
+            </div>
+            <div className="formElement">
+              <p>Event End</p>
+              <div className="input-time">
+                <input
+                  className="modal-input"
+                  type="date"
+                  onChange={(e) => setEndDate(e.target.value)}
+                  value={endDate}
+                  required
+                />
+                <input
+                  className="modal-input"
+                  type="time"
+                  onChange={(e) => setEndTime(e.target.value)}
+                  value={endTime}
+                  required
+                />
+              </div>
+            </div>
+            <div className="formElement formElementDescription">
+              <p>Description</p>
+              <textarea
+                className="descriptionInput"
+                value={text}
+                placeholder="Enter a short description about what your event is about and what attendees can expect!"
+                onChange={(e) => setText(e.target.value)}
+                maxLength={500}
               />
             </div>
           </div>
-          <div className="formElement">
-            <p>Event End</p>
-            <div className="input-time">
-              <input
-                className="modal-input"
-                type="date"
-                onChange={changeEndDate}
-                value={endDate}
-              />
-              <input
-                className="modal-input"
-                type="time"
-                onChange={changeEndTime}
-                value={endTime}
-              />
-            </div>
-          </div>
-          <div className="formElement formElementDescription">
-            <p id="modal-desc-title">Description</p>
-            <textarea
-              className="descriptionInput"
-              id="modal-desc"
-              value={text}
-              placeholder="Enter a short description about what your event is about and what attendees can expect!"
-              onChange={changeText}
-            />
-          </div>
-          </div>
-        <button type="submit" onClick={addEv}>
-            Save
-        </button>
-        <button id="cancel-button" onClick={cancelAdd}>
-            {' '}Cancel{' '}
+          <button type="submit">Save</button>
+          <button id="cancel-button" onClick={cancelAdd}>
+            {' '}
+            Cancel{' '}
           </button>
-        </div>
-      </Modal> 
+        </form>
+      </Modal>
     </div>
   );
 };
 
 export default connect(null, { addEvent, updateEvent, deleteEvent })(Events);
-
