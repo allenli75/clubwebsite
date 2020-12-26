@@ -37,6 +37,7 @@
     "react-hooks": "^1.0.1",
     "react-hooks-helper": "^1.6.0",
     "react-images-upload": "^1.2.8",
+    "react-lineto": "^3.2.0",
     "react-moment": "^0.9.7",
     "react-notifications": "~1.6.0",
     "react-redux": "^7.2.1",

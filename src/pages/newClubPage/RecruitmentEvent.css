@@ -1,0 +1,97 @@
+#recr-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+ 
+    position: relative;
+    left: 3%;
+    max-width: 94%;
+    z-index: 100;
+    margin-bottom: 1.5vw;
+}
+#name-time-box{
+    display: flex;
+    flex-direction: column;
+    max-width: 30%;
+}
+.event-title {
+    letter-spacing: 0.03em;
+    position: relative;
+    margin: 0vw 1vw 1.2vw 0.7vw;
+    left: 3%;
+    top: 0.7vw;
+    font-family: Qanelas Soft;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.1vw;
+    color: #3d3d3d;
+}
+ 
+.event-time{
+    position: relative;
+    left: 3%;
+    font-family: Qanelas Soft;
+    font-style: normal;
+    color: #AEAEAE;
+    font-weight: 100;
+    margin: 0vw 1vw 0vw 0.7vw;
+    font-size: 1.0vw;
+}
+ 
+.date-circle{
+    width: 3.5vw;
+    height: 3.5vw;
+    line-height: 3.5vw;
+    border-radius: 50%;
+    font-size: 1.0vw;
+    font-family: Qanelas Soft;
+    margin: 0vw 0vw 0vw 1.5vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+ 
+}
+ 
+#filled{
+    color: #fff;
+    background: #367BC6
+}
+ 
+#unfilled{
+    background: #FFFFFF;
+    color: #367BC6;
+    border: 0.25vw solid #367BC6;
+    width: 3.0vw;
+    height: 3.0vw;
+    line-height: 3.0vw;
+}
+ 
+.desc-box {
+    margin: 1.6vw 0vw 0vw 1.5vw;
+    max-width: 60%;
+    font-size: 1.1vw;
+    font-family: Qanelas Soft;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    
+}
+ 
+.vl {
+    border-left: 6px solid #367BC6;
+    z-index: -10;
+    position: absolute;
+    left: 17%;
+    margin-left: -3px;
+    top: 26vw;
+    border-width: 0.4vw;
+  }
+
+  .recr-button-row {
+      display: flex;
+      flex-direction: row;
+      margin-left: 18vw;
+      margin-top: 1vw;
+      
+  }
+ 
