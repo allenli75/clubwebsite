@@ -11,9 +11,7 @@ function RecruitmentTL({ data }) {
     return orderedEvents.map((event, i) => (
         <div>
         <div id="recr-box">
-            <div id="name-time-box">
-                {console.log(event.event_start)}
-                {console.log(event.event_start.slice(8,10))}
+            <div className="name-time-box">
                 <text className="event-title">{event.name} </text>
                 <div style={{display: "flex"}}>
                     <Moment className="event-time"
@@ -27,15 +25,17 @@ function RecruitmentTL({ data }) {
                 date={event.event_end}
                 format={justTimeFormat(event.event_start, event.event_end, END_DATETIME)}/>
             </div>
-            <div className="date-circle" id={(today.getMonth() > parseInt(event.event_start.slice(5,7)) || ((today.getMonth() == parseInt(event.event_start.slice(5,7))) && (today.getDay() > parseInt(event.event_start.slice(8,10))))) ? "filled": "unfilled"}>
+            <div className="date-circle" id={(today.getFullYear() > event.event_start.slice(0,4)) || (today.getMonth() > parseInt(event.event_start.slice(5,7)) || ((today.getMonth() == parseInt(event.event_start.slice(5,7))) && (today.getDay() > parseInt(event.event_start.slice(8,10))))) ? "filled": "unfilled"}>
                 {parseInt(event.event_start.slice(5,7))}/{parseInt(event.event_start.slice(8,10))}</div>
             <div className="desc-box">
-                {event.description} 
+                <div className="event-desc">
+                {event.description}
+                </div>
                 <div className = "recr-button-row">
                     <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://www.pokemon.com/us/"
+                        href="" //gcal link
                         
                     >
                        {<img
@@ -48,7 +48,7 @@ function RecruitmentTL({ data }) {
                     <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://www.pokemon.com/us/"
+                        href="" //FB link
                     >
                        {<img
                             className="res-img"
@@ -60,7 +60,7 @@ function RecruitmentTL({ data }) {
                     <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://www.pokemon.com/us/"
+                        href="" //Zoom link
                     >
                        {<img
                             className="res-img"

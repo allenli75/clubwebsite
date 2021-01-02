@@ -3,17 +3,16 @@
     flex-direction: row;
  
     position: relative;
-    left: 3%;
+    left: -2%;
     max-width: 94%;
     z-index: 100;
     margin-bottom: 1.5vw;
     min-height: 8vw;
 }
-#name-time-box{
+.name-time-box{
     display: flex;
     flex-direction: column;
-    min-width: 25%;
-    max-width: 25%;
+    width: 24%;
 }
 .event-title {
     letter-spacing: 0.03em;
@@ -46,7 +45,7 @@
     border-radius: 50%;
     font-size: 1.0vw;
     font-family: Qanelas Soft;
-    margin: 0.8vw 0vw 0vw 1.5vw;
+    margin: 0.8vw 0vw 0vw 0vw;
     font-weight: bold;
     font-style: normal;
     text-align: center;
@@ -69,28 +68,26 @@
  
 .desc-box {
     margin: 0.8vw 0vw 0vw 1.5vw;
-    max-width: 57%;
+    max-width: 65%;
     font-size: 1em;
     font-family: Qanelas Soft;
     font-style: normal;
-    display: flex;
-    flex-direction: column;
+    
     
 }
  
 .vl {
     border-left: 6px solid #367BC6;
     z-index: -10;
-    position: absolute;
-    margin-left: 16.4vw;
-    top: 58vw;
+    position: relative;
+    margin-left: 11.6vw;
     border-width: 0.4vw;
   }
 
   .recr-button-row {
       display: flex;
       flex-direction: row;
-      margin-left: 18vw;
+      margin-left: 22.5vw;
       margin-top: 1vw;
       
   }
@@ -102,4 +99,9 @@
 
   #gcal {
       width: 2.4vw;
+  }
+
+  .event-desc {
+      margin-left: 1vw;
+      height: 8vw;
   }

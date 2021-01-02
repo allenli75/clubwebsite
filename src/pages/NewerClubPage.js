@@ -107,7 +107,8 @@ function ClubPage({
 
   const numEvents = organization.events.length;
   console.log(numEvents);
-  const lineHeight = (numEvents - 1) * 9;
+  const lineHeight =  (numEvents - 1) * 14;
+  const lineTop = -(numEvents) * 13;
  
   return (
     <div className='clubpage-wrapper'>
@@ -180,8 +181,11 @@ function ClubPage({
                   <h1>Recruitment Timeline</h1>
                   <EditIcon className="clubpage-content-header-icon"/>
                 </a>
-                {<RecruitmentTL data={organization} />}
-                <div className="vl" style={{height: lineHeight + "vw"}}></div>
+                <div className="recr-container">
+                  <RecruitmentTL data={organization} />
+                  <div className="vl" style={{height: lineHeight + "vw", top: lineTop + "vw"}}></div>
+                </div>
+                
               </div>
             }
             {tab === 'events' &&
