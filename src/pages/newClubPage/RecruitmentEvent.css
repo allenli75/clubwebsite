@@ -1,18 +1,19 @@
 #recr-box {
     display: flex;
     flex-direction: row;
-    align-items: center;
  
     position: relative;
     left: 3%;
     max-width: 94%;
     z-index: 100;
     margin-bottom: 1.5vw;
+    min-height: 8vw;
 }
 #name-time-box{
     display: flex;
     flex-direction: column;
-    max-width: 30%;
+    min-width: 25%;
+    max-width: 25%;
 }
 .event-title {
     letter-spacing: 0.03em;
@@ -39,13 +40,13 @@
 }
  
 .date-circle{
-    width: 3.5vw;
-    height: 3.5vw;
-    line-height: 3.5vw;
+    width: 4vw;
+    height: 4vw;
+    line-height: 4vw;
     border-radius: 50%;
     font-size: 1.0vw;
     font-family: Qanelas Soft;
-    margin: 0vw 0vw 0vw 1.5vw;
+    margin: 0.8vw 0vw 0vw 1.5vw;
     font-weight: bold;
     font-style: normal;
     text-align: center;
@@ -61,15 +62,15 @@
     background: #FFFFFF;
     color: #367BC6;
     border: 0.25vw solid #367BC6;
-    width: 3.0vw;
-    height: 3.0vw;
-    line-height: 3.0vw;
+    width: 3.5vw;
+    height: 3.5vw;
+    line-height: 3.5vw;
 }
  
 .desc-box {
-    margin: 1.6vw 0vw 0vw 1.5vw;
-    max-width: 60%;
-    font-size: 1.1vw;
+    margin: 0.8vw 0vw 0vw 1.5vw;
+    max-width: 57%;
+    font-size: 1em;
     font-family: Qanelas Soft;
     font-style: normal;
     display: flex;
@@ -81,9 +82,8 @@
     border-left: 6px solid #367BC6;
     z-index: -10;
     position: absolute;
-    left: 17%;
-    margin-left: -3px;
-    top: 26vw;
+    margin-left: 16.4vw;
+    top: 58vw;
     border-width: 0.4vw;
   }
 
@@ -94,4 +94,12 @@
       margin-top: 1vw;
       
   }
- 
+  
+  .recrButton {
+      width: 2.2vw;
+      margin-left: 0.5vw;
+  }
+
+  #gcal {
+      width: 2.4vw;
+  }
