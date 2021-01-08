@@ -108,7 +108,7 @@ function RecrAccord({data}) {
                                 <button className="link-del">+ Add another link</button>
                             </div>
                             {/*RIGHT SIDE INPUTS*/}
-                            <div style={{marginLeft:"2vw", width: "50%"}}>
+                            <div id="recr-right-inp">
                                 Description *
                                 <div>
                                     <textarea
@@ -118,7 +118,28 @@ function RecrAccord({data}) {
                                     >
                                     </textarea>
                                 </div>
+                                <div id="recr-char">
+                                    150 characters remaining 
+                                </div>
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <input
+                                    type="checkbox"
+                                >
+                                </input>
+                                <p id="inv-only">
+                                    Invite Only Event
+                                </p>
                                 
+                                
+                            </div>
+                            <div id="recr-forge-holder">
+                                    <button className="recr-forge">
+                                        <img className="recr-img" src={require('../assets/recrDup.PNG')}></img>     
+                                    </button>
+                                    <button className="recr-forge" >
+                                        <img className="recr-img" src={require('../assets/recrOop.PNG')}></img>     
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </AccordionItemPanel>

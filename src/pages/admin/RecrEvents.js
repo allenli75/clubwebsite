@@ -18,6 +18,7 @@ return (
         <div style={{minHeight:"52vh"}}>
             <RecrAccord></RecrAccord>
             <RecrAccord></RecrAccord>
+
         </div>
 
         
