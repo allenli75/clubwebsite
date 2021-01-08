@@ -1,0 +1,73 @@
+#recr-wrap {
+    border: 1px solid #C4C4C4;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    width: 94.5%;
+    padding: 5px;
+    padding-left: 25px;
+    margin-top: 1vh;
+}
+
+#recr-unfold {
+    margin-left: 9%;
+}
+
+.recr-accordion__panel-event {
+    animation: fadein 0.35s ease-in;
+    text-align: left;
+    border: none;
+    font-family: Qanelas Soft;
+}
+
+.recr-input {
+    background: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 7px;
+    height: 4vh;
+    font-family: Qanelas Soft;
+    margin: 1vh 1vw 2vh 0;
+}
+
+#recr-name-input {
+    width: 97%;
+}
+
+#recr-link-sel {
+    width: 30.5%;
+}
+
+#recr-link {
+    width: 58%;
+    margin-left: -0.1vw;
+    margin-right: 0.5vw;
+}
+
+.link-del {
+    background: none;
+    border: none;
+    color: #C4C4C4;
+    font-size: 14px;
+    font-family: Qanelas Soft;
+    margin-bottom: 10px;
+}
+#link-remove {
+    font-size: 20px;
+}
+
+.recr-date-row {
+    display: flex;
+    flex-direction: row;
+}
+
+#recr-date-input {
+    width: 32%;
+}
+
+#recr-desc-input {
+    width: 95%;
+    height: 30vh;
+    resize: none;
+    
+
+}
