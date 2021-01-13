@@ -156,14 +156,16 @@ function ClubPage({
   }
 
   const numEvents = organization.events.length;
-  const lineHeight = (numEvents - 1) * 14;
-  const lineTop = -(numEvents) * 13;
+  const lineHeight = (numEvents - 1) * 12;
+  const lineTop = -(numEvents) * 11;
 
   ReactGA.initialize('UA-176775736-1');
   ReactGA.pageview('/' + history.location.pathname.slice(6).split("/")[0]);
 
   return (
     <div className='clubpage-wrapper'>
+      {console.log("ORG INFO")}
+      {console.log(organization)}
       <div className='clubpage'>
         <div className='clubpage-header'>
           <img
@@ -359,7 +361,7 @@ function ClubPage({
           close={cancelEdit}
         >
           <div className="admin-modal">
-            <RecrEvents profile={organization}/>
+            <RecrEvents events={organization.events}/>
           </div>
         </Modal>
         <Footer />

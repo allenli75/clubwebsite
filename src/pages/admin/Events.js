@@ -86,7 +86,7 @@ const Events = ({ addEvent, updateEvent, deleteEvent, events }) => {
     });
   }
 
-  /*Passed down to eventComp to allow it to remove event from state array, count--*/
+  /*Passed down to eventComp to allow it to remove event from state array*/
   function removeEvent(id) {
     deleteEvent(id);
   }
