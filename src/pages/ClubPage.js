@@ -51,6 +51,7 @@ function ClubPage({
 
   const path = history.location.pathname.split("/").slice(2);
   const routeId = path[0];
+
   useEffect(() => {
     if (!admin && organization.link_name !== routeId) getOrganization(routeId);
     // clears the loaded profile when component unmounts
@@ -83,7 +84,6 @@ function ClubPage({
     tab = tempTab;
   } 
   const [numEvents, setNumEvents] = useState('');
-  //console.log(organization.events.length)
 
   if (!organization.link_name) return <Loading />;
 
@@ -91,9 +91,6 @@ function ClubPage({
     setEventsSet(true)
     setNumEvents(organization.events.length)
   }
-  console.log("ORG INFO")
-  console.log(organization.events.length)
-  
   const lineHeight = (numEvents - 1) * 12;
   const lineTop = -(numEvents) * 11;
   function incNumEvents(num) {
@@ -254,9 +251,10 @@ function ClubPage({
                     }
                   </div>
                   <div className="recr-container">
-                    {console.log("TEST")}
-                    {console.log(organization)}
-                    <RecruitmentTL props={organization}/>
+
+                    <RecruitmentTL adminCheck = {admin} profile={organization} events={organization.events} currRoute = {routeId}>
+
+                    </RecruitmentTL>
                     <div className="vl" style={{height : lineHeight + "vw", top: lineTop + "vw"}}></div>
                   </div>
                 </div>

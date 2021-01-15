@@ -3,14 +3,12 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import "./RecruitmentTL.css"
 import { justTimeFormat, simplestRangeFormat, START_DATETIME, END_DATETIME } from '../utils/formatTimeAndDate';
+import { propTypes } from 'react-bootstrap/esm/Image';
  
-const RecruitmentTL = ({ props }) => {
-    const orderedEvents = props.events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
+const RecruitmentTL = ({ events, adminCheck, profile, currRoute }) => {
+
+    const orderedEvents = events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
     var numEvents = orderedEvents.length;
-   
-    console.log(props)
-    //console.log(events)
-   // console.log(orderedEvents);
     var today = new Date();
     return (
         <div>
@@ -90,4 +88,13 @@ const mapStateToProps = (state) => ({
     events: state.profile.events
   });
 
-export default connect(mapStateToProps)(RecruitmentTL);
+const callMSP = (admin, currRoute) => {
+    if (admin && currRoute.currRoute == "recruitment") {
+        return (
+            mapStateToProps
+        )
+    }
+}
+ 
+export default connect(callMSP)(RecruitmentTL);
+ 
