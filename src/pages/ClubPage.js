@@ -36,15 +36,9 @@ function ClubPage({
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showBannerModal, setShowBannerModal] = useState(false);
   const [showRecrModal, setShowRecrModal] = useState(false);
-  
-  const [numEvents, setNumEvents] = useState(organization.events.length);
 
-  function incNumEvents(num) {
-    if (numEvents + num >= 0) {
-      setNumEvents(numEvents + num);
-    }
-    
-  }
+  const [eventsSet, setEventsSet] = useState(false);
+  
 
   function cancelEdit() {
     setShowContactModal(false);
@@ -88,9 +82,25 @@ function ClubPage({
   if (tempTab) {
     tab = tempTab;
   } 
+  const [numEvents, setNumEvents] = useState('');
+  //console.log(organization.events.length)
 
   if (!organization.link_name) return <Loading />;
-  console.log(organization.recruiting_events);
+
+  if (!eventsSet) {
+    setEventsSet(true)
+    setNumEvents(organization.events.length)
+  }
+  console.log("ORG INFO")
+  console.log(organization.events.length)
+  
+  const lineHeight = (numEvents - 1) * 12;
+  const lineTop = -(numEvents) * 11;
+  function incNumEvents(num) {
+    if (numEvents + num >= 0) {
+      setNumEvents(numEvents + num);
+    } 
+  }
 
 
   const socLinks = organization.social_media_links;
@@ -166,16 +176,14 @@ function ClubPage({
     tagList.push(<Tag key={"nar"} label="Application Not Required" color="#cdeaff" />)
   }
 
-  const lineHeight = (numEvents - 1) * 12;
-  const lineTop = -(numEvents) * 11;
+
 
   ReactGA.initialize('UA-176775736-1');
   ReactGA.pageview('/' + history.location.pathname.slice(6).split("/")[0]);
 
   return (
     <div className='clubpage-wrapper'>
-      {console.log("ORG INFO")}
-      {console.log(organization)}
+      
       <div className='clubpage'>
         <div className='clubpage-header'>
           <img
@@ -246,7 +254,9 @@ function ClubPage({
                     }
                   </div>
                   <div className="recr-container">
-                    <RecruitmentTL events={organization.events}/>
+                    {console.log("TEST")}
+                    {console.log(organization)}
+                    <RecruitmentTL props={organization}/>
                     <div className="vl" style={{height : lineHeight + "vw", top: lineTop + "vw"}}></div>
                   </div>
                 </div>
@@ -371,9 +381,7 @@ function ClubPage({
           close={cancelEdit}
         >
           <div className="admin-modal">
-            {console.log("RECR")}
-            {console.log(organization.recruiting_events)}
-            <RecrEvents cancelEdit = {cancelEdit} incNumEvents = {incNumEvents} events={organization.events}/>
+            <RecrEvents cancelEdit = {cancelEdit} events={organization.events} incNumEvents = {incNumEvents}/>
           </div>
         </Modal>
         <Footer />

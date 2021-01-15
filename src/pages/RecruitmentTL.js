@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import "./RecruitmentTL.css"
 import { justTimeFormat, simplestRangeFormat, START_DATETIME, END_DATETIME } from '../utils/formatTimeAndDate';
  
-const RecruitmentTL = ({ events }) => {
-    const orderedEvents = events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
+const RecruitmentTL = ({ props }) => {
+    const orderedEvents = props.events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
     var numEvents = orderedEvents.length;
+   
+    console.log(props)
+    //console.log(events)
+   // console.log(orderedEvents);
     var today = new Date();
     return (
         <div>
