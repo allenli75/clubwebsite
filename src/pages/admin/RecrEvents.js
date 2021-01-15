@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { updateProfile } from '../../actions/profile';
 import { NotificationManager } from 'react-notifications';
@@ -9,19 +9,18 @@ import './Admin.css';
 import RecrAccord from './RecrAccord';
 
 
-const RecrEvents = ({events, addEvent, deleteEvent, updateEvent}) => {
-    const [propEvents, setPropEvents] = useState(events);
-
-    function addEv(e) {
+const RecrEvents = ({events, addEvent, deleteEvent, updateEvent, incNumEvents, cancelEdit}) => {
+    var addSuccess = true;
+    const addEv = async (e) => {
         e.preventDefault();
         //const start = startDate.concat(' ' + startTime);
         //const end = endDate.concat(' ' + endTime);
         const emptyEvent = {
-          name: "test3",
-          link: "https://www.pokemon.com",
-          event_start: "2020-08-28T23:27:00",
-          event_end: "2020-08-28T23:28:00",
-          description: "lmao"
+          name: "[Event " + events.length + "]",
+          link: "",
+          event_start: "2000-01-01T00:00:00",
+          event_end: "2000-01-01T00:00:00",
+          description: ""
         };
     
         //if (eventLink.length > 0 && !validURL(eventLink)) {
@@ -29,9 +28,15 @@ const RecrEvents = ({events, addEvent, deleteEvent, updateEvent}) => {
         //  return;
         //}
         // call add event action
-        console.log("PRESSED");
-        addEvent(emptyEvent);
-        setPropEvents(events);
+        try {
+            await addEvent(emptyEvent);
+        } catch (err) {
+            addSuccess = false;
+            console.log(err);
+        }
+        if (addSuccess) {
+          incNumEvents(1);
+        }
     };
 
     function entryChange(
@@ -56,17 +61,21 @@ const RecrEvents = ({events, addEvent, deleteEvent, updateEvent}) => {
           description: text,
         });
       }
-    
-    const RecrAccords = events.map((ev, i) => (
-        <RecrAccord 
-            data={ev}
-            deleteEvent = {deleteEvent}
-            entryChange = {entryChange}>
-        </RecrAccord>
-
-    ));
-    
-    
+    const count = [1,2]
+    function saveAll() {
+      for (const num in count) {
+        refs.current.forEach(child => {
+          if (child !== null){
+            child.save();
+          }
+        })
+      }
+      cancelEdit();  
+    }
+    function delRef(index) {
+      delete refs[index];
+    }
+    const refs = useRef([]);
     return (
         <div id="recr-main">
             <h3>Recruitment Timeline</h3>
@@ -75,27 +84,29 @@ const RecrEvents = ({events, addEvent, deleteEvent, updateEvent}) => {
             </div>
             <hr style={{width: "97.5%", marginLeft: "-0.25%"}}></hr>
             <div style={{minHeight:"52vh"}}>
-                {console.log("EVENTS")}
-                {console.log(events)}
-
-                {RecrAccords}
-
-            </div>
-
-            
+                {events.map((ev, i) => (
+                    <RecrAccord 
+                        data={ev}
+                        deleteEvent = {deleteEvent}
+                        entryChange = {entryChange}
+                        key = {i}
+                        delRef = {delRef}
+                        ref = {ins => refs.current[i] = ins}
+                        incNumEvents = {incNumEvents}>
+                    </RecrAccord>
+                ))}
+            </div>        
             <div id="recr-buttons">
                 <button className="recr-button" id="recr-add" onClick={(e) => addEv(e)}>+ Add Event</button>
-                <button className="recr-button" id="recr-cancel" onClick={() => console.log(events)}>Cancel</button>
-                <button className="recr-button" id="recr-save">Save</button>
+                <button className="recr-button" id="recr-cancel" onClick={cancelEdit}>Cancel</button>
+                <button className="recr-button" id="recr-save" onClick={saveAll}>Save</button>
             </div>
-
         </div>
-)
-};
+)};
 
 const mapStateToProps = (state) => ({
     profile: state.profile.profile,
+    events: state.profile.events
   });
 
-//export default connect(mapStateToProps, { updateProfile })(RecrEvents);
 export default connect(mapStateToProps, { addEvent, updateEvent, deleteEvent })(RecrEvents);

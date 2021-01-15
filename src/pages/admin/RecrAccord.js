@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, forwardRef, useImperativeHandle} from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -14,25 +14,28 @@ import { NotificationManager } from 'react-notifications';
 
 
 
-const RecrAccord = ({data, deleteEvent, entryChange}) => {
-
-    const [name, setName] = useState('');
-    const [eventLink, setEventLink] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [text, setText] = useState('');
-
-    const [propsName, setPropsName] = useState(data.name);
-    const [propsEventLink, setPropsEventLink] = useState(data.link);
-    const [propsStart, setPropsStart] = useState(data.event_start);
-    const [propsEnd, setPropsEnd] = useState(data.event_end);
-    const [propsText, setPropsText] = useState(data.description);
-
+const RecrAccord = forwardRef((props, ref) => {
+    const [name, setName] = useState(props.data.name);
+    const [eventLink, setEventLink] = useState(props.data.link);
+    const [startDate, setStartDate] = useState(props.data.event_start.substring(0, 10));
+    const [startTime, setStartTime] = useState(props.data.event_start.substring(11, 16));
+    const [endDate, setEndDate] = useState(props.data.event_end.substring(0, 10));
+    const [endTime, setEndTime] = useState(props.data.event_end.substring(11, 16));
+    const [text, setText] = useState(props.data.description);
+    
+    const defaultStart = (startDate != "2000-01-01")
+    const defaultEnd = (endDate != "2000-01-01")
+    useImperativeHandle(
+        ref,
+        () => ({
+            save() {
+                singleSave();
+            }
+        }),
+    )
     function singleDelete() {
-        deleteEvent(data.id);  
-        console.log("passed");
+        props.deleteEvent(props.data.id);  
+        props.incNumEvents(-1);
       }
     
     function singleSave() {
@@ -46,9 +49,8 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
             NotificationManager.error('Event end must come before start', '', 3000);
             return;
         }
-        console.log(name);
-        entryChange(
-            data.id,
+        props.entryChange(
+            props.data.id,
             name,
             normalizeUrl(eventLink),
             startDate,
@@ -56,24 +58,8 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
             endDate,
             endTime,
             text
-          );
-        setPropsName(name);
-        setPropsEventLink(normalizeUrl(eventLink));
-        setPropsStart(startDate.concat(' ' + startTime));
-        setPropsEnd(endDate.concat(' ' + endTime));
-        setPropsText(text);
-
+          );    
     }
-    useEffect(() => {
-        setName(propsName);
-        setEventLink(propsEventLink);
-        setStartDate(propsStart.substring(0, 10));
-        setStartTime(propsStart.substring(11, 16));
-        setEndDate(propsEnd.substring(0, 10));
-        setEndTime(propsEnd.substring(11, 16));
-        setText(propsText);
-    }, [propsName, propsEventLink, propsStart, propsEnd, propsText]);
-
     return (
         <div id="recr-wrap">
             <Accordion className="accordion" allowZeroExpanded>
@@ -109,7 +95,7 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setStartDate(e.target.value)}
-                                        value={startDate}
+                                        value={defaultStart ? startDate: null}
                                         required
                                     >
                                     </input>
@@ -118,21 +104,22 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setStartTime(e.target.value)}
-                                        value={startTime}
+                                        value={defaultStart ? startTime: null}
                                         required
                                     >
                                     </input>
 
                                     {/*BACKEND FOR THIS?*/}
-                                    <select
+                                    <input
+                                        type="text"
                                         className="recr-input"
                                         id="recr-date-input"
+                                        value={"PST"}
+                                        readOnly
+                                    
                                     >
-                                        <option selected disabled hidden>Time zone</option>
-                                        <option>PST</option>
-                                        <option>EST</option>
-                                        <option>GMT</option>
-                                    </select>
+                                    
+                                    </input>
                                 </div>
 
                                 End 
@@ -142,7 +129,7 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setEndDate(e.target.value)}
-                                        value={endDate}
+                                        value={defaultEnd ? endDate : null}
                                         required
                                     >
                                     </input>
@@ -151,19 +138,19 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setEndTime(e.target.value)}
-                                        value={endTime}
+                                        value={defaultEnd ? endTime : null}
                                         required
                                     >
                                     </input>
-                                    <select
+                                    <input
+                                        type="text"
                                         className="recr-input"
                                         id="recr-date-input"
+                                        value={"PST"}
+                                        readOnly
+                                    
                                     >
-                                        <option selected disabled hidden>Time zone</option>
-                                        <option>PST</option>
-                                        <option>EST</option>
-                                        <option>GMT</option>
-                                    </select>
+                                    </input>
                                 </div>
                                 Link(s)
                                 <div>
@@ -231,7 +218,7 @@ const RecrAccord = ({data, deleteEvent, entryChange}) => {
             
         </div>
     );
-}
+})
 
 
 

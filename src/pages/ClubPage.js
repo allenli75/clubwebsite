@@ -36,6 +36,15 @@ function ClubPage({
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showBannerModal, setShowBannerModal] = useState(false);
   const [showRecrModal, setShowRecrModal] = useState(false);
+  
+  const [numEvents, setNumEvents] = useState(organization.events.length);
+
+  function incNumEvents(num) {
+    if (numEvents + num >= 0) {
+      setNumEvents(numEvents + num);
+    }
+    
+  }
 
   function cancelEdit() {
     setShowContactModal(false);
@@ -81,6 +90,8 @@ function ClubPage({
   } 
 
   if (!organization.link_name) return <Loading />;
+  console.log(organization.recruiting_events);
+
 
   const socLinks = organization.social_media_links;
   const contactComps = Object.keys(socLinks).map((key, i) =>
@@ -155,7 +166,6 @@ function ClubPage({
     tagList.push(<Tag key={"nar"} label="Application Not Required" color="#cdeaff" />)
   }
 
-  const numEvents = organization.events.length;
   const lineHeight = (numEvents - 1) * 12;
   const lineTop = -(numEvents) * 11;
 
@@ -236,7 +246,7 @@ function ClubPage({
                     }
                   </div>
                   <div className="recr-container">
-                    <RecruitmentTL data={organization}/>
+                    <RecruitmentTL events={organization.events}/>
                     <div className="vl" style={{height : lineHeight + "vw", top: lineTop + "vw"}}></div>
                   </div>
                 </div>
@@ -361,7 +371,9 @@ function ClubPage({
           close={cancelEdit}
         >
           <div className="admin-modal">
-            <RecrEvents events={organization.events}/>
+            {console.log("RECR")}
+            {console.log(organization.recruiting_events)}
+            <RecrEvents cancelEdit = {cancelEdit} incNumEvents = {incNumEvents} events={organization.events}/>
           </div>
         </Modal>
         <Footer />
