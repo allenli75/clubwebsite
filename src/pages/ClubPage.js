@@ -251,8 +251,6 @@ function ClubPage({
                     }
                   </div>
                   <div className="recr-container">
-                    {console.log("RECR EVS")}
-                    {console.log(organization.recruiting_events)}
                     <RecruitmentTL adminCheck = {admin} profile={organization} events={organization.recruiting_events} currRoute = {routeId}>
                     </RecruitmentTL>
                     <div className="vl" style={{height : lineHeight + "vw", top: lineTop + "vw"}}></div>
@@ -379,8 +377,6 @@ function ClubPage({
           close={cancelEdit}
         >
           <div className="admin-modal">
-            {console.log("RECR EVENTS")}
-            {console.log(organization.recruiting_events)}
             <RecrEvents profile = {organization} events = {organization.recruiting_events} cancelEdit = {cancelEdit} incNumEvents = {incNumEvents}/>
           </div>
         </Modal>

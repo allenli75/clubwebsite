@@ -11,12 +11,8 @@ import RecrAccord from './RecrAccord';
 
 const RecrEvents = ({profile, events, incNumEvents, cancelEdit, addRecrEvent, updateRecrEvent, deleteRecrEvent}) => {
     var addSuccess = true;
-    console.log("PROFILE")
-    console.log(profile.recruiting_events)
     const addEv = async (e) => {
         e.preventDefault();
-        //const start = startDate.concat(' ' + startTime);
-        //const end = endDate.concat(' ' + endTime);
         const emptyEvent = {
           name: "[Event " + events.length + "]",
           link: "",
@@ -27,11 +23,6 @@ const RecrEvents = ({profile, events, incNumEvents, cancelEdit, addRecrEvent, up
           invite_only: false,
         };
     
-        //if (eventLink.length > 0 && !validURL(eventLink)) {
-        //  NotificationManager.error('Please enter a valid URL', '', 1500);
-        //  return;
-        //}
-        // call add event action
         try {
             await addRecrEvent(emptyEvent);
         } catch (err) {
@@ -93,7 +84,7 @@ const RecrEvents = ({profile, events, incNumEvents, cancelEdit, addRecrEvent, up
             </div>
             <hr style={{width: "97.5%", marginLeft: "-0.25%"}}></hr>
             <div style={{minHeight:"52vh"}}>
-                {profile.recruiting_events.map((ev, i) => (
+                {events.map((ev, i) => (
                     <RecrAccord 
                         data={ev}
                         deleteRecrEvent = {deleteRecrEvent}
@@ -115,7 +106,7 @@ const RecrEvents = ({profile, events, incNumEvents, cancelEdit, addRecrEvent, up
 
 const mapStateToProps = (state) => ({
     profile: state.profile.profile,
-    recruiting_events: state.profile.recruiting_events
+    events: state.profile.recruiting_events
   });
 
 export default connect(mapStateToProps, { addRecrEvent, updateRecrEvent, deleteRecrEvent })(RecrEvents);

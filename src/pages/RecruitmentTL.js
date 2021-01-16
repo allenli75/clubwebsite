@@ -6,8 +6,7 @@ import { justTimeFormat, simplestRangeFormat, START_DATETIME, END_DATETIME } fro
 import { propTypes } from 'react-bootstrap/esm/Image';
  
 const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
-
-    const orderedEvents = profile.recruiting_events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
+    const orderedEvents = events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
     var numEvents = orderedEvents.length;
     
     var today = new Date();
@@ -17,6 +16,8 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                 <div>
                 <div id="recr-box">
                     <div className="name-time-box">
+                        {console.log("EVENT INFO")}
+                        {console.log(event)}
                         <text className="event-title">{event.name} </text>
                         <div style={{display: "flex"}}>
                             <Moment className="event-time"
@@ -53,7 +54,7 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="" //FB link
+                                href={event.link}
                             >
                             {<img
                                     className="res-img"
@@ -65,7 +66,7 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="" //Zoom link
+                                href={event.virtual_link}
                             >
                             {<img
                                     className="res-img"

@@ -10,6 +10,9 @@ import {
   UPDATE_RESOURCE,
   DELETE_RESOURCE,
   GET_TAGS,
+  ADD_RECR_EVENT,
+  UPDATE_RECR_EVENT,
+  DELETE_RECR_EVENT,
 } from '../actions/types';
 
 const initialState = {
@@ -25,6 +28,7 @@ const initialState = {
   },
   resources: [],
   events: [],
+  recruiting_events: [],
   images: {
     logo_url: '',
     banner_url: '',
@@ -47,6 +51,7 @@ export default function (state = initialState, action) {
         link_name: payload.link_name,
         resources: payload.resources,
         events: payload.events,
+        recruiting_events: payload.recruiting_events,
         images: { logo_url, banner_url },
         social_media_links: payload.social_media_links,
         get_involved: payload.get_involved,
@@ -77,6 +82,10 @@ export default function (state = initialState, action) {
     case UPDATE_RESOURCE:
     case DELETE_RESOURCE:
       return { ...state, resources: payload };
+    case ADD_RECR_EVENT:
+    case UPDATE_RECR_EVENT:
+    case DELETE_RECR_EVENT:
+      return {...state, recruiting_events: payload}
     case GET_TAGS:
       return { ...state, tagOptions: payload };
     default:

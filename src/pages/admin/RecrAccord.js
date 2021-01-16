@@ -60,7 +60,7 @@ const RecrAccord = forwardRef((props, ref) => {
             endTime,
             text,
             invOnly,
-            virtLink
+            normalizeUrl(virtLink)
             
           );    
     }
@@ -158,24 +158,54 @@ const RecrAccord = forwardRef((props, ref) => {
                                 </div>
                                 Link(s)
                                 <div>
-                                    <select
+                                    <input
+                                        type="text"
                                         className="recr-input"
                                         id="recr-link-sel"
+                                        value={"Facebook Event Link"}
+                                        readOnly
+                                    
+                                    >
+                                    </input>
+                                    {/*<select
+                                        className="recr-input"
+                                        id="recr-link-sel"
+                                        onChange={(e) => set}
                                     >
                                         <option selected disabled hidden>Select link type</option>
                                         <option>Zoom</option>
-                                        <option>GCal</option>
                                         <option>FB Event</option>
-                                    </select>
+                                    </select>*/}
                                     <input
                                         type="text"
                                         className="recr-input"
                                         id="recr-link"
+                                        value = {eventLink}
+                                        onChange = {(e) => setEventLink(e.target.value)}
                                     >
                                     </input>
-                                    <button className="link-del" id="link-remove">x</button>
+                                    {/*<button className="link-del" id="link-remove">x</button>*/}
                                 </div>
-                                <button className="link-del">+ Add another link</button>
+                                <div>
+                                    <input
+                                        type="text"
+                                        className="recr-input"
+                                        id="recr-link-sel"
+                                        value={"Zoom Meeting Link"}
+                                        readOnly
+                                    
+                                    >
+                                    </input>
+                                    <input
+                                        type="text"
+                                        className="recr-input"
+                                        id="recr-link"
+                                        value= {virtLink}
+                                        onChange = {(e) => setVirtLink(e.target.value)}
+                                    >
+                                    </input>
+                                </div>
+                                {/*<button className="link-del">+ Add another link</button>*/}
                             </div>
                             {/*RIGHT SIDE INPUTS*/}
                             <div id="recr-right-inp">
@@ -194,9 +224,15 @@ const RecrAccord = forwardRef((props, ref) => {
                                 <div id="recr-char">
                                     {150 - text.length} characters remaining 
                                 </div>
+                                {console.log("INVITED?")}
+                                {console.log(invOnly)}
                             <div style={{display: "flex", flexDirection: "row"}}>
                                 <input
                                     type="checkbox"
+                                    value="invite"
+                                    onChange={(e) => setInvOnly(e.target.checked)}
+                                   
+                                    checked = {invOnly}
                                 >
                                 </input>
                                 <p id="inv-only">
