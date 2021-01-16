@@ -12,9 +12,8 @@ import '../EventAccord.css';
 import { normalizeUrl, validURL } from '../../utils/normalizeUrl';
 import { NotificationManager } from 'react-notifications';
 
-
-
 const RecrAccord = forwardRef((props, ref) => {
+
     const [name, setName] = useState(props.data.name);
     const [eventLink, setEventLink] = useState(props.data.link);
     const [startDate, setStartDate] = useState(props.data.event_start.substring(0, 10));
@@ -22,6 +21,8 @@ const RecrAccord = forwardRef((props, ref) => {
     const [endDate, setEndDate] = useState(props.data.event_end.substring(0, 10));
     const [endTime, setEndTime] = useState(props.data.event_end.substring(11, 16));
     const [text, setText] = useState(props.data.description);
+    const [virtLink, setVirtLink] = useState(props.data.virtual_link);
+    const [invOnly, setInvOnly] = useState(props.data.invite_only);
     
     const defaultStart = (startDate != "2000-01-01")
     const defaultEnd = (endDate != "2000-01-01")
@@ -34,7 +35,7 @@ const RecrAccord = forwardRef((props, ref) => {
         }),
     )
     function singleDelete() {
-        props.deleteEvent(props.data.id);  
+        props.deleteRecrEvent(props.data.id);  
         props.incNumEvents(-1);
       }
     
@@ -57,7 +58,10 @@ const RecrAccord = forwardRef((props, ref) => {
             startTime,
             endDate,
             endTime,
-            text
+            text,
+            invOnly,
+            virtLink
+            
           );    
     }
     return (

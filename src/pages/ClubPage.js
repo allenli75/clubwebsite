@@ -89,7 +89,7 @@ function ClubPage({
 
   if (!eventsSet) {
     setEventsSet(true)
-    setNumEvents(organization.events.length)
+    setNumEvents(organization.recruiting_events.length)
   }
   const lineHeight = (numEvents - 1) * 12;
   const lineTop = -(numEvents) * 11;
@@ -251,9 +251,9 @@ function ClubPage({
                     }
                   </div>
                   <div className="recr-container">
-
-                    <RecruitmentTL adminCheck = {admin} profile={organization} events={organization.events} currRoute = {routeId}>
-
+                    {console.log("RECR EVS")}
+                    {console.log(organization.recruiting_events)}
+                    <RecruitmentTL adminCheck = {admin} profile={organization} events={organization.recruiting_events} currRoute = {routeId}>
                     </RecruitmentTL>
                     <div className="vl" style={{height : lineHeight + "vw", top: lineTop + "vw"}}></div>
                   </div>
@@ -379,7 +379,9 @@ function ClubPage({
           close={cancelEdit}
         >
           <div className="admin-modal">
-            <RecrEvents cancelEdit = {cancelEdit} events={organization.events} incNumEvents = {incNumEvents}/>
+            {console.log("RECR EVENTS")}
+            {console.log(organization.recruiting_events)}
+            <RecrEvents profile = {organization} events = {organization.recruiting_events} cancelEdit = {cancelEdit} incNumEvents = {incNumEvents}/>
           </div>
         </Modal>
         <Footer />

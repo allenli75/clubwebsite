@@ -158,7 +158,7 @@ export const deleteRecrEvent = (id) => async (dispatch) => {
   try {
     // This will hit the api that will add the event, and return the new data with event added
     // and then update the profile information in state to be correct
-    const res = await API.delete(`/api/admin/recruting-events/${id}`);
+    const res = await API.delete(`/api/admin/recruiting-events/${id}`);
 
     dispatch({ type: DELETE_RECR_EVENT, payload: res.data });
   } catch (err) {
