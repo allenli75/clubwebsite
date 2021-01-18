@@ -39,5 +39,9 @@ export function simplestRangeFormat(start_dt, end_dt, datetype) {
 }
 
 export function justTimeFormat(start_dt, end_dt, datetype) {
-  return 'h:mm A z'
+  return 'h:mm A'
+}
+
+export function dateTimeFormat(start_dt, end_dt, datatype) {
+  return 'M/D h:mm A'
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import "./RecruitmentTL.css"
-import { justTimeFormat, simplestRangeFormat, START_DATETIME, END_DATETIME } from '../utils/formatTimeAndDate';
+import { justTimeFormat, simplestRangeFormat, START_DATETIME, END_DATETIME, dateTimeFormat } from '../utils/formatTimeAndDate';
 import { propTypes } from 'react-bootstrap/esm/Image';
  
 const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
@@ -17,17 +17,38 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                 <div id="recr-box">
                     <div className="name-time-box">
                         <text className="event-title">{event.name} </text>
-                        <div style={{display: "flex"}}>
+                        {console.log}
+
+                        {(event.event_start.slice(0,10) == event.event_end.slice(0,10)) ?
+                        <div style={{marginLeft: "0vw"}}>
                             <Moment className="event-time"
+                            id="first-time"
                             interval={0}
                             date={event.event_start}
                             format={justTimeFormat(event.event_start, event.event_end, START_DATETIME)}/>
-                            <text className="event-time" style={{marginLeft:"-0.5vw"}}>-</text>
-                        </div>
-                        <Moment className="event-time"
-                        interval={0}
-                        date={event.event_end}
-                        format={justTimeFormat(event.event_start, event.event_end, END_DATETIME)}/>
+                            <text className="event-time" style={{marginLeft:"-0.0vw"}}>-</text>
+                            <Moment className="event-time"
+                            interval={0}
+                            date={event.event_end}
+                            format={justTimeFormat(event.event_start, event.event_end, END_DATETIME)}/>
+                        </div> :
+                        <div style={{marginLeft: "0vw"}}>
+                            
+                            <Moment className="event-time"
+                            id="first-time"
+                            interval={0}
+                            date={event.event_start}
+                            format={dateTimeFormat(event.event_start, event.event_end, START_DATETIME)}/>
+                            <text className="event-time" style={{marginLeft:"-0.0vw"}}>-</text>
+                            <div style={{marginLeft:"0.7vw"}}>
+                            <Moment className="event-time"
+                            interval={0}
+                            date={event.event_end}
+                            format={dateTimeFormat(event.event_start, event.event_end, END_DATETIME)}/>
+                            </div>
+                        </div> 
+                        }
+                        
                     </div>
                     <div style={{width: "3vw"}}></div>
                     <div className="date-circle" id={(today.getFullYear() > parseInt(event.event_start.slice(0,4))) || (today.getMonth() + 1 > parseInt(event.event_start.slice(5,7)) || (((today.getMonth() + 1) == parseInt(event.event_start.slice(5,7))) && (today.getDate() > parseInt(event.event_start.slice(8,10))))) ? "filled": "unfilled"}>
