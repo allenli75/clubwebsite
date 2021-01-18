@@ -91,8 +91,9 @@ function ClubPage({
     setEventsSet(true)
     setNumEvents(organization.recruiting_events.length)
   }
-  const lineHeight = (numEvents - 1) * 12;
-  const lineTop = -(numEvents) * 11;
+  //const num = 2
+  const lineHeight = (numEvents - 1) * 11.8;
+  const lineTop = -(numEvents) * 10.8;
   function incNumEvents(num) {
     if (numEvents + num >= 0) {
       setNumEvents(numEvents + num);
@@ -245,7 +246,8 @@ function ClubPage({
               <Route path={admin ? "/admin/recruitment" : `/club/${routeId}/recruitment`} render={() => 
                 <div className= "clubpage-content-timeline">
                   <div className='clubpage-content-header'>
-                    <h1>Recruitment Timeline</h1>
+                    <h1>Recruitment Timeline</h1> 
+                    <p style={{marginLeft: ((numEvents == 0) ? "-23vw" :"-27vw")}}>*Times are in PST</p>
                     {admin && 
                       <EditIcon className="clubpage-content-header-icon" onClick={() => setShowRecrModal(admin)}/>
                     }

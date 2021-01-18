@@ -1,4 +1,5 @@
 import React, {useState, useEffect, forwardRef, useImperativeHandle} from 'react';
+import Modal from '../../layout/Modal';
 import {
   Accordion,
   AccordionItem,
@@ -23,13 +24,39 @@ const RecrAccord = forwardRef((props, ref) => {
     const [text, setText] = useState(props.data.description);
     const [virtLink, setVirtLink] = useState(props.data.virtual_link);
     const [invOnly, setInvOnly] = useState(props.data.invite_only);
+
+    const [showDelModal, setShowDelModal] = useState(false);
     
-    const defaultStart = (startDate != "2000-01-01")
-    const defaultEnd = (endDate != "2000-01-01")
+    const changedStart = (startDate != "2000-01-01")
+    const changedEnd = (endDate != "2000-01-01")
+
+    function cancelDel() {
+        setShowDelModal(false);
+    }
     useImperativeHandle(
         ref,
         () => ({
-            save() {
+            checkSave() {
+                var errPresent = false;
+                if (name == "") {
+                    NotificationManager.error('Event ' + props.position + ": name required", '', 3000);
+                    errPresent = true;
+                } if (text == "") {
+                    NotificationManager.error('Event ' + props.position + ": description required", '', 3000);
+                    errPresent = true;
+                } if (changedStart == false) {
+                    NotificationManager.error('Event ' + props.position + ": start date required", '', 3000);
+                    errPresent = true;
+                } 
+                if (errPresent == true) {
+                    return 1;
+                    
+                }
+                singleSave();
+                
+                return 0;
+            },
+            verifySave() {
                 singleSave();
             }
         }),
@@ -37,6 +64,7 @@ const RecrAccord = forwardRef((props, ref) => {
     function singleDelete() {
         props.deleteRecrEvent(props.data.id);  
         props.incNumEvents(-1);
+        setShowDelModal(false);
       }
     
     function singleSave() {
@@ -44,6 +72,8 @@ const RecrAccord = forwardRef((props, ref) => {
             NotificationManager.error('Please enter a valid URL', '', 1500);
             return;
           }
+        
+        
         const start = Date.parse(startDate + ' ' + startTime);
         const end = Date.parse(endDate + ' ' + endTime);
         if (end < start) {
@@ -62,9 +92,11 @@ const RecrAccord = forwardRef((props, ref) => {
             invOnly,
             normalizeUrl(virtLink)
             
-          );    
+          );
+        return 0;    
     }
     return (
+        <div>
         <div id="recr-wrap">
             <Accordion className="accordion" allowZeroExpanded>
                 <AccordionItem>
@@ -89,6 +121,7 @@ const RecrAccord = forwardRef((props, ref) => {
                                         placeholder="Event name"
                                         onChange={(e) => setName(e.target.value)}
                                         value={name}
+                                        maxLength={40}
                                     >
                                     </input>
                                 </div>
@@ -99,7 +132,7 @@ const RecrAccord = forwardRef((props, ref) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setStartDate(e.target.value)}
-                                        value={defaultStart ? startDate: null}
+                                        value={changedStart ? startDate: null}
                                         required
                                     >
                                     </input>
@@ -108,7 +141,7 @@ const RecrAccord = forwardRef((props, ref) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setStartTime(e.target.value)}
-                                        value={defaultStart ? startTime: null}
+                                        value={changedStart ? startTime: null}
                                         required
                                     >
                                     </input>
@@ -133,7 +166,7 @@ const RecrAccord = forwardRef((props, ref) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setEndDate(e.target.value)}
-                                        value={defaultEnd ? endDate : null}
+                                        value={changedEnd ? endDate : null}
                                         required
                                     >
                                     </input>
@@ -142,7 +175,7 @@ const RecrAccord = forwardRef((props, ref) => {
                                         className="recr-input"
                                         id="recr-date-input"
                                         onChange={(e) => setEndTime(e.target.value)}
-                                        value={defaultEnd ? endTime : null}
+                                        value={changedEnd ? endTime : null}
                                         required
                                     >
                                     </input>
@@ -224,14 +257,12 @@ const RecrAccord = forwardRef((props, ref) => {
                                 <div id="recr-char">
                                     {150 - text.length} characters remaining 
                                 </div>
-                                {console.log("INVITED?")}
-                                {console.log(invOnly)}
                             <div style={{display: "flex", flexDirection: "row"}}>
                                 <input
                                     type="checkbox"
                                     value="invite"
                                     onChange={(e) => setInvOnly(e.target.checked)}
-                                   
+                                    style={{cursor: "pointer"}}
                                     checked = {invOnly}
                                 >
                                 </input>
@@ -245,7 +276,7 @@ const RecrAccord = forwardRef((props, ref) => {
                                     <button className="recr-forge" onClick={singleSave}>
                                         <img className="recr-img" src={require('../assets/recrDup.PNG')}></img>     
                                     </button>
-                                    <button className="recr-forge" onClick={singleDelete}>
+                                    <button className="recr-forge" onClick={() => setShowDelModal(true)}>
                                         <img className="recr-img" src={require('../assets/recrOop.PNG')}></img>     
                                     </button>
                                 </div>
@@ -255,7 +286,29 @@ const RecrAccord = forwardRef((props, ref) => {
                     
                 </AccordionItem>
             </Accordion>
-            
+        
+        </div>
+        <Modal
+            showModal={showDelModal}
+            setShowModal={setShowDelModal}
+            close={cancelDel}
+            style={{overflow: "hidden"}}
+        >
+            <div id="recr-del-wrap">
+                <div id="recr-del-center">
+                    Are you sure you want to delete?
+                    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                        <button id="recr-del-button" onClick={singleDelete}>
+                            Delete
+                        </button>
+                        <button id="recr-cancel-button" onClick={cancelDel}>
+                            <u>Cancel</u>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </Modal>   
         </div>
     );
 })

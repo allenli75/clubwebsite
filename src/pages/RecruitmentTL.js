@@ -16,8 +16,6 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                 <div>
                 <div id="recr-box">
                     <div className="name-time-box">
-                        {console.log("EVENT INFO")}
-                        {console.log(event)}
                         <text className="event-title">{event.name} </text>
                         <div style={{display: "flex"}}>
                             <Moment className="event-time"
@@ -31,6 +29,7 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                         date={event.event_end}
                         format={justTimeFormat(event.event_start, event.event_end, END_DATETIME)}/>
                     </div>
+                    <div style={{width: "3vw"}}></div>
                     <div className="date-circle" id={(today.getFullYear() > parseInt(event.event_start.slice(0,4))) || (today.getMonth() + 1 > parseInt(event.event_start.slice(5,7)) || (((today.getMonth() + 1) == parseInt(event.event_start.slice(5,7))) && (today.getDate() > parseInt(event.event_start.slice(8,10))))) ? "filled": "unfilled"}>
                         {parseInt(event.event_start.slice(5,7))}/{parseInt(event.event_start.slice(8,10))}</div>
                     <div className="desc-box">
