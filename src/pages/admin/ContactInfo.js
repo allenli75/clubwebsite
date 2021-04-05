@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { updateProfile } from '../../redux/actions/profile';
 import { NotificationManager } from 'react-notifications';
 import { normalizeUrl } from '../../utils/normalizeUrl';
-import './admin/Admin.css';
+import './admin/Admin.scss';
 
 const ContactInfo = ({ profile, updateProfile, close }) => {
   const contactInfo = profile.social_media_links;

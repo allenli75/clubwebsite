@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../../../components/layout/navbar/Navbar';
 import { Route, Switch, Link } from 'react-router-dom';
-import '../admin/Admin.css';
+import '../admin/Admin.scss';
 import './Security.css';
 import ChangeLogin from './ChangeLogin.js';
 import { connect } from 'react-redux';

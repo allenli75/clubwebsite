@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ResetPassword.css';
+import './ResetPassword.scss';
 import image from '../assets/resetpwd2.png';
 import error from '../assets/error.svg';
 import { resetPassword } from '../../redux/actions/auth';

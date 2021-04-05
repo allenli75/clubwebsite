@@ -1,15 +1,15 @@
 import React from 'react';
 
-import './AboutPage.css'
+import './AboutPage.scss'
 import PolaroidComponent from './../../components/layout/about/PolaroidComponent.js'
 import Footer from './../../components/layout/footer/Footer.js';
 
+// Importing members' images from assets
 import tina from './../assets/profile-photos/tina.JPG'
 import grace from './../assets/profile-photos/grace.JPG'
 import james from './../assets/profile-photos/james.jpg'
 import yuki from './../assets/profile-photos/yuki.jpg'
 import cynthia from './../assets/profile-photos/cynthia.JPG'
-
 import allen from './../assets/profile-photos/allen.jpg'
 import amy from './../assets/profile-photos/amy.jpg'
 import izzie from './../assets/profile-photos/izzie.jpeg'
@@ -19,11 +19,9 @@ import nico from './../assets/profile-photos/nico.jpg'
 import christine from './../assets/profile-photos/christine.JPG'
 import matt from './../assets/profile-photos/matt.png'
 import juliet from './../assets/profile-photos/juliet.png'
-
 import tejas from './../assets/profile-photos/tejas.png'
 import joyce from './../assets/profile-photos/joyce.jpg'
 import franco from './../assets/profile-photos/franco.jpg'
-
 import kevin from './../assets/profile-photos/kevin.jpg'
 import vicky from './../assets/profile-photos/vicky.jpg'
 import jasmine from './../assets/profile-photos/jasmine.jpg'

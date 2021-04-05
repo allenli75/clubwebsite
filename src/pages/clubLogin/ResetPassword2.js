@@ -1,5 +1,5 @@
 import React from 'react';
-import './ResetPassword.css';
+import './ResetPassword.scss';
 import Footer from '../../components/layout/footer/Footer';
 import ResetPassword2Form from './ResetPassword2Form';
 

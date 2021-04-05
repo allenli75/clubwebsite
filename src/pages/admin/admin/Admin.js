@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './Admin.css';
+import './Admin.scss';
 import { loadProfile } from '../../../redux/actions/profile';
 import { connect } from 'react-redux';
 import ClubPage from '../../club/ClubPage';

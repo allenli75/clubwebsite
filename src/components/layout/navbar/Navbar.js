@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout, login } from '../../../redux/actions/auth';
 
-import './Navbar.css';
+import './Navbar.scss';
 import useOnClickOutside from '../../../utils/useOnClickOutside';
 
 import logo from '../../../pages/assets/logo.png';

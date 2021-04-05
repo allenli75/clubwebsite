@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ResetPassword.css';
+import './ResetPassword.scss';
 import image from '../assets/resetpwd1.png';
 import error from '../assets/error.svg';
 import { isCallinkEmail, sendResetPasswordEmail } from '../../redux/actions/auth';
