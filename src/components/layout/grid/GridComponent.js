@@ -47,7 +47,7 @@ function GridComponent({
           <div className="noresults-content">
             {' '}
             <div className="noresults-text"> No Results Found </div>{' '}
-            <img className="noresults-image" src={confusion} />{' '}
+            <img className="noresults-image" src={confusion} alt="confused bear" />{' '}
           </div>
         )}
       </div>

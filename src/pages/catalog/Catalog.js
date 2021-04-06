@@ -39,7 +39,7 @@ const Catalog = ({
     noAppReq,
     recruiting,
     notRecruiting,
-    sort,
+    // sort,
     members,
   } = formDetails;
 

@@ -5,15 +5,14 @@ import ReactGA from 'react-ga';
 import { Route, Switch, Link } from 'react-router-dom';
 
 import { getOrganization, clearOrganization } from '../../redux/actions/catalog';
+// import { API } from '../../utils/backendClient';
 
 import RightArrow from '@material-ui/icons/CallMadeRounded';
-import HeartBordered from '@material-ui/icons/FavoriteBorderRounded';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 
 import './ClubPage.css';
 import RecruitmentTL from '../admin/RecruitmentTL.js';
-import EventAccord from './EventAccord';
 import Gallery from '../../components/gallery/Gallery';
 import Footer from '../../components/layout/footer/Footer';
 import Loading from '../../components/layout/loading/Loading';
@@ -30,7 +29,6 @@ import RecrEvents from '../../pages/admin/recruitment/RecrEvents';
 import Activation from './Activation';
 import { membersMap } from '../../utils/filterClubs.js';
 import { normalizeUrl } from '../../utils/normalizeUrl.js';
-import { API, TOKENS } from '../../utils/backendClient';
 import ClubCardSimple from './ClubCardSimple';
 
 function ClubPage({
@@ -83,6 +81,7 @@ function ClubPage({
 
   // console.log(organization);
 
+  /*
   const fetchGallery = async () => {
     try {
       const res = await API.get('/api/admin/gallery-pics');
@@ -95,9 +94,7 @@ function ClubPage({
       throw err;
     }
   };
-
   // fetchGallery();
-  /*
   organization.gallery = [
     {
       type: 'i',
@@ -110,6 +107,7 @@ function ClubPage({
       caption: 'The team',
     },
   ];*/
+  
   let [tab, setTab] = useState('overview');
   const tempTab = path[1];
   if (tempTab) {
@@ -141,7 +139,8 @@ function ClubPage({
   var recommendedClubCards;
   if (!admin) {
     var recommendedClubs = organization.recommended_clubs;
-    var recommendedClubCards = Object.keys(recommendedClubs).map((i) =>
+
+    recommendedClubCards = Object.keys(recommendedClubs).map((i) =>
       recommendedClubs[i] !== null && recommendedClubs[i] !== '' ? (
         <ClubCardSimple club={recommendedClubs[i]} />
       ) : null
@@ -169,6 +168,7 @@ function ClubPage({
     ) : null
   );
 
+  /*
   const resComps = organization.resources.map((res, i) => (
     <div className="clubpage-content-resource" id="resources" key={i}>
       {res.name}
@@ -177,6 +177,7 @@ function ClubPage({
       </a>
     </div>
   ));
+  */
 
   const overview = (
     <div>
@@ -225,6 +226,7 @@ function ClubPage({
                 {admin && (
                   <img
                     src={require('../assets/Edit.svg')}
+                    alt="edit icon"
                     className="clubpage-content-header-icon"
                     onClick={() => setShowGalleryModal(admin)}
                   />
@@ -471,7 +473,8 @@ function ClubPage({
                   {organization.apply_link && (
                     <a
                       href={normalizeUrl(organization.apply_link)}
-                      target="_blank">
+                      target="_blank"
+                      rel="noopener noreferrer">
                       <button className="clubpage-apply-btn">
                         Apply Now!
                         <RightArrow
@@ -498,13 +501,15 @@ function ClubPage({
               <h2>Website</h2>
               <a
                 href={normalizeUrl(organization.social_media_links.website)}
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
                 {organization.social_media_links.website}
               </a>
               <h2>Email</h2>
               <a
                 href={'mailto:' + organization.social_media_links.contact_email}
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
                 {organization.social_media_links.contact_email}
               </a>
               <h2>Social Media</h2>

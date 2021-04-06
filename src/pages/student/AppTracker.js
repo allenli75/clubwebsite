@@ -31,10 +31,11 @@ const AppTracker = ({
     tags,
     appReq,
     noAppReq,
-    recruiting,
-    notRecruiting,
+    // recruiting,
+    // notRecruiting,
   } = formDetails;
 
+  /*
   const resetFilters = () => {
     setFormDetails({ name: 'name', value: '' });
     setFormDetails({ name: 'tags', value: [] });
@@ -43,6 +44,7 @@ const AppTracker = ({
     setFormDetails({ name: 'recruiting', value: false });
     setFormDetails({ name: 'notRecruiting', value: false });
   };
+  */
 
   const toggleTag = (tagLabel) => {
     setFormDetails({ name: 'tags', value: tagLabel });
@@ -58,6 +60,7 @@ const AppTracker = ({
     setFormDetails({ name: 'noAppReq', value: !noAppReq });
   }
 
+  /*
   function toggleRecruiting() {
     setFormDetails({ name: 'recruiting', value: !recruiting });
     setFormDetails({ name: 'notRecruiting', value: false });
@@ -67,6 +70,7 @@ const AppTracker = ({
     setFormDetails({ name: 'recruiting', value: false });
     setFormDetails({ name: 'notRecruiting', value: !notRecruiting });
   }
+  */
 
   function changeSearch(e) {
     setFormDetails({ name: 'name', value: e.target.value });

@@ -256,6 +256,7 @@ const RegisterStudent = ({
 
   function addSelectedMajor(major) {
     // Set profile values.
+    setMajorsPopulated(true)
     if (selectedMajors.includes(major)) {
       const index = selectedMajors.indexOf(major);
       if (index > -1) {
@@ -304,7 +305,7 @@ const RegisterStudent = ({
       <div>
         {!isLoggedIn ? (
           <div class="redirection">
-            <img class="image" src={illeniumisourlordandsavior} />
+            <img class="image" alt="" src={illeniumisourlordandsavior} />
             <div class="title">
               Redirecting to CalNet <span> </span>
             </div>

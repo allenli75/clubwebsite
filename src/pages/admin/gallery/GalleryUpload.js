@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import ImageUploader from '../../../components/react-images-upload';
+import { NotificationManager } from 'react-notifications';
+
+import Delete from '@material-ui/icons/DeleteRounded';
+import Add from '@material-ui/icons/AddRounded';
+
+import './GalleryUpload.css';
+
 import {
   updateProfile,
   uploadLogo,
@@ -10,13 +17,10 @@ import {
   updateGalleryPhoto,
   deleteGalleryPhoto,
 } from '../../../redux/actions/profile';
-import { NotificationManager } from 'react-notifications';
 import store from '../../../redux/store';
-import { API, TOKENS } from '../../../utils/backendClient';
-import './GalleryUpload.css';
-import Delete from '@material-ui/icons/DeleteRounded';
-import Add from '@material-ui/icons/AddRounded';
-import { CodeOutlined } from '@material-ui/icons';
+
+// import { API, TOKENS } from '../../../utils/backendClient';
+
 
 const GalleryUpload = ({
   addGalleryPhoto,
@@ -34,34 +38,6 @@ const GalleryUpload = ({
     // Outline leftover from ClubPage
     store.dispatch(getGalleryPhotos());
   }, []);
-  async function uploadBannerPic(bannerUploads) {
-    if (bannerUploads && bannerUploads.length > 0) {
-      try {
-        NotificationManager.info('Uploading banner...', '', 1500);
-        await uploadBanner(bannerUploads[0]);
-        NotificationManager.success(
-          'Banner changes saved successfully! Refresh to see changes',
-          '',
-          5000
-        );
-        close();
-      } catch (err) {
-        if (err.response.status === 503) {
-          NotificationManager.error(
-            'Something went wrong on our end. Please try again later',
-            'Banner image upload unsuccessful',
-            5000
-          );
-        } else {
-          NotificationManager.error(
-            'For best results, please upload a logo that has an aspect ratio of 10:3',
-            'Banner image upload unsuccessful',
-            5000
-          );
-        }
-      }
-    }
-  }
 
   const updateImage = async (newImg, ind) => {
     let oldGallery = [...gallery];
@@ -85,7 +61,7 @@ const GalleryUpload = ({
     await store.dispatch(getGalleryPhotos()).then((res) => {
       let updatedGallery = [...res];
       gallery.forEach((el, sInd) => {
-        if (el.temp && sInd != ind) {
+        if (el.temp && sInd !== ind) {
           updatedGallery.insert(sInd, el);
         }
       });
@@ -203,7 +179,6 @@ const GalleryUpload = ({
                   </div>
                 ) : (
                   <ImageUploader
-                    withIcon={false}
                     label=""
                     buttonStyles={{
                       background: '#54a0f1',
@@ -257,7 +232,7 @@ const GalleryUpload = ({
           ))}
         <button className="image-card image-card-empty" onClick={addPhoto}>
           <Add style={{ color: '#C5C5C5', fontSize: 40 }} />
-          <a className="hiddenText">Click here to add a photo</a>
+          <p className="hiddenText">Click here to add a photo</p>
         </button>
       </div>
       <p>

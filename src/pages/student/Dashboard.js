@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './Dashboard.css';
-import Footer from '../../components/layout/footer/Footer';
-import Loading from '../../components/layout/loading/Loading';
-import MasterTimeline from './MasterTimeline';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ReactGA from 'react-ga';
+import ReactMoment from 'react-moment';
+
 import Delete from '@material-ui/icons/DeleteOutlineRounded';
 import RightArrow from '@material-ui/icons/ChevronRightRounded';
 import LeftArrow from '@material-ui/icons/ChevronLeftRounded';
-import ReactMoment from 'react-moment';
+
+import './Dashboard.css';
+
 import {
   containsToday,
   isUpcoming,
@@ -20,6 +19,10 @@ import {
   isWithinFourWeeks,
   eventsOverlap,
 } from '../../utils/formatTimeAndDate';
+
+import Footer from '../../components/layout/footer/Footer';
+import Loading from '../../components/layout/loading/Loading';
+import MasterTimeline from './MasterTimeline';
 import AppTracker from './AppTracker';
 import Onboarding from './studentOnboarding/Onboarding';
 import OnboardingModal from './studentOnboarding/onboardingModal/OnboardingModal';
@@ -444,4 +447,6 @@ function Dashboard({ student }) {
 
 const mapStateToProps = (state, ownProps) => ({});
 
-export default connect(mapStateToProps, {})(withRouter(Dashboard));
+export default connect(mapStateToProps, {})(
+  withRouter(Dashboard)
+);

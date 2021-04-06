@@ -1,6 +1,6 @@
 import {
   LOAD_PROFILE,
-  LOAD_PROFILE_NOT_LOGGED_IN,
+  // LOAD_PROFILE_NOT_LOGGED_IN,
   LOAD_PROFILE_ERROR,
   UPDATE_PROFILE,
   UPLOAD_IMAGES,
@@ -16,7 +16,7 @@ import {
   ADD_RECR_EVENT,
   DELETE_RECR_EVENT,
   UPDATE_RECR_EVENT,
-  GET_GALLERY_PHOTOS,
+  // GET_GALLERY_PHOTOS,
   ADD_GALLERY_PHOTO,
   UPDATE_GALLERY_PHOTO,
   DELETE_GALLERY_PHOTO,
@@ -24,8 +24,7 @@ import {
 import FormData from 'form-data';
 
 import { loadAllClubs } from './catalog';
-import { refreshToken } from './auth';
-import { API, TOKENS } from '../../utils/backendClient';
+import { API } from '../../utils/backendClient';
 
 // Load Profile
 export const loadProfile = () => async (dispatch) => {

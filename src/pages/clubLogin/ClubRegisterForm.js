@@ -403,6 +403,7 @@ const MultiStepForm = ({
         emptyAppStartDate={emptyAppStartDate}
         emptyAppEndDate={emptyAppEndDate}
         dateError={dateError}
+        setDateError={setDateError}
       />
       <StepThree
         currStep={currStep}

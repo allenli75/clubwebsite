@@ -8,7 +8,6 @@ import Modal from '../../../components/layout/modal/Modal';
 import {
   Accordion,
   AccordionItem,
-  AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
 } from 'react-accessible-accordion';
@@ -286,6 +285,7 @@ const RecrAccord = forwardRef((props, ref) => {
                     <button className="recr-forge" onClick={duplicateEvent}>
                       <img
                         className="recr-img"
+                        alt="duplicate"
                         src={require('../../assets/recrDup.PNG')}></img>
                     </button>
                     <button
@@ -293,6 +293,7 @@ const RecrAccord = forwardRef((props, ref) => {
                       onClick={() => setShowDelModal(true)}>
                       <img
                         className="recr-img"
+                        alt="trash"
                         src={require('../../assets/recrOop.PNG')}></img>
                     </button>
                   </div>

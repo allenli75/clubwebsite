@@ -2,7 +2,7 @@ import {
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
   LOGOUT,
-  REFRESH_TOKEN,
+  // REFRESH_TOKEN,
   AUTH_ERROR,
 } from './types';
 

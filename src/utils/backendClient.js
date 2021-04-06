@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
 
-const LOCAL_URL = 'https://sc-backend.ngrok.io';
+// const LOCAL_URL = 'https://sc-backend.ngrok.io';
 const DEV_URL = 'https://sc-backend-dev.herokuapp.com';
-const PROD_URL = 'https://sc-backend-prod.herokuapp.com';
+// const PROD_URL = 'https://sc-backend-prod.herokuapp.com';
 
 const ACCESS_TOKEN_KEY = 'token';
 const REFRESH_TOKEN_KEY = 'refreshToken';
@@ -103,8 +103,8 @@ async function tryRefreshAccessToken() {
 }
 
 API.interceptors.response.use(res => res, async err => {
-  const badToken = err.response.status == 401;
-  const isAuthToken = err.config.headers['Authorization'] == TOKENS.access.header();
+  const badToken = err.response.status === 401;
+  const isAuthToken = err.config.headers['Authorization'] === TOKENS.access.header();
   console.log('isAuthToken', isAuthToken);
   
   if (badToken && isAuthToken) {

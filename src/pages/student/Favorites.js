@@ -43,6 +43,7 @@ function Favorites({
     notRecruiting,
   } = formDetails;
 
+  /*
   const resetFilters = () => {
     setFormDetails({ name: 'name', value: '' });
     setFormDetails({ name: 'tags', value: [] });
@@ -51,6 +52,7 @@ function Favorites({
     setFormDetails({ name: 'recruiting', value: false });
     setFormDetails({ name: 'notRecruiting', value: false });
   };
+  */
 
   const toggleTag = (tagLabel) => {
     setFormDetails({ name: 'tags', value: tagLabel });
@@ -232,7 +234,7 @@ function Favorites({
             <img
               className="favorites-img"
               src={require('../assets/resetpwd2.png')}
-              alt="flyer bears image"
+              alt="flyer bears"
             />
           </div>
         </div>

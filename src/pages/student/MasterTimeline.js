@@ -3,7 +3,7 @@ import moment from 'moment';
 import ReactMoment from 'react-moment';
 import './MasterTimeline.css';
 import CloseIcon from '@material-ui/icons/ChevronRightRounded';
-import { dayDiff, simplestRangeFormat, START_DATETIME, END_DATETIME } from '../../utils/formatTimeAndDate';
+import { dayDiff, simplestRangeFormat, END_DATETIME } from '../../utils/formatTimeAndDate';
 
 
 function MasterTimeline({ data }) {

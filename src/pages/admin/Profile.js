@@ -87,14 +87,17 @@ const Profile = ({
 
   function checkDateError() {
     var errorExists = false;
+    var start = null;
+    var end = null;
+
     if (recruiting.value) {
       if (appReq.value) {
         if (appStartDate === null || appEndDate === null) {
           errorExists = true;
           NotificationManager.error('These fields are required.', '', 5000);
         } else {
-          var start = Date.parse(appStartDate);
-          var end = Date.parse(appEndDate);
+          start = Date.parse(appStartDate);
+          end = Date.parse(appEndDate);
           if (end < start) {
             errorExists = true;
             NotificationManager.error(
@@ -109,8 +112,8 @@ const Profile = ({
           errorExists = true;
           NotificationManager.error('These fields are required.', '', 5000);
         } else {
-          var start = Date.parse(recrStartDate);
-          var end = Date.parse(recrEndDate);
+          start = Date.parse(recrStartDate);
+          end = Date.parse(recrEndDate);
           if (end < start) {
             errorExists = true;
             NotificationManager.error(
@@ -172,6 +175,7 @@ const Profile = ({
     }
   };
 
+  /*
   const reqFieldsCheck = () => {
     if (tags === null) {
       NotificationManager.error(
@@ -187,6 +191,9 @@ const Profile = ({
       );
     }
   };
+  */
+
+  setOrgEmail(orgEmail);
 
   return (
     <div>

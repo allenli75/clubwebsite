@@ -95,6 +95,7 @@ const Navbar = ({
     </>
   );
 
+  /*
   const loggedInStudent = (
     <div className="logged-in-links">
       <Link to="/about" className="nav-link">
@@ -134,6 +135,7 @@ const Navbar = ({
       </div>
     </div>
   );
+  */
 
   const loggedInOrg = (
     <div className="logged-in-links">

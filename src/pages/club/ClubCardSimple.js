@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './ClubCardSimple.css'
 import logo from '../assets/default_logo.jpg'
-import banner from '../assets/default_banner.jpg'
 import { Link } from 'react-router-dom'
 
 const ClubCard = ({club}) => {

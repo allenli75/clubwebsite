@@ -5,7 +5,7 @@ import { google } from "calendar-link";
 import moment from 'moment';
 import 'moment-timezone';
 import "./RecruitmentTL.css"
-import { justTimeFormat, simplestRangeFormat, START_DATETIME, END_DATETIME, dateTimeFormat } from '../../utils/formatTimeAndDate';
+import { justTimeFormat, START_DATETIME, END_DATETIME, dateTimeFormat } from '../../utils/formatTimeAndDate';
 //import { propTypes } from 'react-bootstrap/esm/Image';
 
 function generateGoogleEventLink(recruiting_event) {
@@ -32,7 +32,7 @@ function generateGoogleEventLink(recruiting_event) {
 
 const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
     const orderedEvents = events.sort((a,b) => (a.event_start > b.event_start) ? 1 : ((b.event_start > a.event_start) ? -1 : 0))
-    var numEvents = orderedEvents.length;
+    // var numEvents = orderedEvents.length;
     
     var today = new Date();
     return (
@@ -43,12 +43,12 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                     {/* <div className="name-time-box">
                     </div> */}
                     <div style={{width: "3vw"}}></div>
-                    <div className="date-circle" id={(today.getFullYear() > parseInt(event.event_start.slice(0,4))) || (today.getMonth() + 1 > parseInt(event.event_start.slice(5,7)) || (((today.getMonth() + 1) == parseInt(event.event_start.slice(5,7))) && (today.getDate() > parseInt(event.event_start.slice(8,10))))) ? "filled": "unfilled"}>
+                    <div className="date-circle" id={(today.getFullYear() > parseInt(event.event_start.slice(0,4))) || (today.getMonth() + 1 > parseInt(event.event_start.slice(5,7)) || (((today.getMonth() + 1) === parseInt(event.event_start.slice(5,7))) && (today.getDate() > parseInt(event.event_start.slice(8,10))))) ? "filled": "unfilled"}>
                         {parseInt(event.event_start.slice(5,7))}/{parseInt(event.event_start.slice(8,10))}</div>
                     <div className="desc-box">
                         <div className="event-desc">
                         <p className="event-title">{event.name} </p>
-                        {(event.event_start.slice(0,10) == event.event_end.slice(0,10)) ?
+                        {(event.event_start.slice(0,10) === event.event_end.slice(0,10)) ?
                         <div style={{display:'flex', flexDirection:'row', marginBottom:".5vw"}}>
                             {/* <div className="event-time">
                                 {"" + (parseInt(event.event_start.slice(11,13)) % 12 === 0 ? 12 : parseInt(event.event_start.slice(11,13)) % 12) + event.event_start.slice(13,16) + " " + (parseInt(event.event_start.slice(11,13)) >= 12 ? "PM" : "AM")}
@@ -100,7 +100,7 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                                 
                             >
                             {<img
-                                    className="res-img"
+                                    className="recrButton"
                                     src={require('../assets/linkImages/gcal.PNG')}
                                     alt="resource"
                                     id="gcal"
@@ -112,10 +112,9 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                                 href={event.link}
                             >
                             {<img
-                                    className="res-img"
+                                    className="recrButton"
                                     src={require('../assets/linkImages/recrFB.PNG')}
                                     alt="resource"
-                                    className="recrButton"
                             />}
                             </a> : null}
                            {(event.virtual_link != null) ? <a
@@ -124,10 +123,9 @@ const RecruitmentTL = ({ adminCheck, profile, currRoute, events }) => {
                                 href={event.virtual_link}
                             >
                             {<img
-                                    className="res-img"
+                                    className="recrButton"
                                     src={require('../assets/linkImages/recrZM.PNG')}
                                     alt="resource"
-                                    className="recrButton"
                             />}
                             </a> : null}
                         </div>
@@ -146,7 +144,7 @@ const mapStateToProps = (state) => ({
   });
  
 const callMSP = (admin, currRoute) => {
-    if (admin && currRoute.currRoute == "recruitment") {
+    if (admin && currRoute.currRoute === "recruitment") {
         return (
             mapStateToProps
         )

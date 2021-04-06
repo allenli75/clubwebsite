@@ -12,14 +12,14 @@ export const SettingsMultiSelect = ({options, selections, placeholder, set, max 
   })
   
   const selectOption = (option) => {
-
+    var newSelections = null
     if (selections.includes(option)){
       const optionIndex = selections.indexOf(option)
-      var newSelections = [...selections]
+      newSelections = [...selections]
       newSelections.splice(optionIndex, 1)
     } else {
       if (selections.length >= max) return
-      var newSelections = [...selections, option]
+      newSelections = [...selections, option]
     }
     
     set(newSelections)
