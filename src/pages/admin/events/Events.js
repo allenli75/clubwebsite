@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EventComp from './EventComp.js';
 import { addEvent, updateEvent, deleteEvent } from '../../actions/profile';
 import { validURL, normalizeUrl } from '../../utils/normalizeUrl';
-import './Events.css';
+import './Events.scss';
 import { NotificationManager } from 'react-notifications';
 
 const Events = ({ addEvent, updateEvent, deleteEvent, events }) => {
