@@ -77,6 +77,7 @@ function ClubPage({
       //!organization.link_name && clearOrganization();
     };
     // recall useEffect when the link_name in url changes
+    // eslint-disable-next-line
   }, [routeId, activated, organization]);
 
   // console.log(organization);

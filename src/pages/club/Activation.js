@@ -41,6 +41,7 @@ const Activation = ({
         : { value: 0, label: 'Not accepting new members' }
     );
     setSize(profile.num_users);
+    // eslint-disable-next-line
     defaultVal = true;
   }, [profile]);
 
@@ -58,6 +59,7 @@ const Activation = ({
         : { value: 0, label: 'Not accepting new members' }
     );
     setSize(profile.num_users);
+    // eslint-disable-next-line
   }, [defaultVal]);
 
   // Activate the activate button
