@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './ClubCardSimple.css'
+import './ClubCardSimple.scss'
 import logo from '../assets/default_logo.jpg'
 import banner from '../assets/default_banner.jpg'
 import { Link } from 'react-router-dom'

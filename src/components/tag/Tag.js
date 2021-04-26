@@ -1,5 +1,5 @@
 import React from 'react';
-import './Tag.css';
+import './Tag.scss';
 import Check from '../../pages/assets/Check.svg';
 import X from '../../pages/assets/X.svg';
 import Pen from '../../pages/assets/Pen.svg';

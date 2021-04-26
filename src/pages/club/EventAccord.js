@@ -6,7 +6,7 @@ import {
   AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-import "./EventAccord.css";
+import "./EventAccord.scss";
 
 import Moment from 'react-moment';
 import { simplestRangeFormat, START_DATETIME, END_DATETIME } from '../../utils/formatTimeAndDate';

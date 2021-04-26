@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Modal from '../../layout/Modal';
+import Modal from '../../../components/layout/modal/Modal';
 import { connect } from 'react-redux';
 import EventComp from './EventComp.js';
-import { addEvent, updateEvent, deleteEvent } from '../../actions/profile';
-import { validURL, normalizeUrl } from '../../utils/normalizeUrl';
+import { addEvent, updateEvent, deleteEvent } from '../../../redux/actions/profile';
+import { validURL, normalizeUrl } from '../../../utils/normalizeUrl';
 import './Events.scss';
 import { NotificationManager } from 'react-notifications';
 
@@ -111,7 +111,7 @@ const Events = ({ addEvent, updateEvent, deleteEvent, events }) => {
         <div className="events-list">{eventComps}</div>
         <img
           id="add-button"
-          src={require('../assets/linkImages/addEvent.png')}
+          src={require('../../assets/linkImages/addEvent.png')}
           onClick={() => setShowModal(true)}
           alt="add event"
         />
@@ -208,4 +208,9 @@ const Events = ({ addEvent, updateEvent, deleteEvent, events }) => {
   );
 };
 
-export default connect(null, { addEvent, updateEvent, deleteEvent })(Events);
+const mapStateToProps = (state) => ({
+  profile: state.profile.profile,
+  events: state.profile.events,
+});
+
+export default connect(mapStateToProps, { addEvent, updateEvent, deleteEvent })(Events);

@@ -27,6 +27,7 @@ import Profile from '../../pages/admin/Profile';
 import Banner from '../../pages/admin/Banner';
 import GalleryUpload from '../../pages/admin/gallery/GalleryUpload';
 import RecrEvents from '../../pages/admin/recruitment/RecrEvents';
+import Events from '../../pages/admin/events/Events';
 import Activation from './Activation';
 import { membersMap } from '../../utils/filterClubs.js';
 import { normalizeUrl } from '../../utils/normalizeUrl.js';
@@ -48,6 +49,7 @@ function ClubPage({
   const [showBannerModal, setShowBannerModal] = useState(false);
   const [showRecrModal, setShowRecrModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [showEventsModal, setShowEventsModal] = useState(false);
 
   const [eventsSet, setEventsSet] = useState('');
   const [activated, setActivation] = useState(false);
@@ -62,6 +64,7 @@ function ClubPage({
     setShowBannerModal(false);
     setShowRecrModal(false);
     setShowGalleryModal(false);
+    setShowEventsModal(false);
   }
 
   const path = history.location.pathname.split('/').slice(2);
@@ -437,6 +440,7 @@ function ClubPage({
                           <img
                             src={require('../assets/Edit.svg')}
                             className="clubpage-content-header-icon"
+                            onClick={() => setShowEventsModal(admin)}
                             alt=""
                           />
                         )}
@@ -595,6 +599,16 @@ function ClubPage({
               events={organization.recruiting_events}
               cancelEdit={cancelEdit}
               incNumEvents={incNumEvents}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          showModal={showEventsModal}
+          setShowModal={setShowEventsModal}
+          close={cancelEdit}>
+          <div className="admin-modal">
+            <Events
             />
           </div>
         </Modal>

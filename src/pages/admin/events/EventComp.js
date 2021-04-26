@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Modal from '../../layout/Modal';
+import Modal from '../../../components/layout/modal/Modal';
 import { normalizeUrl, validURL } from '../../../utils/normalizeUrl';
 import { NotificationManager } from 'react-notifications';
 
@@ -113,7 +113,7 @@ const EventComp = ({ data, entryChange, removeEvent }) => {
                 rel="noopener noreferrer"
               >
                 <img
-                  src={require('../assets/linkImages/resLink.png')}
+                  src={require('../../assets/linkImages/resLink.png')}
                   alt="event"
                 />
               </a>
@@ -123,12 +123,12 @@ const EventComp = ({ data, entryChange, removeEvent }) => {
             <img
               alt="edit"
               onClick={() => setShowEditModal(true)}
-              src={require('../assets/linkImages/editLink.png')}
+              src={require('../../assets/linkImages/editLink.png')}
             />
             <img
               alt="remove"
               onClick={() => setShowDelModal(true)}
-              src={require('../assets/linkImages/removeLink.png')}
+              src={require('../../assets/linkImages/removeLink.png')}
             />
           </div>
         </div>
