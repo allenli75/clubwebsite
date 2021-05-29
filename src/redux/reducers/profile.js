@@ -14,10 +14,12 @@ import {
   ADD_RECR_EVENT,
   UPDATE_RECR_EVENT,
   DELETE_RECR_EVENT,
-    GET_GALLERY_PHOTOS,
+  GET_GALLERY_PHOTOS,
   ADD_GALLERY_PHOTO,
   UPDATE_GALLERY_PHOTO,
-  DELETE_GALLERY_PHOTO
+  DELETE_GALLERY_PHOTO,
+  GET_ROLES,
+  ADD_ROLE
 } from '../actions/types';
 
 const initialState = {
@@ -31,6 +33,7 @@ const initialState = {
     new_members: false,
     about_us: '',
     num_users: 0,
+    roles: []
   },
   resources: [],
   events: [],
@@ -49,6 +52,8 @@ const initialState = {
   apply_deadline_start: '',
   apply_deadline_end: '',
   apply_link: '',
+  roles: [
+  ],
   // reactivated: false
 };
 
@@ -79,6 +84,7 @@ export default function (state = initialState, action) {
         apply_deadline_start: payload.apply_deadline_start,
         apply_deadline_end: payload.apply_deadline_end,
         apply_link: payload.apply_link,
+        // roles: payload.roles || [],
       };
     case UPDATE_PROFILE:
       const updateSocial = payload.social_media_links
@@ -102,6 +108,9 @@ export default function (state = initialState, action) {
       const updateAppLink = payload.apply_link
         ? payload.apply_link
         : state.apply_link;
+      const updateRoles = payload.roles
+        ? payload.roles
+        : state.roles;
       return {
         ...state,
         profile: payload,
@@ -112,6 +121,7 @@ export default function (state = initialState, action) {
         apply_deadline_start: updateAppDeadlineStart,
         apply_deadline_end: updateAppDeadlineEnd,
         apply_link: updateAppLink,
+        roles: updateRoles,
       };
     case UPLOAD_IMAGES:
       // return { ...state, images: payload };
@@ -139,6 +149,9 @@ export default function (state = initialState, action) {
     case UPDATE_GALLERY_PHOTO:
     case DELETE_GALLERY_PHOTO:
       return {...state, galleryPhotos: payload};
+    case ADD_ROLE:
+    case GET_ROLES:
+      return {...state, roles: payload };
     default:
       return state;
   }

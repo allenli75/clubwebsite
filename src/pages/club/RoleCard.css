@@ -1,0 +1,111 @@
+.rolecard-content {
+  padding: 20px;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+
+  width: 265px;
+
+  margin-right: 10px;
+
+  background-image: url('./../assets/role-card.png');
+  background-size: cover;
+}
+
+.rolecard-content:hover {
+  border: 1px solid #ABDFFC;
+}
+
+.rolecard-dot-red {
+  margin-left: 15px;
+  height: 10px;
+  width: 10px;
+  background-color: #FBD6D5;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.rolecard-dot-green {
+  margin-left: 15px;
+  height: 10px;
+  width: 10px;
+  background-color: #CDEFC6;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.rolecard-content-row1 {
+  display: flex;
+  flex-direction: row;
+}
+
+.rolecard-text {
+  flex-grow: 1;
+}
+
+.rolecard-title {
+  font-family: Qanelas Soft;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0em;
+  text-align: left;
+
+  margin-bottom: 8px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rolecard-status {
+  font-family: Qanelas Soft;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 25px;
+  letter-spacing: 0em;
+  margin-left: 5px;
+}
+
+.rolecard-commitment {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.rolecard-skills {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.rolecard-skills .list {
+  margin-left: 25px;
+}
+
+.rolecard-list {
+  margin-bottom: 25px;
+}
+
+.rolecard-description {
+  font-size: 14px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.simple-one-line {
+  -webkit-line-clamp: 5;
+}
+.simple-two-line {
+  -webkit-line-clamp: 4;
+}
+.simple-three-line {
+  -webkit-line-clamp: 3;
+}
+.simple-four-line {
+  -webkit-line-clamp: 2;
+}
+.simple-five-line {
+  -webkit-line-clamp: 1;
+}
+
+a {
+  color: inherit;
+}

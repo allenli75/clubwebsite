@@ -20,6 +20,8 @@ import {
   ADD_GALLERY_PHOTO,
   UPDATE_GALLERY_PHOTO,
   DELETE_GALLERY_PHOTO,
+  GET_ROLES,
+  ADD_ROLE,
 } from './types';
 import FormData from 'form-data';
 
@@ -55,6 +57,7 @@ export const updateProfile = (formData) => async (dispatch) => {
       apply_deadline_end: formData.apply_deadline_end,
       apply_link: formData.apply_link,
       is_reactivating: formData.is_reactivating,
+      roles: formData.roles,
     });
 
     await dispatch(loadAllClubs());
@@ -313,6 +316,24 @@ export const deleteGalleryPhoto = (id) => async (dispatch) => {
   try {
     const res = await API.delete(`/api/admin/gallery-media/${id}`);
     dispatch({ type: DELETE_GALLERY_PHOTO, payload: res.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getRoles = () => async (dispatch) => {
+  try {
+    const res = await API.get('/api/admin/roles');
+    return res.data;
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const addRole = (newRole, roles) => async (dispatch) => {
+  try {
+    const res = await API.post('/api/admin/roles', roles.append(newRole));
+    dispatch({ type: ADD_ROLE, payload: res.data });
   } catch (err) {
     console.log(err);
   }

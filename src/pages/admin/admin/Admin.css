@@ -206,11 +206,11 @@
   color: white;
   font-weight: 700;
   font-size: 14px;
-  border: 1px solid #54a0f1;
+  border: 1px solid #367BC6;
 }
 
 #save-button:hover {
-  background: #6eaff5;
+  background: #367BC6;
   cursor: pointer;
 }
 
@@ -324,4 +324,69 @@
   .event {
     width: 100%;
   }
+}
+
+.roles-modal {
+  width: 1100px;
+}
+
+#add-responsibility-button {
+  margin-bottom: 20px;
+  float: left;
+  border-radius: 5px;
+  padding: 10px 25px;
+  color: #54a0f1;
+  font-weight: 700;
+  font-size: 14px;
+  background: white;
+  border: 1px solid #54a0f1;
+}
+
+#add-responsibility-button:hover {
+  border: 1px solid #367BC6;
+  color: #367BC6;
+  cursor: pointer;
+}
+
+.role-row {
+  min-height: 20px;
+  left: 0px;
+  top: 0px;
+  border-radius: 10px;
+
+  padding: 10px;
+
+  border: 1px solid #C4C4C4;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.role-row-header {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  margin-left: 15px;
+}
+
+.role-row-content {
+  margin-left: 15px;
+}
+
+.userInput {
+  width: 800px;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  font-family: Qanelas Soft;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  border-radius: 5px;
+  border: solid 1px #C4C4C4;
+  color: #4e4e4e;
 }

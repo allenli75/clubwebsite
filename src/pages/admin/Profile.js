@@ -53,6 +53,8 @@ const Profile = ({
       ? null
       : getDateOnly(profile.apply_deadline_end)
   );
+  const [orgRoles, setOrgRoles] = useState(profile.roles);
+
 
   function getDateOnly(obj) {
     if (obj instanceof Date) {
@@ -155,6 +157,7 @@ const Profile = ({
           recruiting.value === 1 && appReq.value === 0
             ? new Date(recrEndDate)
             : null,
+        roles: orgRoles,
       };
 
       try {

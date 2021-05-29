@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactGA from 'react-ga';
 import { Route, Switch, Link } from 'react-router-dom';
+import ScrollArea from 'react-scrollbar';
 
 import { getOrganization, clearOrganization } from '../../redux/actions/catalog';
 
@@ -12,6 +13,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 
 import './ClubPage.css';
+
 import RecruitmentTL from '../admin/RecruitmentTL.js';
 import EventAccord from './EventAccord';
 import Gallery from '../../components/gallery/Gallery';
@@ -22,6 +24,7 @@ import Tag from '../../components/tag/Tag';
 import Modal from '../../components/layout/modal/Modal';
 import ContactInfo from '../../pages/admin/ContactInfo';
 import GetInvolved from '../../pages/admin/GetInvolved';
+import Roles from '../../pages/admin/Roles';
 import AboutClub from '../../pages/admin/AboutClub';
 import Profile from '../../pages/admin/Profile';
 import Banner from '../../pages/admin/Banner';
@@ -32,6 +35,7 @@ import { membersMap } from '../../utils/filterClubs.js';
 import { normalizeUrl } from '../../utils/normalizeUrl.js';
 import { API, TOKENS } from '../../utils/backendClient';
 import ClubCardSimple from './ClubCardSimple';
+import RoleCard from './RoleCard';
 
 function ClubPage({
   admin,
@@ -39,8 +43,13 @@ function ClubPage({
   getOrganization,
   clearOrganization,
   tagOptions,
+  roles,
   history,
 }) {
+
+  console.log('in club page');
+  console.log(roles);
+
   const [showContactModal, setShowContactModal] = useState(false);
   const [showInvolvedModal, setShowInvolvedModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
@@ -48,6 +57,7 @@ function ClubPage({
   const [showBannerModal, setShowBannerModal] = useState(false);
   const [showRecrModal, setShowRecrModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
 
   const [eventsSet, setEventsSet] = useState('');
   const [activated, setActivation] = useState(false);
@@ -62,6 +72,7 @@ function ClubPage({
     setShowBannerModal(false);
     setShowRecrModal(false);
     setShowGalleryModal(false);
+    setShowRoleModal(false);
   }
 
   const path = history.location.pathname.split('/').slice(2);
@@ -169,6 +180,30 @@ function ClubPage({
     ) : null
   );
 
+  const dummyroles = [
+    {
+      name: "UX Researcher", 
+      open: false, 
+      description: "Conduct research to improve UX of website. Collaborate with other designers, engineers, and product manager.", 
+      commitment: "4-5 hours per week", 
+      skills: ["Familiar with user research methods", "Experience with Figma"]
+    },
+    {
+      name: "UX Content Writer", 
+      open: true, 
+      description: "Produce weekly content on said topic, for our newsletter, social media, and blog.", 
+      commitment: "",
+      skills: ["Portfolio of past writing work", "Knowledge about topic", "3-4 hours per week"]
+    },
+    {
+      name: "UX Content Writer", 
+      open: true, 
+      description: "Produce weekly content on said topic, for our newsletter, social media, and blog.", 
+      commitment: "",
+      skills: ["Portfolio of past writing work", "Knowledge about topic", "3-4 hours per week"]
+    },
+  ]
+
   const resComps = organization.resources.map((res, i) => (
     <div className="clubpage-content-resource" id="resources" key={i}>
       {res.name}
@@ -215,6 +250,22 @@ function ClubPage({
           {aboutMore ? 'See less' : 'See more'}{' '}
           {aboutMore ? <ExpandLess /> : <ExpandMoreIcon />}{' '}
         </button>
+        <div className="roles">
+          <div className="clubpage-content-header">
+            <h1>Roles & Responsibilities</h1>
+            {admin && (
+              <img
+                src={require('../assets/Edit.svg')}
+                className="clubpage-content-header-icon"
+                onClick={() => setShowRoleModal(admin)}
+                alt=""
+              />
+            )}
+          </div>
+          <div className="role-wheel">
+            {roles?.map((role) => <RoleCard role={role} />)}
+          </div>
+        </div>
         <div className="bottomGallery">
           {((organization.gallery_media &&
             organization.gallery_media.length > 0) ||
@@ -592,9 +643,24 @@ function ClubPage({
           <div className="admin-modal">
             <RecrEvents
               profile={organization}
-              events={organization.recruiting_events}
+              events={organization.recruiting_events} 
               cancelEdit={cancelEdit}
               incNumEvents={incNumEvents}
+            />
+          </div>
+        </Modal>
+
+        <Modal
+          showModal={showRoleModal}
+          setShowModal={setShowRoleModal}
+          close={cancelEdit}
+          onPress={console.log(organization)}
+        >
+          <div className="admin-modal">
+            <Roles 
+              profile={organization}
+              roles={roles}  // organization.roles > dummyroles
+              cancelEdit={cancelEdit}
             />
           </div>
         </Modal>
@@ -610,6 +676,7 @@ const mapStateToProps = (state, ownProps) => ({
     ? state.profile.profile
     : state.catalog.organization,
   tagOptions: state.profile.tagOptions,
+  roles: state.profile.roles, // something sus 
 });
 
 export default connect(mapStateToProps, { getOrganization, clearOrganization })(

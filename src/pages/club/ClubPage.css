@@ -6,9 +6,7 @@
   padding-top: 67px;
   position: relative;
   font-family: Qanelas Soft;
-  letter-spacing: 0.03em;
 }
-
 
 .clubpage {
   padding-top: 2vw;
@@ -29,6 +27,14 @@
 .clubpage-tile p {
   width: 100%;
   word-wrap: break-word;
+}
+
+.role-wheel {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  overflow-x: scroll;
 }
 
 .gallery {
@@ -86,7 +92,9 @@
   position: relative;
   border-radius: 10px;
   margin: 0 auto;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+
+  border: 1px solid #C4C4C4;
+  border-radius: 10px;
 }
 
 .clubpage-content-header {
@@ -173,7 +181,6 @@
   width: 60%;
   height: auto;
   background-color: white;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
   position: relative;
 }
 
@@ -279,9 +286,15 @@
 .seeMoreButton {
   background: none;
   border: none;
+  
   font-family: Qanelas Soft;
-  font-size: 1vw;
-  color: #767676;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  color: #367BC6;
+
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -305,7 +318,6 @@
   display: inline-flex;
   background-color: #54a0f1;
   font-family: Qanelas Soft;
-  letter-spacing: 1.5px;
   border: none;
   color: white;
   font-weight: bold;
@@ -324,7 +336,9 @@
 
 .clubpage-tile {
   border-radius: 10px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  border: 1px solid #C4C4C4;
+  border-radius: 10px;
+  
   background-color: white;
   padding: 1.5vw 2vw 1.5vw 2vw;
   margin-bottom: 2vw;
@@ -387,7 +401,6 @@
 
   .clubpage h1 {
     font-size: 3vw;
-    letter-spacing: 0.05em;
   }
 
   .clubpage h2 {
@@ -401,7 +414,6 @@
 
   .club-title {
     font-size: 18px;
-    letter-spacing: 0.03em;
     color: #000000;
   }
   .clubpage-tile {
@@ -499,4 +511,9 @@
     flex-direction: column;
   }
   
+}
+
+.roles {
+  width: 44vw;
+  margin-bottom: 50px;
 }

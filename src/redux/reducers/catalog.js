@@ -11,7 +11,8 @@ import {
   SET_FORM_DETAILS,
   RESET_TAGS,
   SET_MEMBERS,
-  RESET_MEMBERS
+  RESET_MEMBERS,
+  GET_ROLES,
 } from '../actions/types';
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
     notRecruiting: false,
     members: {}
   },
+  roles: [],
 };
 
 export default function (state = initialState, action) {
@@ -89,6 +91,14 @@ export default function (state = initialState, action) {
         ...state,
         formDetails: {
           ...state.formDetails,
+          [payload.name]: payload.value,
+        },
+      };
+    case GET_ROLES:
+      return {
+        ...state,
+        roles: {
+          ...state.roles,
           [payload.name]: payload.value,
         },
       };
